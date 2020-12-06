@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scheme containers</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Scheme containers</h1>
+  <p><i>"The least unofficial curated collection of ready-to-run
+  Scheme implementations!"</i></p>
+  <h2>Containers?</h2>
+  <p><a href="https://www.docker.com">Docker</a> is an easy way to
+  run foreign software on Linux. The software runs in a container
+  isolated from the rest of your operating system; it can't mess
+  with your files or processes, and you don't need to permanently
+  install anything.</p>
+  <h2>Scheme containers?</h2>
+  <p>We took advantage of the opportunity to make containers for a
+  whole bunch of Scheme implementations. If you already have
+  Docker, these are the fastest way to explore Scheme. They are
+  also great for testing the portability of Scheme code, and they
+  serve as executable documentation for how to build the
+  implementations from source code.</p>
+  <h2>What's in the container?</h2>
+  <p>Each container goes into a REPL <i>(read-eval-print loop)</i>
+  by default. Implementations that compile Scheme to C have GCC in
+  the container so you can build programs too. Most containers are
+  based on Debian Linux.</p>
+  <h2>Available implementations</h2>
+  <h3>Big, actively maintained</h3>
+  <ul>
+    <li><kbd>docker run -it schemers/bigloo</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/chezscheme</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/chicken</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/cyclone</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/gambit</kbd></li>
+    <li><kbd>docker run -it schemers/gerbil</kbd></li>
+    <li><kbd>docker run -it schemers/jazz</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/gauche</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/guile</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/ironscheme</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/kawa</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/loko</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/mit-scheme</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/racket</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/sagittarius</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/stklos</kbd></li>
+  </ul>
+  <h3>Small, actively maintained</h3>
+  <ul>
+    <li><kbd>docker run -it schemers/biwascheme</kbd>
+      (JavaScript)</li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/chibi</kbd> (C)</li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/mosh</kbd></li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/owl</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/otus</kbd> (C)</li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/rep</kbd> (C)</li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/s7</kbd> (C)</li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/scm</kbd> (C)</li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/sigscheme</kbd> (C)</li>
+  </ul>
+  <h3>Unmaintained classics</h3>
+  <p><b>Please note:</b> Scheme implementations tend to bit-rot
+  much slower than most code. Just because an implementation is
+  unmaintained doesn't mean it has stopped working. Many (if not
+  most) implementations keep working for years after active
+  maintenance has ended, requiring few if any patches.</p>
+  <ul>
+    <li><kbd>docker run -it schemers/ikarus</kbd></li>
+    <li><kbd>docker run -it schemers/larceny</kbd></li>
+    <li><kbd>docker run -it schemers/oaklisp</kbd></li>
+    <li><kbd>docker run -it schemers/picrin</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/scheme48</kbd></li>
+    <li><kbd>docker run -it schemers/scsh</kbd></li>
+    <li><kbd>docker run -it schemers/siod</kbd></li>
+    <li><kbd>docker run -it schemers/sisc</kbd></li>
+    <li><kbd>docker run -it schemers/tinyscheme</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/ypsilon</kbd></li>
+  </ul>
+  <h3>Research systems</h3>
+  <ul>
+    <li><kbd>docker run -it schemers/schemik</kbd> (implicitly
+    parallel Scheme)</li>
+    <li><kbd>docker run -it schemers/digamma</kbd> (Scheme on
+    LLVM)</li>
+  </ul>
+  <h3>Curiosities</h3>
+  <ul>
+    <li><kbd>docker run -it schemers/conscheme</kbd> (Go)</li>
+    <li><kbd>docker run -it schemers/dfsch</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/elk</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/femtolisp</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/foment</kbd> (C++)</li>
+    <li><kbd>docker run -it schemers/ksi</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/minischeme</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/pc-scheme</kbd> (C, DOS)</li>
+    <li><kbd>docker run -it schemers/rhizome-pi</kbd> (C)</li>
+    <li><kbd>docker run -it schemers/s9fes</kbd> (C,
+    Unix/Plan9)</li>
+    <li><kbd>docker run -it schemers/schluessel</kbd> (Java)</li>
+    <li><kbd>docker run -it schemers/shoe</kbd> (C, Unix)</li>
+    <li><kbd>docker run -it schemers/sizzle</kbd> (C, Unix)</li>
+    <li><kbd>docker run -it schemers/sxm</kbd> (C, Unix)</li>
+    <li><kbd>docker run -it schemers/umb</kbd> (C, Unix)</li>
+    <li><kbd>docker run -it schemers/unlikely</kbd> (C, Unix)</li>
+    <li><kbd>docker run -it schemers/vicare</kbd></li>
+    <li><kbd>docker run -it schemers/vscm</kbd></li>
+    <li><kbd>docker run -it schemers/vx</kbd></li>
+    <li><kbd>docker run -it schemers/xscheme</kbd></li>
+  </ul>
+  <h2>Missing Schemes</h2>
+  <h3>Java (JVM) based</h3>
+  <h3>Other</h3>
+  <h2>Tips</h2>
+  <p>Run the latest release version:</p>
+  <p><kbd>docker run -it schemers/guile</kbd></p>
+  <p>At the moment, that's an alias for the latest release with
+  major version 3:</p>
+  <p><kbd>docker run -it schemers/guile:3</kbd></p>
+  <p>Run the latest release from an earlier major version 2:</p>
+  <p><kbd>docker run -it schemers/guile:2</kbd></p>
+  <p>Run a pre-release version:</p>
+  <p><kbd>docker run -it schemers/guile:head</kbd></p>
+  <p>All containers include a "slim" variant of Debian Linux.
+  Access the shell:</p>
+  <p><kbd>docker run -it schemers/guile:head bash</kbd></p>
+  <p>All containers include a "slim" variant of Debian Linux.
+  Access the shell:</p>
+  <p><kbd>docker run -it schemers/guile:head
+  scheme-script</kbd></p>
+  <p><kbd>docker run -it schemers/guile:head r7rs-script</kbd></p>
+  <h2>Project sites</h2>
+  <p>The containers are served by <a href=
+  "https://hub.docker.com/u/schemers">Docker Hub
+  (<code>schemers</code>)</a> and sourced from <a href=
+  "https://github.com/scheme-containers">GitHub
+  (<code>scheme-containers</code>)</a>.</p>
+  <p>The project does not yet have its own mailing list; please
+  talk in GitHub issues or on the <a href=
+  "https://srfi.schemers.org/srfi-list-subscribe.html#schemeorg"><code>
+  schemeorg</code> list</a>.</p>
+  <h2><code>scheme</code> on Docker Hub</h2>
+  <p>If you happen to know who owns the username
+  <code>scheme</code> on Docker Hub, we would be very grateful it
+  could be donated to the project. The username seems to have been
+  inactive for as long as it has been registered.</p>
+</body>
+</html>
