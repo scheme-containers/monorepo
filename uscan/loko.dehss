@@ -1,0 +1,7 @@
+(*TOP*
+ (dehs (package "loko")
+       (debian-uversion "0.7.0")
+       (debian-mangled-uversion "0.7.0")
+       (upstream-version "0.7.0")
+       (upstream-url "https://scheme.fail/releases/loko-0.7.0.tar.gz")
+       (status "up to date")))

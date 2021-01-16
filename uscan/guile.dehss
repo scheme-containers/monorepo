@@ -1,0 +1,9 @@
+(*TOP*
+ (dehs
+  "\nuscan: Newest version of guile on remote site is 3.0.5, local version is 0\nuscan:  => Newer package available from:\n        => https://ftp.gnu.org/gnu/guile/guile-3.0.5.tar.xz\n"
+  (package "guile")
+  (debian-uversion "0")
+  (debian-mangled-uversion "0")
+  (upstream-version "3.0.5")
+  (upstream-url "https://ftp.gnu.org/gnu/guile/guile-3.0.5.tar.xz")
+  (status "newer package available")))
