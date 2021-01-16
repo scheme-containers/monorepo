@@ -1,0 +1,8 @@
+(*TOP*
+ (dehs (package "chezscheme")
+       (debian-uversion "9.5.4")
+       (debian-mangled-uversion "9.5.4")
+       (upstream-version "9.5.4")
+       (upstream-url
+        "https://github.com/cisco/ChezScheme/archive/v9.5.4.tar.gz")
+       (status "up to date")))

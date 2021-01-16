@@ -1,0 +1,8 @@
+<dehs>
+<package>chezscheme</package>
+<debian-uversion>9.5.4</debian-uversion>
+<debian-mangled-uversion>9.5.4</debian-mangled-uversion>
+<upstream-version>9.5.4</upstream-version>
+<upstream-url>https://github.com/cisco/ChezScheme/archive/v9.5.4.tar.gz</upstream-url>
+<status>up to date</status>
+</dehs>
