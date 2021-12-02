@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - bigloo/**/Dockerfile
+      - implementations/bigloo/**/Dockerfile
 
 jobs:
   docker:

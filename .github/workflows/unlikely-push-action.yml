@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - unlikely/**/Dockerfile
+      - implementations/unlikely/**/Dockerfile
 
 jobs:
   docker:

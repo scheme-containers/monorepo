@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - sxm/**/Dockerfile
+      - implementations/sxm/**/Dockerfile
 
 jobs:
   docker:

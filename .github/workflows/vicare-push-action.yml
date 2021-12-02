@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - vicare/**/Dockerfile
+      - implementations/vicare/**/Dockerfile
 
 jobs:
   docker:

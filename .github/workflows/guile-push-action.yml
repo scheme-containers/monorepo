@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - guile/**/Dockerfile
+      - implementations/guile/**/Dockerfile
 
 jobs:
   docker:

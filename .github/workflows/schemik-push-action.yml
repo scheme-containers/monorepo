@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - schemik/**/Dockerfile
+      - implementations/schemik/**/Dockerfile
 
 jobs:
   docker:

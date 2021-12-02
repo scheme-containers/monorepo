@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - tinyscheme/**/Dockerfile
+      - implementations/tinyscheme/**/Dockerfile
 
 jobs:
   docker:

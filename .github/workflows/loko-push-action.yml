@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - loko/**/Dockerfile
+      - implementations/loko/**/Dockerfile
 
 jobs:
   docker:

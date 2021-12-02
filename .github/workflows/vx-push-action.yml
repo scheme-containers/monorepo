@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - vx/**/Dockerfile
+      - implementations/vx/**/Dockerfile
 
 jobs:
   docker:

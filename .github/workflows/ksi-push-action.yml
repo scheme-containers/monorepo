@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - ksi/**/Dockerfile
+      - implementations/ksi/**/Dockerfile
 
 jobs:
   docker:

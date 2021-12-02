@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - rhizome-pi/**/Dockerfile
+      - implementations/rhizome-pi/**/Dockerfile
 
 jobs:
   docker:

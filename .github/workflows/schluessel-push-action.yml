@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - schluessel/**/Dockerfile
+      - implementations/schluessel/**/Dockerfile
 
 jobs:
   docker:

@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - minischeme/**/Dockerfile
+      - implementations/minischeme/**/Dockerfile
 
 jobs:
   docker:

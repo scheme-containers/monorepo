@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - larceny/**/Dockerfile
+      - implementations/larceny/**/Dockerfile
 
 jobs:
   docker:

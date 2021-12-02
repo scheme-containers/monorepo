@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - mosh/**/Dockerfile
+      - implementations/mosh/**/Dockerfile
 
 jobs:
   docker:

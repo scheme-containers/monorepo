@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - otus/**/Dockerfile
+      - implementations/otus/**/Dockerfile
 
 jobs:
   docker:

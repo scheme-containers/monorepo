@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - chezscheme/**/Dockerfile
+      - implementations/chezscheme/**/Dockerfile
 
 jobs:
   docker:

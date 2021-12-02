@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - jazz/**/Dockerfile
+      - implementations/jazz/**/Dockerfile
 
 jobs:
   docker:

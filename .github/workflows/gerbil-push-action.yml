@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - gerbil/**/Dockerfile
+      - implementations/gerbil/**/Dockerfile
 
 jobs:
   docker:

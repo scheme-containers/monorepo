@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - s9fes/**/Dockerfile
+      - implementations/s9fes/**/Dockerfile
 
 jobs:
   docker:

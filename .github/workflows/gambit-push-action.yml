@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - gambit/**/Dockerfile
+      - implementations/gambit/**/Dockerfile
 
 jobs:
   docker:

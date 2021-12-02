@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - xscheme/**/Dockerfile
+      - implementations/xscheme/**/Dockerfile
 
 jobs:
   docker:

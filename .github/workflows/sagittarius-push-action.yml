@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - sagittarius/**/Dockerfile
+      - implementations/sagittarius/**/Dockerfile
 
 jobs:
   docker:

@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - kawa/**/Dockerfile
+      - implementations/kawa/**/Dockerfile
 
 jobs:
   docker:

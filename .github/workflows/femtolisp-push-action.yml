@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - femtolisp/**/Dockerfile
+      - implementations/femtolisp/**/Dockerfile
 
 jobs:
   docker:

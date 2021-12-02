@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - mit-scheme/**/Dockerfile
+      - implementations/mit-scheme/**/Dockerfile
 
 jobs:
   docker:

@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - unsyntax/**/Dockerfile
+      - implementations/unsyntax/**/Dockerfile
 
 jobs:
   docker:

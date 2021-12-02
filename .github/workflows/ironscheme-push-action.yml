@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - ironscheme/**/Dockerfile
+      - implementations/ironscheme/**/Dockerfile
 
 jobs:
   docker:

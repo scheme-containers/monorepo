@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - pc-scheme/**/Dockerfile
+      - implementations/pc-scheme/**/Dockerfile
 
 jobs:
   docker:

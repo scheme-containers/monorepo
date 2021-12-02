@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - scheme48/**/Dockerfile
+      - implementations/scheme48/**/Dockerfile
 
 jobs:
   docker:

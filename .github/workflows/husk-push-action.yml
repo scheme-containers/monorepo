@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - husk/**/Dockerfile
+      - implementations/husk/**/Dockerfile
 
 jobs:
   docker:

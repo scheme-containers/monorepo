@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - siod/**/Dockerfile
+      - implementations/siod/**/Dockerfile
 
 jobs:
   docker:

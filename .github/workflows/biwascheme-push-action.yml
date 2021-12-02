@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - biwascheme/**/Dockerfile
+      - implementations/biwascheme/**/Dockerfile
 
 jobs:
   docker:

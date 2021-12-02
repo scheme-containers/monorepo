@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - picrin/**/Dockerfile
+      - implementations/picrin/**/Dockerfile
 
 jobs:
   docker:

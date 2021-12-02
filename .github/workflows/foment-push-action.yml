@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - foment/**/Dockerfile
+      - implementations/foment/**/Dockerfile
 
 jobs:
   docker:

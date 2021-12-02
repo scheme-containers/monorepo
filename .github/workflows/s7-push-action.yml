@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - s7/**/Dockerfile
+      - implementations/s7/**/Dockerfile
 
 jobs:
   docker:

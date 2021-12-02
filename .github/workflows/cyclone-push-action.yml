@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - cyclone/**/Dockerfile
+      - implementations/cyclone/**/Dockerfile
 
 jobs:
   docker:

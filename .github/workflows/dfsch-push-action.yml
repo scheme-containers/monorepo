@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - dfsch/**/Dockerfile
+      - implementations/dfsch/**/Dockerfile
 
 jobs:
   docker:

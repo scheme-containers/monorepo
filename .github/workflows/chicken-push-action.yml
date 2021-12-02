@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - chicken/**/Dockerfile
+      - implementations/chicken/**/Dockerfile
 
 jobs:
   docker:

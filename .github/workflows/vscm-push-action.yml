@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - vscm/**/Dockerfile
+      - implementations/vscm/**/Dockerfile
 
 jobs:
   docker:

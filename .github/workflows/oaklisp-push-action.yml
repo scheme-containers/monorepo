@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - oaklisp/**/Dockerfile
+      - implementations/oaklisp/**/Dockerfile
 
 jobs:
   docker:

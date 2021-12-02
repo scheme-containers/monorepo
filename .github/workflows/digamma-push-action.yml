@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - digamma/**/Dockerfile
+      - implementations/digamma/**/Dockerfile
 
 jobs:
   docker:

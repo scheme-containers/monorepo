@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - sizzle/**/Dockerfile
+      - implementations/sizzle/**/Dockerfile
 
 jobs:
   docker:
