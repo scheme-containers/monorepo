@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/conscheme:head
-        id: docker_build_conscheme:head
+        id: docker_build_conscheme-head
         uses: docker/build-push-action@v2
         with:
           push: true

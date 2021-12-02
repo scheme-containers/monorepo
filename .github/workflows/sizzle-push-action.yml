@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/sizzle:0
-        id: docker_build_sizzle:0
+        id: docker_build_sizzle-0
         uses: docker/build-push-action@v2
         with:
           push: true

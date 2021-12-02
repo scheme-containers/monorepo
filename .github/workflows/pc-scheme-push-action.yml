@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/pc-scheme:3.03
-        id: docker_build_pc-scheme:3.03
+        id: docker_build_pc-scheme-3.03
         uses: docker/build-push-action@v2
         with:
           push: true

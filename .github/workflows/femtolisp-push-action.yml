@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/femtolisp:head-lambdaconservatory
-        id: docker_build_femtolisp:head-lambdaconservatory
+        id: docker_build_femtolisp-head-lambdaconservatory
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             femtolisp:head-lambdaconservatory-bullseye-slim
       -
         name: Build and push schemers/femtolisp:head
-        id: docker_build_femtolisp:head
+        id: docker_build_femtolisp-head
         uses: docker/build-push-action@v2
         with:
           push: true

@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/oaklisp:1
-        id: docker_build_oaklisp:1
+        id: docker_build_oaklisp-1
         uses: docker/build-push-action@v2
         with:
           push: true

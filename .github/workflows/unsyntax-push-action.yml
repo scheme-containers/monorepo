@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/unsyntax:head
-        id: docker_build_unsyntax:head
+        id: docker_build_unsyntax-head
         uses: docker/build-push-action@v2
         with:
           push: true

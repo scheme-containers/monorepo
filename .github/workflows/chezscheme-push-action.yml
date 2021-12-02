@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/chezscheme:9-threads
-        id: docker_build_chezscheme:9-threads
+        id: docker_build_chezscheme-9-threads
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -37,7 +37,7 @@ jobs:
             chezscheme:threads
       -
         name: Build and push schemers/chezscheme:9-alpine
-        id: docker_build_chezscheme:9-alpine
+        id: docker_build_chezscheme-9-alpine
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -47,7 +47,7 @@ jobs:
             chezscheme:alpine
       -
         name: Build and push schemers/chezscheme:9
-        id: docker_build_chezscheme:9
+        id: docker_build_chezscheme-9
         uses: docker/build-push-action@v2
         with:
           push: true

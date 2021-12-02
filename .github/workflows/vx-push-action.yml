@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/vx:head
-        id: docker_build_vx:head
+        id: docker_build_vx-head
         uses: docker/build-push-action@v2
         with:
           push: true

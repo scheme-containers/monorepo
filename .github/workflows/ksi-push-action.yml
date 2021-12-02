@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/ksi:3
-        id: docker_build_ksi:3
+        id: docker_build_ksi-3
         uses: docker/build-push-action@v2
         with:
           push: true

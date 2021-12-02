@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/stklos:head
-        id: docker_build_stklos:head
+        id: docker_build_stklos-head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             stklos:head-bullseye-slim
       -
         name: Build and push schemers/stklos:1
-        id: docker_build_stklos:1
+        id: docker_build_stklos-1
         uses: docker/build-push-action@v2
         with:
           push: true
