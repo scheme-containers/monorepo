@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-larceny-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/larceny:1.3
-        id: docker_build_larceny-1.3
+        id: docker_build_larceny__1.3
         uses: docker/build-push-action@v2
         with:
           push: true

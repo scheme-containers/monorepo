@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-dfsch-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/dfsch:head
-        id: docker_build_dfsch-head
+        id: docker_build_dfsch__head
         uses: docker/build-push-action@v2
         with:
           push: true

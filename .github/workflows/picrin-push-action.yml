@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-picrin-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/picrin:head
-        id: docker_build_picrin-head
+        id: docker_build_picrin__head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             picrin:head-bullseye-slim
       -
         name: Build and push schemers/picrin:0
-        id: docker_build_picrin-0
+        id: docker_build_picrin__0
         uses: docker/build-push-action@v2
         with:
           push: true

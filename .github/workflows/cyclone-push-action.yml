@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-cyclone-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/cyclone:head
-        id: docker_build_cyclone-head
+        id: docker_build_cyclone__head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             cyclone:head-bullseye-slim
       -
         name: Build and push schemers/cyclone:0
-        id: docker_build_cyclone-0
+        id: docker_build_cyclone__0
         uses: docker/build-push-action@v2
         with:
           push: true

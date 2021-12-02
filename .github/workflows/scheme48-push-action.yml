@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-scheme48-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/scheme48:1
-        id: docker_build_scheme48-1
+        id: docker_build_scheme48__1
         uses: docker/build-push-action@v2
         with:
           push: true

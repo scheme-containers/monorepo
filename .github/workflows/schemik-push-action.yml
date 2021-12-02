@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-schemik-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/schemik:1.9
-        id: docker_build_schemik-1.9
+        id: docker_build_schemik__1.9
         uses: docker/build-push-action@v2
         with:
           push: true

@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-owl-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/owl:head
-        id: docker_build_owl-head
+        id: docker_build_owl__head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             owl:head-bullseye-slim
       -
         name: Build and push schemers/owl:0
-        id: docker_build_owl-0
+        id: docker_build_owl__0
         uses: docker/build-push-action@v2
         with:
           push: true

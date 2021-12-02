@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-gauche-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/gauche:head
-        id: docker_build_gauche-head
+        id: docker_build_gauche__head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             gauche:head-bullseye-slim
       -
         name: Build and push schemers/gauche:0
-        id: docker_build_gauche-0
+        id: docker_build_gauche__0
         uses: docker/build-push-action@v2
         with:
           push: true

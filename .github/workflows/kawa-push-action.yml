@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-kawa-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/kawa:head
-        id: docker_build_kawa-head
+        id: docker_build_kawa__head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             kawa:head-bullseye-slim
       -
         name: Build and push schemers/kawa:3.1
-        id: docker_build_kawa-3.1
+        id: docker_build_kawa__3.1
         uses: docker/build-push-action@v2
         with:
           push: true

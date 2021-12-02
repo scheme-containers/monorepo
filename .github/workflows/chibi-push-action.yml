@@ -1,5 +1,5 @@
 
-name: docker-actions
+name: docker-chibi-push-action
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/chibi:head
-        id: docker_build_chibi-head
+        id: docker_build_chibi__head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +36,7 @@ jobs:
             chibi:head-bullseye-slim
       -
         name: Build and push schemers/chibi:0
-        id: docker_build_chibi-0
+        id: docker_build_chibi__0
         uses: docker/build-push-action@v2
         with:
           push: true
