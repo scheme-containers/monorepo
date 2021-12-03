@@ -25,15 +25,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/chezscheme:9.5-threads
+        name: Build and push schemers/chezscheme:9.5
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: implementations/chezscheme/9.5-threads/
+          context: implementations/chezscheme/9.5/
           tags: |
-            schemers/chezscheme:9.5-threads
-            schemers/chezscheme:9-threads
-            schemers/chezscheme:threads
+            schemers/chezscheme:9.5
+            schemers/chezscheme:9
+            schemers/chezscheme:9-bullseye-slim
+            schemers/chezscheme:latest
       -
         name: Build and push schemers/chezscheme:9.5-alpine
         uses: docker/build-push-action@v2
@@ -45,13 +46,12 @@ jobs:
             schemers/chezscheme:9-alpine
             schemers/chezscheme:alpine
       -
-        name: Build and push schemers/chezscheme:9.5
+        name: Build and push schemers/chezscheme:9.5-threads
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: implementations/chezscheme/9.5/
+          context: implementations/chezscheme/9.5-threads/
           tags: |
-            schemers/chezscheme:9.5
-            schemers/chezscheme:9
-            schemers/chezscheme:9-bullseye-slim
-            schemers/chezscheme:latest
+            schemers/chezscheme:9.5-threads
+            schemers/chezscheme:9-threads
+            schemers/chezscheme:threads

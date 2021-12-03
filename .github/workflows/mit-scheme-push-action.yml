@@ -25,6 +25,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        name: Build and push schemers/mit-scheme:10
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: implementations/mit-scheme/10/
+          tags: |
+            schemers/mit-scheme:10
+            schemers/mit-scheme:10-bullseye-slim
+      -
         name: Build and push schemers/mit-scheme:11
         uses: docker/build-push-action@v2
         with:
@@ -34,12 +43,3 @@ jobs:
             schemers/mit-scheme:11
             schemers/mit-scheme:11-bullseye-slim
             schemers/mit-scheme:latest
-      -
-        name: Build and push schemers/mit-scheme:10
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/mit-scheme/10/
-          tags: |
-            schemers/mit-scheme:10
-            schemers/mit-scheme:10-bullseye-slim

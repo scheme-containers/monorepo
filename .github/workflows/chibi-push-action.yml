@@ -25,15 +25,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/chibi:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/chibi/head/
-          tags: |
-            schemers/chibi:head
-            schemers/chibi:head-bullseye-slim
-      -
         name: Build and push schemers/chibi:0
         uses: docker/build-push-action@v2
         with:
@@ -43,3 +34,12 @@ jobs:
             schemers/chibi:0
             schemers/chibi:0-bullseye-slim
             schemers/chibi:latest
+      -
+        name: Build and push schemers/chibi:head
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: implementations/chibi/head/
+          tags: |
+            schemers/chibi:head
+            schemers/chibi:head-bullseye-slim

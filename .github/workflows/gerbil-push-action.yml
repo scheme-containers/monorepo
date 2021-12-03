@@ -25,15 +25,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/gerbil:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/gerbil/head/
-          tags: |
-            schemers/gerbil:head
-            schemers/gerbil:head-bullseye-slim
-      -
         name: Build and push schemers/gerbil:0
         uses: docker/build-push-action@v2
         with:
@@ -43,3 +34,12 @@ jobs:
             schemers/gerbil:0
             schemers/gerbil:0-bullseye-slim
             schemers/gerbil:latest
+      -
+        name: Build and push schemers/gerbil:head
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: implementations/gerbil/head/
+          tags: |
+            schemers/gerbil:head
+            schemers/gerbil:head-bullseye-slim

@@ -25,15 +25,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/stklos:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/stklos/head/
-          tags: |
-            schemers/stklos:head
-            schemers/stklos:head-bullseye-slim
-      -
         name: Build and push schemers/stklos:1
         uses: docker/build-push-action@v2
         with:
@@ -43,3 +34,12 @@ jobs:
             schemers/stklos:1
             schemers/stklos:1-bullseye-slim
             schemers/stklos:latest
+      -
+        name: Build and push schemers/stklos:head
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: implementations/stklos/head/
+          tags: |
+            schemers/stklos:head
+            schemers/stklos:head-bullseye-slim

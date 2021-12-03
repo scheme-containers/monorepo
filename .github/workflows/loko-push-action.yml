@@ -25,15 +25,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/loko:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/loko/head/
-          tags: |
-            schemers/loko:head
-            schemers/loko:head-bullseye-slim
-      -
         name: Build and push schemers/loko:0
         uses: docker/build-push-action@v2
         with:
@@ -43,3 +34,12 @@ jobs:
             schemers/loko:0
             schemers/loko:0-bullseye-slim
             schemers/loko:latest
+      -
+        name: Build and push schemers/loko:head
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: implementations/loko/head/
+          tags: |
+            schemers/loko:head
+            schemers/loko:head-bullseye-slim
