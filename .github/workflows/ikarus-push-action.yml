@@ -31,5 +31,5 @@ jobs:
           push: true
           context: implementations/ikarus/head/
           tags: |
-            ikarus:head
-            ikarus:head-bullseye-slim
+            schemers/ikarus:head
+            schemers/ikarus:head-bullseye-slim

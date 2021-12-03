@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/stklos/head/
           tags: |
-            stklos:head
-            stklos:head-bullseye-slim
+            schemers/stklos:head
+            schemers/stklos:head-bullseye-slim
       -
         name: Build and push schemers/stklos:1
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/stklos/1/
           tags: |
-            stklos:1
-            stklos:1-bullseye-slim
-            stklos:latest
+            schemers/stklos:1
+            schemers/stklos:1-bullseye-slim
+            schemers/stklos:latest

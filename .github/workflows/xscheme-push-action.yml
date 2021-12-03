@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/xscheme/head-lambdaconservatory/
           tags: |
-            xscheme:head-lambdaconservatory
-            xscheme:head-lambdaconservatory-bullseye-slim
-            xscheme:latest
+            schemers/xscheme:head-lambdaconservatory
+            schemers/xscheme:head-lambdaconservatory-bullseye-slim
+            schemers/xscheme:latest

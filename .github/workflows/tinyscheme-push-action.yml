@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/tinyscheme/1/
           tags: |
-            tinyscheme:1
-            tinyscheme:1-bullseye-slim
-            tinyscheme:latest
+            schemers/tinyscheme:1
+            schemers/tinyscheme:1-bullseye-slim
+            schemers/tinyscheme:latest

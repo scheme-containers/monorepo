@@ -31,7 +31,7 @@ jobs:
           push: true
           context: implementations/sisc/1.16/
           tags: |
-            sisc:1.6
-            sisc:1
-            sisc:1-bullseye-slim
-            sisc:latest
+            schemers/sisc:1.6
+            schemers/sisc:1
+            schemers/sisc:1-bullseye-slim
+            schemers/sisc:latest

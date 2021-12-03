@@ -31,9 +31,9 @@ jobs:
           push: true
           context: implementations/chezscheme/9.5-threads/
           tags: |
-            chezscheme:9.5-threads
-            chezscheme:9-threads
-            chezscheme:threads
+            schemers/chezscheme:9.5-threads
+            schemers/chezscheme:9-threads
+            schemers/chezscheme:threads
       -
         name: Build and push schemers/chezscheme:9.5-alpine
         uses: docker/build-push-action@v2
@@ -41,9 +41,9 @@ jobs:
           push: true
           context: implementations/chezscheme/9.5-alpine/
           tags: |
-            chezscheme:9.5-alpine
-            chezscheme:9-alpine
-            chezscheme:alpine
+            schemers/chezscheme:9.5-alpine
+            schemers/chezscheme:9-alpine
+            schemers/chezscheme:alpine
       -
         name: Build and push schemers/chezscheme:9.5
         uses: docker/build-push-action@v2
@@ -51,7 +51,7 @@ jobs:
           push: true
           context: implementations/chezscheme/9.5/
           tags: |
-            chezscheme:9.5
-            chezscheme:9
-            chezscheme:9-bullseye-slim
-            chezscheme:latest
+            schemers/chezscheme:9.5
+            schemers/chezscheme:9
+            schemers/chezscheme:9-bullseye-slim
+            schemers/chezscheme:latest

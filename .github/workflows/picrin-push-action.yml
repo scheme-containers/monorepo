@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/picrin/head/
           tags: |
-            picrin:head
-            picrin:head-bullseye-slim
+            schemers/picrin:head
+            schemers/picrin:head-bullseye-slim
       -
         name: Build and push schemers/picrin:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/picrin/0/
           tags: |
-            picrin:0
-            picrin:0-bullseye-slim
-            picrin:latest
+            schemers/picrin:0
+            schemers/picrin:0-bullseye-slim
+            schemers/picrin:latest

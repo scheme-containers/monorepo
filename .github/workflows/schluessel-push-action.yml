@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/schluessel/0/
           tags: |
-            schluessel:0
-            schluessel:0-bullseye-slim
-            schluessel:latest
+            schemers/schluessel:0
+            schemers/schluessel:0-bullseye-slim
+            schemers/schluessel:latest

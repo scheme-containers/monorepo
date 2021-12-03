@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/gambit/head/
           tags: |
-            gambit:head
-            gambit:head-bullseye-slim
+            schemers/gambit:head
+            schemers/gambit:head-bullseye-slim
       -
         name: Build and push schemers/gambit:4
         uses: docker/build-push-action@v2
@@ -40,7 +40,7 @@ jobs:
           push: true
           context: implementations/gambit/4/
           tags: |
-            gambit:4
-            gambit:4.9
-            gambit:4-bullseye-slim
-            gambit:latest
+            schemers/gambit:4
+            schemers/gambit:4.9
+            schemers/gambit:4-bullseye-slim
+            schemers/gambit:latest

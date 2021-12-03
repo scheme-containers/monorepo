@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/ironscheme/1.0-mono/
           tags: |
-            ironscheme:1.0-mono
-            ironscheme:mono
+            schemers/ironscheme:1.0-mono
+            schemers/ironscheme:mono
       -
         name: Build and push schemers/ironscheme:1.0
         uses: docker/build-push-action@v2
@@ -40,7 +40,7 @@ jobs:
           push: true
           context: implementations/ironscheme/1.0/
           tags: |
-            ironscheme:1.0
-            ironscheme:1
-            ironscheme:1-bullseye-slim
-            ironscheme:latest
+            schemers/ironscheme:1.0
+            schemers/ironscheme:1
+            schemers/ironscheme:1-bullseye-slim
+            schemers/ironscheme:latest

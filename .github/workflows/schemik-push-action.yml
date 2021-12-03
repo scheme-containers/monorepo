@@ -31,7 +31,7 @@ jobs:
           push: true
           context: implementations/schemik/1.9/
           tags: |
-            schemik:1.9
-            schemik:1
-            schemik:1-bullseye-slim
-            schemik:latest
+            schemers/schemik:1.9
+            schemers/schemik:1
+            schemers/schemik:1-bullseye-slim
+            schemers/schemik:latest

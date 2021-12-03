@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/femtolisp/head-lambdaconservatory/
           tags: |
-            femtolisp:head-lambdaconservatory
-            femtolisp:head-lambdaconservatory-bullseye-slim
+            schemers/femtolisp:head-lambdaconservatory
+            schemers/femtolisp:head-lambdaconservatory-bullseye-slim
       -
         name: Build and push schemers/femtolisp:head
         uses: docker/build-push-action@v2
@@ -40,5 +40,5 @@ jobs:
           push: true
           context: implementations/femtolisp/head/
           tags: |
-            femtolisp:head
-            femtolisp:head-bullseye-slim
+            schemers/femtolisp:head
+            schemers/femtolisp:head-bullseye-slim

@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/unsyntax/head/
           tags: |
-            unsyntax:head
-            unsyntax:head-bullseye-slim
-            unsyntax:latest
+            schemers/unsyntax:head
+            schemers/unsyntax:head-bullseye-slim
+            schemers/unsyntax:latest

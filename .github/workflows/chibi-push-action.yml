@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/chibi/head/
           tags: |
-            chibi:head
-            chibi:head-bullseye-slim
+            schemers/chibi:head
+            schemers/chibi:head-bullseye-slim
       -
         name: Build and push schemers/chibi:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/chibi/0/
           tags: |
-            chibi:0
-            chibi:0-bullseye-slim
-            chibi:latest
+            schemers/chibi:0
+            schemers/chibi:0-bullseye-slim
+            schemers/chibi:latest

@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/loko/head/
           tags: |
-            loko:head
-            loko:head-bullseye-slim
+            schemers/loko:head
+            schemers/loko:head-bullseye-slim
       -
         name: Build and push schemers/loko:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/loko/0/
           tags: |
-            loko:0
-            loko:0-bullseye-slim
-            loko:latest
+            schemers/loko:0
+            schemers/loko:0-bullseye-slim
+            schemers/loko:latest

@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/sizzle/0/
           tags: |
-            sizzle:0
-            sizzle:0-bullseye-slim
-            sizzle:latest
+            schemers/sizzle:0
+            schemers/sizzle:0-bullseye-slim
+            schemers/sizzle:latest

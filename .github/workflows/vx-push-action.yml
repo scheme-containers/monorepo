@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/vx/head/
           tags: |
-            vx:head
-            vx:head-bullseye-slim
-            vx:latest
+            schemers/vx:head
+            schemers/vx:head-bullseye-slim
+            schemers/vx:latest

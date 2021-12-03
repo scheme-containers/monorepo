@@ -31,7 +31,7 @@ jobs:
           push: true
           context: implementations/scheme48/1/
           tags: |
-            scheme48:1
-            scheme48:1.9
-            scheme48:1-bullseye-slim
-            scheme48:latest
+            schemers/scheme48:1
+            schemers/scheme48:1.9
+            schemers/scheme48:1-bullseye-slim
+            schemers/scheme48:latest

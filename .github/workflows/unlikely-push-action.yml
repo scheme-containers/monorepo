@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/unlikely/head/
           tags: |
-            unlikely:head
-            unlikely:head-bullseye-slim
-            unlikely:latest
+            schemers/unlikely:head
+            schemers/unlikely:head-bullseye-slim
+            schemers/unlikely:latest

@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/gauche/head/
           tags: |
-            gauche:head
-            gauche:head-bullseye-slim
+            schemers/gauche:head
+            schemers/gauche:head-bullseye-slim
       -
         name: Build and push schemers/gauche:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/gauche/0/
           tags: |
-            gauche:0
-            gauche:0-bullseye-slim
-            gauche:latest
+            schemers/gauche:0
+            schemers/gauche:0-bullseye-slim
+            schemers/gauche:latest

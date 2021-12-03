@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/husk/head/
           tags: |
-            husk:head
-            husk:head-bullseye-slim
-            husk:latest
+            schemers/husk:head
+            schemers/husk:head-bullseye-slim
+            schemers/husk:latest

@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/biwascheme/head/
           tags: |
-            biwascheme:head
-            biwascheme:head-bullseye-slim
-            biwascheme:latest
+            schemers/biwascheme:head
+            schemers/biwascheme:head-bullseye-slim
+            schemers/biwascheme:latest

@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/s7/head/
           tags: |
-            s7:head
-            s7:head-bullseye-slim
-            s7:latest
+            schemers/s7:head
+            schemers/s7:head-bullseye-slim
+            schemers/s7:latest

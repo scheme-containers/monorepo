@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/rscheme/0/
           tags: |
-            rscheme:0
-            rscheme:0-bullseye-slim
-            rscheme:latest
+            schemers/rscheme:0
+            schemers/rscheme:0-bullseye-slim
+            schemers/rscheme:latest

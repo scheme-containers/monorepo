@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/mosh/head/
           tags: |
-            mosh:head
-            mosh:head-bullseye-slim
+            schemers/mosh:head
+            schemers/mosh:head-bullseye-slim
       -
         name: Build and push schemers/mosh:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/mosh/0/
           tags: |
-            mosh:0
-            mosh:0-bullseye-slim
-            mosh:latest
+            schemers/mosh:0
+            schemers/mosh:0-bullseye-slim
+            schemers/mosh:latest

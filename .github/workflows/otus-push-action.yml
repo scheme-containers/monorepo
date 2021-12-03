@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/otus/2/
           tags: |
-            otus:2
-            otus:2-bullseye-slim
-            otus:latest
+            schemers/otus:2
+            schemers/otus:2-bullseye-slim
+            schemers/otus:latest

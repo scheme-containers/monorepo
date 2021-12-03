@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/siod/3/
           tags: |
-            siod:3
-            siod:3-bullseye-slim
-            siod:latest
+            schemers/siod:3
+            schemers/siod:3-bullseye-slim
+            schemers/siod:latest

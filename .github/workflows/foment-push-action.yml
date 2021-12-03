@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/foment/head/
           tags: |
-            foment:head
-            foment:head-bullseye-slim
+            schemers/foment:head
+            schemers/foment:head-bullseye-slim
       -
         name: Build and push schemers/foment:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/foment/0/
           tags: |
-            foment:0
-            foment:0-bullseye-slim
-            foment:latest
+            schemers/foment:0
+            schemers/foment:0-bullseye-slim
+            schemers/foment:latest

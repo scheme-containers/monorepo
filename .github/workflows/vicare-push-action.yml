@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/vicare/0/
           tags: |
-            vicare:0
-            vicare:0-bullseye-slim
-            vicare:latest
+            schemers/vicare:0
+            schemers/vicare:0-bullseye-slim
+            schemers/vicare:latest

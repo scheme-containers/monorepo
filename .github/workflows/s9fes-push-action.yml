@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/s9fes/2018/
           tags: |
-            s9fes:2018
-            s9fes:2018-bullseye-slim
-            s9fes:latest
+            schemers/s9fes:2018
+            schemers/s9fes:2018-bullseye-slim
+            schemers/s9fes:latest

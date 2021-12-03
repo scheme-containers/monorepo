@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/owl/head/
           tags: |
-            owl:head
-            owl:head-bullseye-slim
+            schemers/owl:head
+            schemers/owl:head-bullseye-slim
       -
         name: Build and push schemers/owl:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/owl/0/
           tags: |
-            owl:0
-            owl:0-bullseye-slim
-            owl:latest
+            schemers/owl:0
+            schemers/owl:0-bullseye-slim
+            schemers/owl:latest

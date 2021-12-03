@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/kawa/head/
           tags: |
-            kawa:head
-            kawa:head-bullseye-slim
+            schemers/kawa:head
+            schemers/kawa:head-bullseye-slim
       -
         name: Build and push schemers/kawa:3.1
         uses: docker/build-push-action@v2
@@ -40,7 +40,7 @@ jobs:
           push: true
           context: implementations/kawa/3.1/
           tags: |
-            kawa:3.1
-            kawa:3
-            kawa:3-bullseye-slim
-            kawa:latest
+            schemers/kawa:3.1
+            schemers/kawa:3
+            schemers/kawa:3-bullseye-slim
+            schemers/kawa:latest

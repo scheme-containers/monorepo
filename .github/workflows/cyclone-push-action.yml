@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/cyclone/head/
           tags: |
-            cyclone:head
-            cyclone:head-bullseye-slim
+            schemers/cyclone:head
+            schemers/cyclone:head-bullseye-slim
       -
         name: Build and push schemers/cyclone:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/cyclone/0/
           tags: |
-            cyclone:0
-            cyclone:head-bullseye-slim
-            cyclone:latest
+            schemers/cyclone:0
+            schemers/cyclone:head-bullseye-slim
+            schemers/cyclone:latest

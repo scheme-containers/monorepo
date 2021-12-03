@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/rhizome-pi/0/
           tags: |
-            rhizome-pi:0
-            rhizome-pi:0-bullseye-slim
-            rhizome-pi:latest
+            schemers/rhizome-pi:0
+            schemers/rhizome-pi:0-bullseye-slim
+            schemers/rhizome-pi:latest

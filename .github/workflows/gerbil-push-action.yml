@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/gerbil/head/
           tags: |
-            gerbil:head
-            gerbil:head-bullseye-slim
+            schemers/gerbil:head
+            schemers/gerbil:head-bullseye-slim
       -
         name: Build and push schemers/gerbil:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/gerbil/0/
           tags: |
-            gerbil:0
-            gerbil:0-bullseye-slim
-            gerbil:latest
+            schemers/gerbil:0
+            schemers/gerbil:0-bullseye-slim
+            schemers/gerbil:latest

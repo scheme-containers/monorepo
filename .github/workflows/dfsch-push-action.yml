@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/dfsch/head/
           tags: |
-            dfsch:head
-            dfsch:head-bullseye-slim
-            dfsch:latest
+            schemers/dfsch:head
+            schemers/dfsch:head-bullseye-slim
+            schemers/dfsch:latest

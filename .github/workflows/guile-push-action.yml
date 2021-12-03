@@ -31,10 +31,10 @@ jobs:
           push: true
           context: implementations/guile/3/
           tags: |
-            guile:3
-            guile:3.0
-            guile:3-bullseye-slim
-            guile:latest
+            schemers/guile:3
+            schemers/guile:3.0
+            schemers/guile:3-bullseye-slim
+            schemers/guile:latest
       -
         name: Build and push schemers/guile:2
         uses: docker/build-push-action@v2
@@ -42,5 +42,5 @@ jobs:
           push: true
           context: implementations/guile/2/
           tags: |
-            guile:2
-            guile:2.2
+            schemers/guile:2
+            schemers/guile:2.2

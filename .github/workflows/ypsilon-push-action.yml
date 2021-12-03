@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/ypsilon/head-lambdaconservatory/
           tags: |
-            ypsilon:head-lambdaconservatory
-            ypsilon:head-lambdaconservatory-bullseye-slim
-            ypsilon:latest
+            schemers/ypsilon:head-lambdaconservatory
+            schemers/ypsilon:head-lambdaconservatory-bullseye-slim
+            schemers/ypsilon:latest

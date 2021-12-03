@@ -31,9 +31,9 @@ jobs:
           push: true
           context: implementations/mit-scheme/11/
           tags: |
-            mit-scheme:11
-            mit-scheme:11-bullseye-slim
-            mit-scheme:latest
+            schemers/mit-scheme:11
+            schemers/mit-scheme:11-bullseye-slim
+            schemers/mit-scheme:latest
       -
         name: Build and push schemers/mit-scheme:10
         uses: docker/build-push-action@v2
@@ -41,5 +41,5 @@ jobs:
           push: true
           context: implementations/mit-scheme/10/
           tags: |
-            mit-scheme:10
-            mit-scheme:10-bullseye-slim
+            schemers/mit-scheme:10
+            schemers/mit-scheme:10-bullseye-slim

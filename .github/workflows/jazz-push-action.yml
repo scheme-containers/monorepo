@@ -31,5 +31,5 @@ jobs:
           push: true
           context: implementations/jazz/head/
           tags: |
-            jazz:head
-            jazz:head-bullseye-slim
+            schemers/jazz:head
+            schemers/jazz:head-bullseye-slim

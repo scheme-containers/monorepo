@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/elk/3/
           tags: |
-            elk:3
-            elk:3-bullseye-slim
-            elk:latest
+            schemers/elk:3
+            schemers/elk:3-bullseye-slim
+            schemers/elk:latest

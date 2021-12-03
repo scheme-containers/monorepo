@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/conscheme/head/
           tags: |
-            conscheme:head
-            conscheme:head-bullseye-slim
-            conscheme:latest
+            schemers/conscheme:head
+            schemers/conscheme:head-bullseye-slim
+            schemers/conscheme:latest

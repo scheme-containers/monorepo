@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/ksi/3/
           tags: |
-            ksi:3
-            ksi:3-bullseye-slim
-            ksi:latest
+            schemers/ksi:3
+            schemers/ksi:3-bullseye-slim
+            schemers/ksi:latest

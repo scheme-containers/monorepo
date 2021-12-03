@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/oaklisp/1/
           tags: |
-            oaklisp:1
-            oaklisp:1-bullseye-slim
-            oaklisp:latest
+            schemers/oaklisp:1
+            schemers/oaklisp:1-bullseye-slim
+            schemers/oaklisp:latest

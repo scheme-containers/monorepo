@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/vscm/1/
           tags: |
-            vscm:1
-            vscm:1-bullseye-slim
-            vscm:latest
+            schemers/vscm:1
+            schemers/vscm:1-bullseye-slim
+            schemers/vscm:latest

@@ -31,8 +31,8 @@ jobs:
           push: true
           context: implementations/sagittarius/head/
           tags: |
-            sagittarius:head
-            sagittarius:head-bullseye-slim
+            schemers/sagittarius:head
+            schemers/sagittarius:head-bullseye-slim
       -
         name: Build and push schemers/sagittarius:0
         uses: docker/build-push-action@v2
@@ -40,6 +40,6 @@ jobs:
           push: true
           context: implementations/sagittarius/0/
           tags: |
-            sagittarius:0
-            sagittarius:0-bullseye-slim
-            sagittarius:latest
+            schemers/sagittarius:0
+            schemers/sagittarius:0-bullseye-slim
+            schemers/sagittarius:latest

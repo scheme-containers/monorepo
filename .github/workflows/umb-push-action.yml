@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/umb/3/
           tags: |
-            umb:3
-            umb:3-bullseye-slim
-            umb:latest
+            schemers/umb:3
+            schemers/umb:3-bullseye-slim
+            schemers/umb:latest

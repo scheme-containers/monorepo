@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/racket/6/
           tags: |
-            racket:6
-            racket:6-bullseye-slim
-            racket:latest
+            schemers/racket:6
+            schemers/racket:6-bullseye-slim
+            schemers/racket:latest

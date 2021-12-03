@@ -31,7 +31,7 @@ jobs:
           push: true
           context: implementations/pc-scheme/3.03/
           tags: |
-            pc-scheme:3.03
-            pc-scheme:3
-            pc-scheme:3-bullseye-slim
-            pc-scheme:latest
+            schemers/pc-scheme:3.03
+            schemers/pc-scheme:3
+            schemers/pc-scheme:3-bullseye-slim
+            schemers/pc-scheme:latest

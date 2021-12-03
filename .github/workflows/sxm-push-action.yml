@@ -31,7 +31,7 @@ jobs:
           push: true
           context: implementations/sxm/1.1/
           tags: |
-            sxm:1.1
-            sxm:1
-            sxm:1-bullseye-slim
-            sxm:latest
+            schemers/sxm:1.1
+            schemers/sxm:1
+            schemers/sxm:1-bullseye-slim
+            schemers/sxm:latest

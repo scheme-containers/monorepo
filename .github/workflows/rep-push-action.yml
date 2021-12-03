@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/rep/0/
           tags: |
-            rep:0
-            rep:0-bullseye-slim
-            rep:latest
+            schemers/rep:0
+            schemers/rep:0-bullseye-slim
+            schemers/rep:latest

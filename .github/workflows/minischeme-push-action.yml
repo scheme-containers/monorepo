@@ -31,6 +31,6 @@ jobs:
           push: true
           context: implementations/minischeme/0/
           tags: |
-            minischeme:0
-            minischeme:0-bullseye-slim
-            minischeme:latest
+            schemers/minischeme:0
+            schemers/minischeme:0-bullseye-slim
+            schemers/minischeme:latest
