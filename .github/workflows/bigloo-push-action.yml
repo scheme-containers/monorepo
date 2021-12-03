@@ -32,7 +32,7 @@ jobs:
           context: implementations/bigloo/4/
           tags: |
             schemers/bigloo:4
-            schemers/bigloo:0-bullseye-slim
+            schemers/bigloo:0-bullseye
             schemers/bigloo:latest
       -
         name: Build and push schemers/bigloo:head
@@ -42,4 +42,4 @@ jobs:
           context: implementations/bigloo/head/
           tags: |
             schemers/bigloo:head
-            schemers/bigloo:head-bullseye-slim
+            schemers/bigloo:head-bullseye
