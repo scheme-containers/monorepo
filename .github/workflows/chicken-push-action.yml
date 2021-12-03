@@ -35,12 +35,3 @@ jobs:
             schemers/chicken:5.3
             schemers/chicken:5-bullseye-slim
             schemers/chicken:latest
-      -
-        name: Build and push schemers/chicken:4.13
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/chicken/4.13/
-          tags: |
-            schemers/chicken:4.13
-            schemers/chicken:4
