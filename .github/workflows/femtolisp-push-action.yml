@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: femtolisp/head-lambdaconservatory/
+          context: implementations/femtolisp/head-lambdaconservatory/
           tags: |
             femtolisp:head-lambdaconservatory
             femtolisp:head-lambdaconservatory-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: femtolisp/head/
+          context: implementations/femtolisp/head/
           tags: |
             femtolisp:head
             femtolisp:head-bullseye-slim

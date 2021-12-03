@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: pc-scheme/3.03/
+          context: implementations/pc-scheme/3.03/
           tags: |
             pc-scheme:3.03
             pc-scheme:3

@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: stklos/head/
+          context: implementations/stklos/head/
           tags: |
             stklos:head
             stklos:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: stklos/1/
+          context: implementations/stklos/1/
           tags: |
             stklos:1
             stklos:1-bullseye-slim

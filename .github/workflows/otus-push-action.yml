@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: otus/2/
+          context: implementations/otus/2/
           tags: |
             otus:2
             otus:2-bullseye-slim

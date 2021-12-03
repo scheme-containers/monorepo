@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ikarus/head/
+          context: implementations/ikarus/head/
           tags: |
             ikarus:head
             ikarus:head-bullseye-slim

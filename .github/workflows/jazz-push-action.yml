@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: jazz/head/
+          context: implementations/jazz/head/
           tags: |
             jazz:head
             jazz:head-bullseye-slim

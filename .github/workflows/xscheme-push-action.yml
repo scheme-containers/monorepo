@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: xscheme/head-lambdaconservatory/
+          context: implementations/xscheme/head-lambdaconservatory/
           tags: |
             xscheme:head-lambdaconservatory
             xscheme:head-lambdaconservatory-bullseye-slim

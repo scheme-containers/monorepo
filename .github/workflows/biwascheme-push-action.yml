@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: biwascheme/head/
+          context: implementations/biwascheme/head/
           tags: |
             biwascheme:head
             biwascheme:head-bullseye-slim

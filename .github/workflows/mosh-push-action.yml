@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: mosh/head/
+          context: implementations/mosh/head/
           tags: |
             mosh:head
             mosh:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: mosh/0/
+          context: implementations/mosh/0/
           tags: |
             mosh:0
             mosh:0-bullseye-slim

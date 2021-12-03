@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: gerbil/head/
+          context: implementations/gerbil/head/
           tags: |
             gerbil:head
             gerbil:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: gerbil/0/
+          context: implementations/gerbil/0/
           tags: |
             gerbil:0
             gerbil:0-bullseye-slim

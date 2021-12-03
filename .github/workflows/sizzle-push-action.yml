@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: sizzle/0/
+          context: implementations/sizzle/0/
           tags: |
             sizzle:0
             sizzle:0-bullseye-slim

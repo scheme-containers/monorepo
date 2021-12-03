@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: chibi/head/
+          context: implementations/chibi/head/
           tags: |
             chibi:head
             chibi:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: chibi/0/
+          context: implementations/chibi/0/
           tags: |
             chibi:0
             chibi:0-bullseye-slim

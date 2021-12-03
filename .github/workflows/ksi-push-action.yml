@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ksi/3/
+          context: implementations/ksi/3/
           tags: |
             ksi:3
             ksi:3-bullseye-slim

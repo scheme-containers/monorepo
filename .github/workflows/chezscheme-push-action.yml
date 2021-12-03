@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: chezscheme/9-threads/
+          context: implementations/chezscheme/9-threads/
           tags: |
             chezscheme:9-threads
             chezscheme:9.5-threads
@@ -41,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: chezscheme/9-alpine/
+          context: implementations/chezscheme/9-alpine/
           tags: |
             chezscheme:9-alpine
             chezscheme:alpine
@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: chezscheme/9/
+          context: implementations/chezscheme/9/
           tags: |
             chezscheme:9
             chezscheme:9.5

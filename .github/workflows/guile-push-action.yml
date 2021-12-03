@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: guile/3/
+          context: implementations/guile/3/
           tags: |
             guile:3
             guile:3.0
@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: guile/2/
+          context: implementations/guile/2/
           tags: |
             guile:2
             guile:2.2

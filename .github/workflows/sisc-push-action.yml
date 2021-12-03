@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: sisc/1.16/
+          context: implementations/sisc/1.16/
           tags: |
             sisc:1.6
             sisc:1

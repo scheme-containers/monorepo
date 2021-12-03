@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: minischeme/0/
+          context: implementations/minischeme/0/
           tags: |
             minischeme:0
             minischeme:0-bullseye-slim

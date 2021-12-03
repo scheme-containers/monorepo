@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: digamma/head/
+          context: implementations/digamma/head/
           tags: |
             digamma:head
             digamma:head-bullseye-slim

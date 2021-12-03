@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: vicare/0/
+          context: implementations/vicare/0/
           tags: |
             vicare:0
             vicare:0-bullseye-slim

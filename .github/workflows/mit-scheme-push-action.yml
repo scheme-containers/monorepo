@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: mit-scheme/11/
+          context: implementations/mit-scheme/11/
           tags: |
             mit-scheme:11
             mit-scheme:11-bullseye-slim
@@ -41,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: mit-scheme/10/
+          context: implementations/mit-scheme/10/
           tags: |
             mit-scheme:10
             mit-scheme:10-bullseye-slim

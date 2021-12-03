@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: loko/head/
+          context: implementations/loko/head/
           tags: |
             loko:head
             loko:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: loko/0/
+          context: implementations/loko/0/
           tags: |
             loko:0
             loko:0-bullseye-slim

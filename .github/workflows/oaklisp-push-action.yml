@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: oaklisp/1/
+          context: implementations/oaklisp/1/
           tags: |
             oaklisp:1
             oaklisp:1-bullseye-slim

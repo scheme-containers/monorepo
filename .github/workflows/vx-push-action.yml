@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: vx/head/
+          context: implementations/vx/head/
           tags: |
             vx:head
             vx:head-bullseye-slim

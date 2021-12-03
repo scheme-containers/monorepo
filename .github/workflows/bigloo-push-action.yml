@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: bigloo/head/
+          context: implementations/bigloo/head/
           tags: |
             bigloo:head
             bigloo:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: bigloo/4/
+          context: implementations/bigloo/4/
           tags: |
             bigloo:4
             bigloo:0-bullseye-slim

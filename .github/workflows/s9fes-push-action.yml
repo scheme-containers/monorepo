@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: s9fes/2018/
+          context: implementations/s9fes/2018/
           tags: |
             s9fes:2018
             s9fes:2018-bullseye-slim
