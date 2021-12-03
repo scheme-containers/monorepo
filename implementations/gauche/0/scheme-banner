@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+gosh -V | head -n 1
+exec gosh "$@"
