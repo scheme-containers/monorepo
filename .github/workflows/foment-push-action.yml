@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: foment:head/
+          context: foment/head/
           tags: |
             foment:head
             foment:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: foment:0/
+          context: foment/0/
           tags: |
             foment:0
             foment:0-bullseye-slim

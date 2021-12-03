@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: umb:3/
+          context: umb/3/
           tags: |
             umb:3
             umb:3-bullseye-slim

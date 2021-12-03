@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: scheme48:1/
+          context: scheme48/1/
           tags: |
             scheme48:1
             scheme48:1.9

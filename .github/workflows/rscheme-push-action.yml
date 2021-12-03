@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: rscheme:0/
+          context: rscheme/0/
           tags: |
             rscheme:0
             rscheme:0-bullseye-slim

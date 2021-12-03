@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: racket:6/
+          context: racket/6/
           tags: |
             racket:6
             racket:6-bullseye-slim

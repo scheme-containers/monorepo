@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: elk:3/
+          context: elk/3/
           tags: |
             elk:3
             elk:3-bullseye-slim

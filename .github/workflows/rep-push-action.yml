@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: rep:0/
+          context: rep/0/
           tags: |
             rep:0
             rep:0-bullseye-slim

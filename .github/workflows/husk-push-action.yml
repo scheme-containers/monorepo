@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: husk:head/
+          context: husk/head/
           tags: |
             husk:head
             husk:head-bullseye-slim

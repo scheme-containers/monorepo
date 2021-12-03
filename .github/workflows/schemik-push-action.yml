@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: schemik:1.9/
+          context: schemik/1.9/
           tags: |
             schemik:1.9
             schemik:1

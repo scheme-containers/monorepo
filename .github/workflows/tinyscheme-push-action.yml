@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: tinyscheme:1/
+          context: tinyscheme/1/
           tags: |
             tinyscheme:1
             tinyscheme:1-bullseye-slim

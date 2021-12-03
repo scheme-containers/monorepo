@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: owl:head/
+          context: owl/head/
           tags: |
             owl:head
             owl:head-bullseye-slim
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: owl:0/
+          context: owl/0/
           tags: |
             owl:0
             owl:0-bullseye-slim

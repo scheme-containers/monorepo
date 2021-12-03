@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: sxm:1.1/
+          context: sxm/1.1/
           tags: |
             sxm:1.1
             sxm:1

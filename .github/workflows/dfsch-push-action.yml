@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: dfsch:head/
+          context: dfsch/head/
           tags: |
             dfsch:head
             dfsch:head-bullseye-slim

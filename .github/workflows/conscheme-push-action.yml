@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: conscheme:head/
+          context: conscheme/head/
           tags: |
             conscheme:head
             conscheme:head-bullseye-slim

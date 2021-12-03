@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ironscheme:1.0-mono/
+          context: ironscheme/1.0-mono/
           tags: |
             ironscheme:1.0-mono
             ironscheme:mono
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ironscheme:1.0/
+          context: ironscheme/1.0/
           tags: |
             ironscheme:1.0
             ironscheme:1

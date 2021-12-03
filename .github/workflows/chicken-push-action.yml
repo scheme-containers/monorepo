@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: chicken:5.3/
+          context: chicken/5.3/
           tags: |
             chicken:5
             chicken:5.3
@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: chicken:4.13/
+          context: chicken/4.13/
           tags: |
             chicken:4.13
             chicken:4

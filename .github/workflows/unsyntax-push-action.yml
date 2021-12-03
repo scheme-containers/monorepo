@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: unsyntax:head/
+          context: unsyntax/head/
           tags: |
             unsyntax:head
             unsyntax:head-bullseye-slim
