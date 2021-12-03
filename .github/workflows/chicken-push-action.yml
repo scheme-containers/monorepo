@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/chicken:5.3
-        id: docker_build_chicken__5.3
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -38,7 +37,6 @@ jobs:
             chicken:latest
       -
         name: Build and push schemers/chicken:4.13
-        id: docker_build_chicken__4.13
         uses: docker/build-push-action@v2
         with:
           push: true

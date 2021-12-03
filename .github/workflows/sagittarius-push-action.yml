@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/sagittarius:head
-        id: docker_build_sagittarius__head
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +35,6 @@ jobs:
             sagittarius:head-bullseye-slim
       -
         name: Build and push schemers/sagittarius:0
-        id: docker_build_sagittarius__0
         uses: docker/build-push-action@v2
         with:
           push: true

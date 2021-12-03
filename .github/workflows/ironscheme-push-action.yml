@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/ironscheme:1.0-mono
-        id: docker_build_ironscheme__1.0-mono
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -36,7 +35,6 @@ jobs:
             ironscheme:mono
       -
         name: Build and push schemers/ironscheme:1.0
-        id: docker_build_ironscheme__1.0
         uses: docker/build-push-action@v2
         with:
           push: true

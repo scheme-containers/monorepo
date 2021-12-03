@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/mit-scheme:11
-        id: docker_build_mit-scheme__11
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -37,7 +36,6 @@ jobs:
             mit-scheme:latest
       -
         name: Build and push schemers/mit-scheme:10
-        id: docker_build_mit-scheme__10
         uses: docker/build-push-action@v2
         with:
           push: true

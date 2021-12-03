@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/ikarus:head
-        id: docker_build_ikarus__head
         uses: docker/build-push-action@v2
         with:
           push: true

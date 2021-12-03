@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push schemers/racket:6
-        id: docker_build_racket__6
         uses: docker/build-push-action@v2
         with:
           push: true
