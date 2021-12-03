@@ -1,4 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
+
 FROM debian:bullseye-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc \
