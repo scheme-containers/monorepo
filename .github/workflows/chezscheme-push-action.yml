@@ -25,35 +25,36 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/chezscheme:9-threads
-        id: docker_build_chezscheme__9-threads
+        name: Build and push schemers/chezscheme:9.5-threads
+        id: docker_build_chezscheme__9.5-threads
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: implementations/chezscheme/9-threads/
+          context: implementations/chezscheme/9.5-threads/
           tags: |
-            chezscheme:9-threads
             chezscheme:9.5-threads
+            chezscheme:9-threads
             chezscheme:threads
       -
-        name: Build and push schemers/chezscheme:9-alpine
-        id: docker_build_chezscheme__9-alpine
+        name: Build and push schemers/chezscheme:9.5-alpine
+        id: docker_build_chezscheme__9.5-alpine
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: implementations/chezscheme/9-alpine/
+          context: implementations/chezscheme/9.5-alpine/
           tags: |
+            chezscheme:9.5-alpine
             chezscheme:9-alpine
             chezscheme:alpine
       -
-        name: Build and push schemers/chezscheme:9
-        id: docker_build_chezscheme__9
+        name: Build and push schemers/chezscheme:9.5
+        id: docker_build_chezscheme__9.5
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: implementations/chezscheme/9/
+          context: implementations/chezscheme/9.5/
           tags: |
-            chezscheme:9
             chezscheme:9.5
+            chezscheme:9
             chezscheme:9-bullseye-slim
             chezscheme:latest
