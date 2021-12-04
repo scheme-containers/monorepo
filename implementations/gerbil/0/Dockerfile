@@ -2,7 +2,6 @@
 
 # NB: There is an official Gerbil Dockerfile at
 # <https://github.com/vyzo/gerbil/blob/master/Dockerfile>
-
 FROM debian:bullseye-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
