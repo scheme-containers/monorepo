@@ -32,5 +32,5 @@ jobs:
           context: implementations/s7/head/
           tags: |
             schemers/s7:head
-            schemers/s7:head-bullseye-slim
+            schemers/s7:head-buster-slim
             schemers/s7:latest

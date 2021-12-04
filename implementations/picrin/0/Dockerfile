@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:buster-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ca-certificates git libedit-dev perl pkg-config \
  && rm -rf /var/lib/apt/lists/*
@@ -13,7 +13,7 @@ RUN make install
 COPY write-scheme-version write-scheme-version
 RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
-FROM debian:bullseye-slim
+FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libedit2 \
  && rm -rf /var/lib/apt/lists/*

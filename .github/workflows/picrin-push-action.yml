@@ -32,7 +32,7 @@ jobs:
           context: implementations/picrin/0/
           tags: |
             schemers/picrin:0
-            schemers/picrin:0-bullseye-slim
+            schemers/picrin:0-buster-slim
             schemers/picrin:latest
       -
         name: Build and push schemers/picrin:head
@@ -42,4 +42,4 @@ jobs:
           context: implementations/picrin/head/
           tags: |
             schemers/picrin:head
-            schemers/picrin:head-bullseye-slim
+            schemers/picrin:head-buster-slim

@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 # Need bullseye for notcurses.
-FROM debian:bullseye-slim AS build
+FROM debian:buster-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ca-certificates git rsync libnotcurses-dev \
  && rm -rf /var/lib/apt/lists/*
@@ -16,7 +16,7 @@ RUN find . -name '*.scm' | rsync -va --files-from - ./ /usr/local/lib/s7/ \
  && cp -v libc_s7.so /usr/local/lib/s7/ \
  && cp -v s7 /usr/local/bin/
 
-FROM debian:bullseye-slim
+FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libnotcurses2 \
  && rm -rf /var/lib/apt/lists/*

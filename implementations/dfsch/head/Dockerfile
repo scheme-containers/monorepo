@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:buster-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential autoconf automake libtool m4 \
       ca-certificates git libexpat1-dev libgc-dev zlib1g-dev \
@@ -14,7 +14,7 @@ RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libexpat1 libgc1 zlib1g \
  && rm -rf /var/lib/apt/lists/*

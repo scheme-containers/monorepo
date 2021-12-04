@@ -32,7 +32,7 @@ jobs:
           context: implementations/cyclone/0/
           tags: |
             schemers/cyclone:0
-            schemers/cyclone:head-bullseye-slim
+            schemers/cyclone:head-sid-slim
             schemers/cyclone:latest
       -
         name: Build and push schemers/cyclone:head
@@ -42,4 +42,4 @@ jobs:
           context: implementations/cyclone/head/
           tags: |
             schemers/cyclone:head
-            schemers/cyclone:head-bullseye-slim
+            schemers/cyclone:head-sid-slim

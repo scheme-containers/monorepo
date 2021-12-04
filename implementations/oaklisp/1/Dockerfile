@@ -2,7 +2,7 @@
 FROM debian:bullseye-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential autoconf automake libtool \
-      gcc-multilib lib32gcc-8-dev \
+      gcc-multilib lib32gcc-10-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -18,7 +18,7 @@ RUN make install
 
 FROM debian:bullseye-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      lib32gcc1 \
+      lib32gcc-s1 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s oaklisp /usr/local/bin/scheme-banner

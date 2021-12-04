@@ -11,7 +11,7 @@ RUN make install
 COPY write-scheme-version write-scheme-version
 RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
-FROM debian:bullseye-slim
+FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libedit2 \
  && rm -rf /var/lib/apt/lists/*

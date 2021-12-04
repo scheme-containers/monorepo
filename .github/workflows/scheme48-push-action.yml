@@ -25,13 +25,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/scheme48:1
+        name: Build and push schemers/scheme48:1.9
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: implementations/scheme48/1/
+          context: implementations/scheme48/1.9/
           tags: |
-            schemers/scheme48:1
             schemers/scheme48:1.9
+            schemers/scheme48:1
             schemers/scheme48:1-bullseye-slim
             schemers/scheme48:latest

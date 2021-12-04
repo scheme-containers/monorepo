@@ -32,5 +32,5 @@ jobs:
           context: implementations/dfsch/head/
           tags: |
             schemers/dfsch:head
-            schemers/dfsch:head-bullseye-slim
+            schemers/dfsch:head-buster-slim
             schemers/dfsch:latest

@@ -9,7 +9,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://gitlab.com/nieper/unsyntax.git
 WORKDIR /build/unsyntax
-RUN git submodule init
+RUN git submodule update --init
 RUN ./bootstrap --gnulib-srcdir=/usr/share/gnulib
 RUN ./configure
 RUN make

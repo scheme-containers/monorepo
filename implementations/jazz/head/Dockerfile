@@ -10,7 +10,7 @@ WORKDIR /build
 RUN git clone https://github.com/jazzscheme/jazz
 RUN git clone https://github.com/jazzscheme/gambit
 WORKDIR /build/gambit
-RUN git fetch --tags https://github.com/gambit/gambit
+RUN git fetch --tags -f https://github.com/gambit/gambit
 RUN autoconf
 RUN ./configure \
       --prefix=/usr/local/jazz-gambit \
