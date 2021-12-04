@@ -4,7 +4,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       ca-certificates git \
       build-essential \
       autoconf automake m4 \
-      git-merge-changelog gnulib help2man \
+      git-merge-changelog gnulib help2man texinfo \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://gitlab.com/nieper/unsyntax.git
