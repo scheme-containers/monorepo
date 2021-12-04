@@ -32,7 +32,7 @@ jobs:
           context: implementations/foment/0/
           tags: |
             schemers/foment:0
-            schemers/foment:0-bullseye-slim
+            schemers/foment:0-buster-slim
             schemers/foment:latest
       -
         name: Build and push schemers/foment:head
@@ -42,4 +42,4 @@ jobs:
           context: implementations/foment/head/
           tags: |
             schemers/foment:head
-            schemers/foment:head-bullseye-slim
+            schemers/foment:head-buster-slim
