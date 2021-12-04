@@ -32,7 +32,7 @@ FROM debian:bullseye-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
        libffi7 \
        libgmp10 \
-       libreadline7 \
+       libreadline8 \
   && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/vicare/ /usr/local/vicare/
 COPY scheme-script /usr/local/bin/

@@ -1,6 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 # Installing the JDK or the JRE does not seem to work in Debian -slim.
-
 FROM debian:bullseye AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       autoconf automake libtool make patch zip \

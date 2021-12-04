@@ -17,7 +17,7 @@ RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
 FROM debian:bullseye-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libgc1 libglib2.0 libncurses6 libreadline7 \
+      libgc1 libglib2.0 libncurses6 libreadline8 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/scheme-banner
