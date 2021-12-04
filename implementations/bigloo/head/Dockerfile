@@ -8,7 +8,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       git ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/manuel-serrano/bigloo.git --depth 1 --tags
+RUN git clone https://github.com/manuel-serrano/bigloo.git
 WORKDIR /build/bigloo
 RUN git checkout 4.4c
 RUN ./configure
