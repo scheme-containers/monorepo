@@ -10,9 +10,10 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/manuel-serrano/bigloo.git --depth 1 --tags
 WORKDIR /build/bigloo
+RUN git checkout 4.4c
 RUN ./configure
-RUN LD_LIBRARY_PATH=/usr/local/lib/bigloo/4.4b \
-      make bigboot BGLBUILDBINDIR=/usr/local/bin
+RUN LD_LIBRARY_PATH=/usr/local/lib/bigloo/4.4c \
+      make boot BGLBUILDBINDIR=/usr/local/bin
 RUN find /usr/local -type f -delete
 RUN make install-progs
 RUN make fullbootstrap-sans-log
