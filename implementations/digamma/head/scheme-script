@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+script="$1"
+shift
+exec /usr/local/bin/digamma --r6rs --top-level-program "$script" "$@"

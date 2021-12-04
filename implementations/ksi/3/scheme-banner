@@ -1,0 +1,6 @@
+#!/bin/sh
+# ksi gets its prompt from the zeroth command line argument. We need
+# this wrapper to make it "ksi>". If we just made a symbolic link from
+# ksi to scheme-banner, then running scheme-banner would make the
+# prompt say "scheme-banner>".
+exec ksi "$@"

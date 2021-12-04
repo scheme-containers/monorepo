@@ -1,0 +1,4 @@
+#!/bin/bash
+set -eu -o pipefail
+printf "Schemik "
+grep "version " ChangeLog | head -n 1 | grep -ohE "[0-9][0-9.]+"

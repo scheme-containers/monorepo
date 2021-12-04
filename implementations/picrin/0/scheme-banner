@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+cat /usr/local/share/scheme-version
+exec picrin "$@"

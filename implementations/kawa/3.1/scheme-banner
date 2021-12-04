@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+kawa --version
+echo
+exec kawa "$@"

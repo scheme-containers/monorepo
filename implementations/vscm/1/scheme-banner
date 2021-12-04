@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+echo "VSCM V1R2"
+exec scheme "$@"

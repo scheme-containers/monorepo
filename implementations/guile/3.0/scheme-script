@@ -1,0 +1,2 @@
+#!/bin/bash
+exec guile --no-auto-compile --r6rs -ds "$@"

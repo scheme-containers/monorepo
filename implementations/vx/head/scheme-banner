@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+cat /usr/local/share/vx-scheme-version
+exec vx-scheme "$@"

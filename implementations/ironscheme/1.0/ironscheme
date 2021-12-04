@@ -1,0 +1,20 @@
+#!/bin/bash
+# The IRONSCHEME_LIBRARY_PATH variable is non-standard.
+set -eu
+runtime=dotnet # This line is different between dotnet and mono.
+dll=IronScheme.ConsoleCore.dll
+flags=()
+case $(basename "$0") in
+scheme-banner)
+        flags+=(/logo)
+        ;;
+*)
+        flags+=(/nologo)
+        ;;
+esac
+flags+=(--)
+IFS=':' read -ra library_path <<<"${IRONSCHEME_LIBRARY_PATH:-}"
+for dir in "${library_path[@]}"; do
+        flags+=(-I "$dir")
+done
+exec "$runtime" "/usr/local/IronScheme/$dll" "${flags[@]}" "$@"

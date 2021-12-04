@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+cd /usr/local/tinyscheme
+exec ./scheme "$@"

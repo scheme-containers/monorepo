@@ -1,0 +1,11 @@
+--- a/libsizzle/posix.c 2001-01-13 12:08:20.000000000 +0200
++++ b/libsizzle/posix.c 0000-00-00 00:00:00.000000000 +0000
+@@ -2975,7 +2975,7 @@
+   static char * s_func_name = FUNC_NAME;
+
+   CHECK_TYPE (1, dir_stream_p (stream), _("directory stream"));
+-  dir_stream_open_p (stream) = 0;
++  //dir_stream_open_p (stream) = 0;
+   closedir (dir_stream_dir (stream));
+   *result = zzz_unspecified;
+   return RESULT_SUCCESS;
