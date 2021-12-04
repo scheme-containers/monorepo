@@ -16,7 +16,7 @@ RUN make install
 
 FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libexpat1 libgc1 zlib1g \
+      libexpat1 libgc1c2 zlib1g \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s dfsch-repl /usr/local/bin/scheme-banner
