@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:buster-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential scons \
       libgc-dev libglib2.0-dev libncurses-dev libreadline-dev \
@@ -15,7 +15,7 @@ RUN scons install prefix=/usr/local
 COPY write-scheme-version write-scheme-version
 RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
-FROM debian:bullseye-slim
+FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libgc1 libglib2.0 libncurses6 libreadline8 \
  && rm -rf /var/lib/apt/lists/*

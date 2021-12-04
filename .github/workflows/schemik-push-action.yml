@@ -32,5 +32,5 @@ jobs:
           context: implementations/schemik/1/
           tags: |
             schemers/schemik:1
-            schemers/schemik:1-bullseye-slim
+            schemers/schemik:1-buster-slim
             schemers/schemik:latest
