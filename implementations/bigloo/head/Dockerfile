@@ -13,7 +13,7 @@ WORKDIR /build/bigloo
 RUN git checkout 4.4b
 RUN ./configure
 RUN LD_LIBRARY_PATH=/usr/local/lib/bigloo/4.4b \
-      make boot BGLBUILDBINDIR=/usr/local/bin
+      make bigboot BGLBUILDBINDIR=/usr/local/bin
 RUN find /usr/local -type f -delete
 RUN make install-progs
 RUN make fullbootstrap-sans-log
