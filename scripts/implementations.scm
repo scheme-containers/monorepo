@@ -394,8 +394,8 @@
 (define-implementation
   (name "ypsilon")
   (versions (version
-             (name "head-lambdaconservatory")
-             (tags "head-lambdaconservatory"
-                   "head-lambdaconservatory-bullseye-slim"
+             (name "head")
+             (tags "head"
+                   "head-bullseye-slim"
                    "latest"))))
 
