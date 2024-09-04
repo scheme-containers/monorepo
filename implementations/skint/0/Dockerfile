@@ -1,7 +1,7 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ca-certificates git \
+      build-essential \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
