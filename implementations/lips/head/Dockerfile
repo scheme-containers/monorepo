@@ -12,4 +12,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 RUN ln -s /usr/local/bin/lips /usr/local/bin/scheme-r7rs
+RUN ln -s /usr/local/bin/lips /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
