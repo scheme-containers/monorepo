@@ -1,2 +1,2 @@
 #!/bin/sh
-exec stalin "$@"
+exec stalin -On "$@"
