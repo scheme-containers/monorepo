@@ -14,6 +14,6 @@ RUN install skint /usr/local/bin/
 
 FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-banner /usr/local/bin/
-RUN ln -s skint  /usr/local/bin/scheme-r7rs
+RUN ln -s skint /usr/local/bin/scheme-banner \
+ && ln -s skint /usr/local/bin/scheme-r7rs
 CMD ["scheme-banner"]
