@@ -9,7 +9,8 @@ ADD https://github.com/false-schemers/skint/archive/refs/tags/v011.tar.gz skint.
 RUN sha256sum skint.tar.gz && sha256sum -c checksum
 RUN mkdir skint && tar -C skint --strip-components 1 -xf skint.tar.gz
 WORKDIR /build/skint
-RUN gcc -o skint [skint].c -lm && cp skint /usr/local/bin/
+RUN gcc -o skint [skint].c -lm
+RUN install skint /usr/local/bin/
 
 FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
