@@ -6,13 +6,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://gitlab.com/jobol/tr7.git --depth=1
 WORKDIR /build/tr7
-RUN make
-RUN cp tr7i /usr/local/bin/
+RUN make tr7i
+#RUN make test
+RUN make install
 
 FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-banner /usr/local/bin/
-COPY scheme-r7rs /usr/local/bin/
-RUN ldconfig
-ENV TR7_LIB_PATH=/build/tr7/tr7libs
+RUN ln -s tr7i /usr/local/bin/scheme-banner \
+ && ln -s tr7i /usr/local/bin/scheme-r7rs
 CMD ["scheme-banner"]
