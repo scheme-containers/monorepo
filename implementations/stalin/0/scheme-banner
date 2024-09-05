@@ -1,2 +1,3 @@
 #!/bin/sh
-echo "Stalin 0.11 (no REPL)"
+set -eu
+echo "Stalin $(stalin -version) (no REPL)"
