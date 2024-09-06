@@ -1,2 +1,11 @@
 #!/bin/sh
+#
+# TODO: Racket's r7rs module expects scripts to start with the line
+#
+#   #lang r7rs
+#
+# This practice does not conform to the R7RS standard. It's
+# questionable whether this scheme-r7rs command should even run
+# scripts. In any case, it's useful for getting a R7RS REPL.
+#
 exec racket -I r7rs "$@"
