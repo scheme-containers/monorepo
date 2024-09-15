@@ -103,6 +103,10 @@
     <li><kbd>docker run -it schemers/chibi</kbd> (C)</li>
   </ul>
   <ul>
+    <li><kbd>docker run -it schemers/lips</kbd>
+    (Javascript)</li>
+  </ul>
+  <ul>
     <li><kbd>docker run -it schemers/mosh</kbd></li>
   </ul>
   <ul>
@@ -120,6 +124,9 @@
   </ul>
   <ul>
     <li><kbd>docker run -it schemers/sigscheme</kbd> (C)</li>
+  </ul>
+  <ul>
+    <li><kbd>docker run -it schemers/skint</kbd> (C)</li>
   </ul>
   <ul>
     <li><kbd>docker run -it schemers/tinyscheme</kbd> (C)</li>
@@ -169,6 +176,7 @@
     <li><kbd>docker run -it schemers/schluessel</kbd> (Java)</li>
     <li><kbd>docker run -it schemers/shoe</kbd> (C, Unix)</li>
     <li><kbd>docker run -it schemers/sizzle</kbd> (C, Unix)</li>
+    <li><kbd>docker run -it schemers/stalin</kbd> (C, Unix)</li>
     <li><kbd>docker run -it schemers/sxm</kbd> (C, Unix)</li>
     <li><kbd>docker run -it schemers/umb</kbd> (C, Unix)</li>
     <li><kbd>docker run -it schemers/unlikely</kbd> (C, Unix)</li>
@@ -190,13 +198,14 @@
   <p><kbd>docker run -it schemers/guile:2</kbd></p>
   <p>Run a pre-release version:</p>
   <p><kbd>docker run -it schemers/guile:head</kbd></p>
-  <p>All containers include a "slim" variant of Debian Linux.
-  Access the shell:</p>
+  <p>All containers include a "slim" variant of Debian Linux.</p>
+  <p>Access the shell:</p>
   <p><kbd>docker run -it schemers/guile:head bash</kbd></p>
-  <p>All containers include a "slim" variant of Debian Linux.
-  Access the shell:</p>
+  <p>Run a script using the default dialect of Scheme supported by
+  the implementation:</p>
   <p><kbd>docker run -it schemers/guile:head
   scheme-script</kbd></p>
+  <p>Run an R7RS program:</p>
   <p><kbd>docker run -it schemers/guile:head r7rs-script</kbd></p>
   <h2>Project sites</h2>
   <p>The containers are served by <a href=
