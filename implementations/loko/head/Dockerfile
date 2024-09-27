@@ -1,14 +1,29 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM akkuscm/akku:latest AS build
+FROM debian:bookworm-slim AS build
+RUN apt-get update && apt-get -y --no-install-recommends install \
+      make build-essential autoconf automake guile-3.0 guile-3.0-dev git ca-certificates libcurl4-openssl-dev pkg-config chezscheme \
+ && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone --depth 1 https://gitlab.com/weinholt/loko.git
+COPY checksum checksum
+ADD https://gitlab.com/akkuscm/akku/-/archive/v1.1.0/akku-v1.1.0.tar.gz akku.tar.gz
+RUN sha256sum akku.tar.gz && sha256sum -c checksum
+RUN mkdir akku && tar -C akku --strip-components 1 -xf akku.tar.gz
+WORKDIR /build/akku
+RUN ./bootstrap
+RUN ./configure GUILD=/usr/bin/guild GUILE_CONFIG=/usr/bin/guile-config
+RUN make
+RUN make install
+WORKDIR /build
+RUN git clone https://gitlab.com/weinholt/loko.git --depth=1
 WORKDIR /build/loko
 RUN akku --debug install
-RUN apk add make
 RUN make
-RUN make install && rm /usr/local/bin/scheme-banner
+RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get -y --no-install-recommends install \
+      guile-3.0 \
+ && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local /usr/local
 RUN ln -s loko /usr/local/bin/scheme-banner \
  && ln -s loko /usr/local/bin/scheme-script
