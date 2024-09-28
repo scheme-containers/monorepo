@@ -20,7 +20,7 @@ RUN make modules
 RUN make check
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc libc-dev \
  && rm -rf /var/lib/apt/lists/*
