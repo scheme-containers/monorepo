@@ -13,7 +13,7 @@ RUN make
 RUN make install
 RUN make test
 
-FROM debian:sid-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc libc-dev libck0 libck-dev libtommath1 libtommath-dev \
  && rm -rf /var/lib/apt/lists/*
