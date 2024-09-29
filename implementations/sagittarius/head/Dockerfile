@@ -18,11 +18,11 @@ RUN cmake . -DCMAKE_INSTALL_PREFIX=/usr/local
 RUN make
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-       libffi7 \
+       libffi8 \
        libgc1 \
-       libssl1.1 \
+       libssl3 \
   && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner scheme-r7rs scheme-script /usr/local/bin/
