@@ -1,0 +1,14 @@
+build-{{name}}-debian:
+	rm -rf scheme.tar.gz
+	cp $(shell guix pack -L ./packages/ -S /opt/gnu/bin=bin {{packages}}) ./scheme.tar.gz
+	docker build . -f Dockerfile.debian --build-arg BANNER="{{{banner}}}" --tag=schemers/{{{name}}}:latest
+
+build-{{name}}-alpine:
+	rm -rf scheme.tar.gz
+	cp $(shell guix pack -L ./packages/ -S /opt/gnu/bin=bin {{packages}}) ./scheme.tar.gz
+	docker build . -f Dockerfile.alpine --build-arg BANNER="{{{banner}}}" --tag=schemers/{{{name}}}:latest-alpine
+
+build-{{name}}-fedora:
+	rm -rf scheme.tar.gz
+	cp $(shell guix pack -L ./packages/ -S /opt/gnu/bin=bin {{packages}}) ./scheme.tar.gz
+	docker build . -f Dockerfile.fedora --build-arg BANNER="{{{banner}}}" --tag=schemers/{{name}}:latest-fedora

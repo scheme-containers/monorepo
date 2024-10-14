@@ -1,0 +1,8 @@
+FROM fedora:latest
+ARG BANNER
+COPY scheme.tar.gz /scheme.tar.gz
+RUN tar -xf /scheme.tar.gz -C /
+RUN echo "#!/bin/sh" > /usr/local/bin/scheme-banner && chmod +x /usr/local/bin/scheme-banner
+RUN echo "$BANNER" >> /usr/local/bin/scheme-banner
+ENV PATH=/opt/gnu/bin:${PATH}
+CMD ["scheme-banner"]
