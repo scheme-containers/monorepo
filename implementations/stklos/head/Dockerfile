@@ -2,7 +2,7 @@
 FROM debian:bullseye-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential file texinfo git ca-certificates \
-      libffi-dev libgc-dev libgmp-dev libpcre3-dev \
+      libffi-dev libgc-dev libgmp-dev libpcre3-dev bash-completion \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/egallesio/STklos.git stklos --depth 1 --tags
