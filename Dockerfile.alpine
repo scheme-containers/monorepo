@@ -1,7 +1,6 @@
 FROM alpine:latest
 ARG BANNER
-COPY scheme.tar.gz /scheme.tar.gz
-RUN tar -xf /scheme.tar.gz -C /
+ADD scheme.tar.gz /
 RUN printf "#!/bin/sh\n$BANNER" > /usr/bin/scheme-banner && chmod +x /usr/bin/scheme-banner
 ENV PATH=/opt/gnu/bin:${PATH}
 CMD ["scheme-banner"]
