@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential file texinfo git ca-certificates \
       libffi-dev libgc-dev libgmp-dev libpcre3-dev bash-completion \
@@ -12,11 +12,11 @@ RUN ./configure \
 RUN make
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi7 libgc1 libgmp10 libpcre3 libreadline8 \
+      libffi8 libgc1 libgmp10 libpcre3 libreadline8 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/scheme-banner
-RUN ln -s libreadline.so.7.0 /lib/x86_64-linux-gnu/libreadline.so
+RUN ln -s libreadline.so.8.0 /lib/x86_64-linux-gnu/libreadline.so
 CMD ["scheme-banner"]
