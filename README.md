@@ -28,3 +28,9 @@ Or an alternative flavor:
 Or both at once:
 
     docker run -it schemers/ironscheme:1-mono
+
+### Building the base build image
+
+Run:
+
+    make build-base
