@@ -1,0 +1,98 @@
+#!/usr/bin/env -S gosh -r7 -A ./snow
+; vim: ft=scheme
+
+(import (scheme base)
+        (scheme read)
+        (scheme write)
+        (scheme file)
+        (scheme process-context)
+        (arvyy mustache)
+        (gauche process)) ; Not portable!!
+
+(include "util.scm")
+(include "implementations.scm")
+
+(when (and (> (length (command-line)) 1)
+           (or (string=? (list-ref (command-line) 1) "--help")
+               (string=? (list-ref (command-line) 1) "-h")))
+  (for-each
+    display
+    '("Usage: build.scm [implementation name] [version]"
+      #\newline
+      "If no argument is given builds all implementations and versions."
+      #\newline))
+  (exit))
+
+(define dockerfile-debian (compile (slurp "templates/Dockerfile.debian")))
+(define dockerfile-alpine (compile (slurp "templates/Dockerfile.alpine")))
+(define dockerfile-path "Dockerfile.generated")
+
+(define linux
+  (if (>= (length (command-line)) 2)
+    (list-ref (command-line) 1)
+    (error "Please give atleast the linux base as argument, one of: debian")))
+
+(define implementation-to-build
+  (if (>= (length (command-line)) 3)
+    (list-ref (command-line) 2)
+    #f))
+
+(define implementation-version-to-build
+  (if (>= (length (command-line)) 4)
+    (list-ref (command-line) 3)
+    #f))
+
+(define make-tag
+  (lambda (implementation-name version-name)
+    (string-append "schemers/"
+                   implementation-name
+                   ":"
+                   version-name
+                   (cond ((string=? linux "alpine") "-alpine")
+                         (else "")))))
+
+(define make-docker-command
+  (lambda (implementation-name version-name)
+    `(docker
+       build
+       -f
+       ,dockerfile-path
+       "."
+       ,(string-append "--tag="
+                       (make-tag implementation-name version-name)))))
+
+(for-each
+  (lambda (implementation)
+    (let ((implementation-data (cdr implementation))
+          (implementation-name (symbol->string (car implementation))))
+      (when (or (not implementation-to-build)
+                (string=? implementation-name implementation-to-build))
+        (for-each
+          (lambda (version)
+            (let* ((version-data (cdr version))
+                   (version-name (car version))
+                   (template-data (append version-data implementation-data)))
+              (when (or (not implementation-version-to-build)
+                        (string=? version-name
+                                  implementation-version-to-build))
+
+                (with-output-to-file
+                  dockerfile-path
+                  (lambda ()
+                    (display
+                      (execute
+                        (cond
+                          ((string=? linux "debian")
+                           dockerfile-debian)
+                          ((string=? linux "alpine")
+                           dockerfile-alpine)
+                          (else
+                            (error "No dockerfile template exists for this linux")))
+                        template-data))))
+                (display "Building tag: ")
+                (display (make-tag implementation-name version-name))
+                (newline)
+                (do-process (make-docker-command implementation-name
+                                                 version-name)))))
+          (cdr (assoc 'versions (cdr implementation)))))))
+  implementations)

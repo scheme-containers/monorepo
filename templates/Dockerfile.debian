@@ -1,0 +1,83 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+
+# Build image
+
+FROM debian:bookworm-slim AS build
+
+RUN apt-get update && apt-get install -y \
+    wget git ca-certificates build-essential make autoconf automake m4 libtool \
+    curl
+
+{{#apt-build-dependencies}}
+RUN apt-get install -y {{{apt-build-dependencies}}}
+{{/apt-build-dependencies}}
+
+WORKDIR /build
+
+{{#url}}
+RUN wget --quiet -O scheme.tgz {{{url}}}
+RUN mkdir scheme && tar -C scheme --strip-components 1 -xzf scheme.tgz
+{{/url}}
+
+{{#git-url}}
+# Do not add --depth 1 it breaks Gambit builds
+RUN git clone {{{git-url}}} scheme
+{{/git-url}}
+
+{{#checksum}}
+RUN echo "{{{checksum}}} scheme.tgz" > checksum
+RUN sha256sum scheme.tgz && sha256sum -c checksum
+{{/checksum}}
+
+WORKDIR /build/scheme
+
+{{#configure-command}}
+RUN {{{configure-command}}}
+{{/configure-command}}
+
+{{^configure-command}}
+RUN test -f ./configure && ./configure || true
+{{/configure-command}}
+
+
+{{#make-command}}
+RUN {{{make-command}}}
+{{/make-command}}
+
+{{^make-command}}
+RUN make
+{{/make-command}}
+
+
+{{#install-command}}
+RUN {{{install-command}}}
+{{/install-command}}
+
+{{^install-command}}
+RUN make install
+{{/install-command}}
+
+# Run image
+FROM debian:bookworm-slim
+COPY --from=build /usr/local/ /usr/local/
+
+{{#apt-dependencies}}
+RUN apt-get update && apt-get -y --no-install-recommends install {{{apt-dependencies}}}
+{{/apt-dependencies}}
+
+{{#run-image-extra-command}}
+RUN {{run-image-extra-command}}
+{{/run-image-extra-command}}
+
+{{#scheme-script}}
+RUN printf "{{{scheme-script}}}" > /usr/local/bin/scheme-script && chmod +x /usr/local/bin/scheme-script
+{{/scheme-script}}
+
+{{#scheme-banner}}
+RUN printf "{{{scheme-banner}}}" > /usr/local/bin/scheme-banner && chmod +x /usr/local/bin/scheme-banner
+{{/scheme-banner}}
+
+{{#scheme-r7rs}}
+RUN printf "{{{scheme-r7rs}}}" > /usr/local/bin/scheme-r7rs && chmod +x /usr/local/bin/scheme-r7rs
+{{/scheme-r7rs}}
+CMD ["scheme-banner"]

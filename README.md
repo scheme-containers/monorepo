@@ -28,3 +28,35 @@ Or an alternative flavor:
 Or both at once:
 
     docker run -it schemers/ironscheme:1-mono
+
+## Building image
+
+### All
+
+To build all images run:
+
+    ./build
+
+
+### Specific implementation
+
+To build specific implementation run:
+
+    ./build LINUX IMPLEMENTATION_NAME VERSION
+
+Currently supported linuxes are debian and alpine
+
+If version is omitted all versions will be built. See implementations.scm
+for supported implementatons and versions.
+
+### Adding implementation
+
+Add implementation data into implementations.scm. There should be enough
+examples by the previous implementations. See also templates/Dockerfile for
+supported all supported fields.
+
+Many build dependencies are already included in the image, check the
+templates/Dockerfile.
+
+In scheme-banner commands remember to double other than quotes.
+For example newline \\n.
