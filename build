@@ -39,7 +39,12 @@
 (define linux
   (if (>= (length (command-line)) 2)
     (list-ref (command-line) 1)
-    (error "Please give atleast the linux base as argument, one of: debian")))
+    #f))
+
+(when (and (not (string=? linux "debian"))
+           (not (string=? linux "alpine")))
+  (show-help)
+  (exit 1))
 
 (define implementation-to-build
   (if (>= (length (command-line)) 3)
@@ -70,18 +75,12 @@
        ,(string-append "--tag="
                        (make-tag implementation-name version-name)))))
 
-(when (file-exists? jenkinsfile-path) (delete-file jenkinsfile-path))
-
 (for-each
   (lambda (implementation-name)
     (let ((implementation-data
             (with-input-from-file
               (string-append "data/" implementation-name ".scm")
               (lambda () (read)))))
-      (display (execute jenkinsfile-job
-                        `((name . ,implementation-name)
-                          )))
-               jenkinsfile-out)
       (when (or (not implementation-to-build)
                 (string=? implementation-name implementation-to-build))
         (for-each
@@ -100,7 +99,6 @@
               (when (or (not implementation-version-to-build)
                         (string=? version-name
                                   implementation-version-to-build))
-
                 (with-output-to-file
                   dockerfile-path
                   (lambda ()

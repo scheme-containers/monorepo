@@ -21,6 +21,7 @@
 (define jenkinsfile-stage (compile (slurp "templates/Jenkinsfile-stage")))
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
 
+(when (file-exists? jenkinsfile-path) (delete-file jenkinsfile-path))
 (define jenkinsfile-out (open-output-file jenkinsfile-path))
 (display (execute jenkinsfile-top '()) jenkinsfile-out)
 
