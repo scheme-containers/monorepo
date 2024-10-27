@@ -46,17 +46,17 @@ To build specific implementation run:
 
 Currently supported linuxes are debian and alpine
 
-If version is omitted all versions will be built. See implementations.scm
-for supported implementatons and versions.
+If version is omitted all versions will be built. See data directory for
+supported implementatons and versions.
 
 ### Adding implementation
 
-Add implementation data into implementations.scm. There should be enough
-examples by the previous implementations. See also templates/Dockerfile for
-supported all supported fields.
+Add implementation data into data directory as IMPLEMENTATION_NAME.scm.
+There should be enough examples by the previous implementations.
+See also templates/Dockerfile for supported all supported fields.
 
 Many build dependencies are already included in the image, check the
 templates/Dockerfile.
 
-In scheme-banner commands remember to double other than quotes.
+In scheme-banner commands remember to double escape other than quotes.
 For example newline \\n.
