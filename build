@@ -10,34 +10,26 @@
         (srfi 170)
         (gauche process)) ; Not portable!!
 
-
-(define slurp-loop
-  (lambda (line result)
-    (if (eof-object? line)
-      result
-      (slurp-loop (read-line) (string-append result line (string #\newline))))))
-
-(define slurp
-  (lambda (path)
-    (with-input-from-file
-      path
-      (lambda ()
-        (slurp-loop (read-line) "")))))
+(include "util.scm")
 
 (define implementations
   (map (lambda (file)
          (string-copy file 0 (- (string-length file) 4)))
        (directory-files "data")))
 
+(define show-help
+  (lambda ()
+    (for-each
+      display
+      '("Usage: build.scm debian/alpine [implementation name] [version]"
+        #\newline
+        "If no argument is given builds all implementations and versions."
+        #\newline))))
+
 (when (and (> (length (command-line)) 1)
            (or (string=? (list-ref (command-line) 1) "--help")
                (string=? (list-ref (command-line) 1) "-h")))
-  (for-each
-    display
-    '("Usage: build.scm [implementation name] [version]"
-      #\newline
-      "If no argument is given builds all implementations and versions."
-      #\newline))
+  (show-help)
   (exit))
 
 (define dockerfile-debian (compile (slurp "templates/Dockerfile.debian")))
@@ -78,23 +70,33 @@
        ,(string-append "--tag="
                        (make-tag implementation-name version-name)))))
 
+(when (file-exists? jenkinsfile-path) (delete-file jenkinsfile-path))
+
 (for-each
   (lambda (implementation-name)
     (let ((implementation-data
             (with-input-from-file
               (string-append "data/" implementation-name ".scm")
               (lambda () (read)))))
-      (write implementation-name)
-      (newline)
-      (write implementation-data)
-      (newline)
+      (display (execute jenkinsfile-job
+                        `((name . ,implementation-name)
+                          )))
+               jenkinsfile-out)
       (when (or (not implementation-to-build)
                 (string=? implementation-name implementation-to-build))
         (for-each
           (lambda (version)
-            (let* ((version-data (cdr version))
-                   (version-name (car version))
-                   (template-data (append version-data implementation-data)))
+            (let* ((version-name (car version))
+                   (version-data (cdr version))
+                   (template-data (append version-data implementation-data))
+                   (dockerfile (cond
+                                 ((string=? linux "debian")
+                                  dockerfile-debian)
+                                 ((string=? linux "alpine")
+                                  dockerfile-alpine)
+                                 (else
+                                   (show-help)
+                                   (exit 1)))))
               (when (or (not implementation-version-to-build)
                         (string=? version-name
                                   implementation-version-to-build))
@@ -103,19 +105,13 @@
                   dockerfile-path
                   (lambda ()
                     (display
-                      (execute
-                        (cond
-                          ((string=? linux "debian")
-                           dockerfile-debian)
-                          ((string=? linux "alpine")
-                           dockerfile-alpine)
-                          (else
-                            (error "No dockerfile template exists for this linux")))
-                        template-data))))
+                      (execute dockerfile template-data))))
                 (display "Building tag: ")
                 (display (make-tag implementation-name version-name))
                 (newline)
-                (do-process (make-docker-command implementation-name
-                                                 version-name)))))
+                ; Not portable!
+                (when (not (do-process (make-docker-command implementation-name
+                                                 version-name)))
+                  (exit 1)))))
           (cdr (assoc 'versions implementation-data))))))
   implementations)

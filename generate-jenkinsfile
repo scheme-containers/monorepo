@@ -1,0 +1,60 @@
+#!/usr/bin/env -S gosh -r7 -A ./snow
+; vim: ft=scheme
+
+(import (scheme base)
+        (scheme read)
+        (scheme write)
+        (scheme file)
+        (scheme process-context)
+        (arvyy mustache)
+        (srfi 170))
+
+(include "util.scm")
+
+(define implementations
+  (map (lambda (file)
+         (string-copy file 0 (- (string-length file) 4)))
+       (directory-files "data")))
+
+(define jenkinsfile-path "Jenkinsfile")
+(define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
+(define jenkinsfile-stage (compile (slurp "templates/Jenkinsfile-stage")))
+(define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
+
+(define jenkinsfile-out (open-output-file jenkinsfile-path))
+(display (execute jenkinsfile-top '()) jenkinsfile-out)
+
+(for-each
+  (lambda (implementation-name)
+    (let ((implementation-data
+            (with-input-from-file
+              (string-append "data/" implementation-name ".scm")
+              (lambda () (read)))))
+        (for-each
+          (lambda (version)
+            (let* ((version-name (car version))
+                   (version-data (cdr version))
+                   (template-data (append version-data implementation-data)))
+              (for-each
+                (lambda (linux)
+                  (display (execute jenkinsfile-stage
+                                    `((name . ,(string-append implementation-name
+                                                              " "
+                                                              linux
+                                                              " "
+                                                              version-name))
+                                      (command . ,(string-append "./build"
+                                                                 " "
+                                                                 linux
+                                                                 " "
+                                                                 implementation-name
+                                                                 " "
+                                                                 version-name))
+                                      ))
+                           jenkinsfile-out))
+                '("debian" "alpine"))))
+          (cdr (assoc 'versions implementation-data)))))
+  implementations)
+
+(display (execute jenkinsfile-bottom '()) jenkinsfile-out)
+(close-port jenkinsfile-out)

@@ -1,0 +1,5 @@
+        stage('{{{name}}}') {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh '{{{command}}}'
+            }
+        }
