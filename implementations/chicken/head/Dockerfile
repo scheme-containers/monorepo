@@ -11,7 +11,7 @@ RUN make PLATFORM=linux spotless
 RUN make PLATFORM=linux CHICKEN=/usr/local/bin/chicken
 RUN make PLATFORM=linux install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc libc-dev \
  && rm -rf /var/lib/apt/lists/*
