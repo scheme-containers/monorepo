@@ -3,7 +3,7 @@
 # NOTE: A shallow clone (git clone --depth 1) causes an obscure build
 # failure for unknown reasons. That's why we use a full clone.
 
-FROM schemers/gambit AS build
+FROM schemers/gambit:latest AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ghostscript texinfo ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
