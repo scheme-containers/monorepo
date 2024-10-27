@@ -7,10 +7,27 @@
         (scheme file)
         (scheme process-context)
         (arvyy mustache)
+        (srfi 170)
         (gauche process)) ; Not portable!!
 
-(include "util.scm")
-(include "implementations.scm")
+
+(define slurp-loop
+  (lambda (line result)
+    (if (eof-object? line)
+      result
+      (slurp-loop (read-line) (string-append result line (string #\newline))))))
+
+(define slurp
+  (lambda (path)
+    (with-input-from-file
+      path
+      (lambda ()
+        (slurp-loop (read-line) "")))))
+
+(define implementations
+  (map (lambda (file)
+         (string-copy file 0 (- (string-length file) 4)))
+       (directory-files "data")))
 
 (when (and (> (length (command-line)) 1)
            (or (string=? (list-ref (command-line) 1) "--help")
@@ -62,9 +79,15 @@
                        (make-tag implementation-name version-name)))))
 
 (for-each
-  (lambda (implementation)
-    (let ((implementation-data (cdr implementation))
-          (implementation-name (symbol->string (car implementation))))
+  (lambda (implementation-name)
+    (let ((implementation-data
+            (with-input-from-file
+              (string-append "data/" implementation-name ".scm")
+              (lambda () (read)))))
+      (write implementation-name)
+      (newline)
+      (write implementation-data)
+      (newline)
       (when (or (not implementation-to-build)
                 (string=? implementation-name implementation-to-build))
         (for-each
@@ -94,5 +117,5 @@
                 (newline)
                 (do-process (make-docker-command implementation-name
                                                  version-name)))))
-          (cdr (assoc 'versions (cdr implementation)))))))
+          (cdr (assoc 'versions implementation-data))))))
   implementations)
