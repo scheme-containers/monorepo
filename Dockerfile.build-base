@@ -4,7 +4,6 @@ RUN apt-get update && apt-get install -y \
         llvm-14-dev \
         clang-14 \
         ghostscript \
-        texinfo\
         ca-certificates \
         cpio \
         golang \
@@ -12,7 +11,6 @@ RUN apt-get update && apt-get install -y \
         pkg-config \
         guile-3.0 \
         libncurses-dev \
-        autoconf \
         build-essential \
         libsqlite3-dev \
         libssl-dev \
@@ -22,12 +20,10 @@ RUN apt-get update && apt-get install -y \
         libedit-dev \
         perl \
         libedit2 \
-        cpio \
         rsync \
         cmake \
         libffi-dev \
         libgc-dev \
-        libssl-dev \
         libz-dev \
         sqlite3 \
         zlib1g-dev \
@@ -43,7 +39,6 @@ RUN apt-get update && apt-get install -y \
         libglu1-mesa-dev \
         default-jdk-headless \
         libexpat1-dev \
-        libgc-dev \
         libc-dev \
         libgmp-dev \
         libunistring-dev \
@@ -57,21 +52,13 @@ RUN apt-get update && apt-get install -y \
         libx11-dev \
         uuid-dev \
         ncurses-dev \
-        build-essential \
         git \
         file \
-        libtool \
         autoconf \
-        automake \
         libreadline-dev \
         libltdl-dev \
-        libgmp-dev \
         texinfo \
         flex \
-        libunistring-dev \
-        libgc-dev \
-        libffi-dev \
-        pkg-config \
         gettext \
         cabal-install \
         libffi8 \
