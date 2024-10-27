@@ -2,6 +2,8 @@
 
 set -eu
 
+# Without arguments builds all, with implementation name as argument builds just that one
+
 build_only="${1:-}"
 cd "$(dirname "$0")"
 
