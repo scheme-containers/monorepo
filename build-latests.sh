@@ -2,6 +2,8 @@
 
 set -eu
 
+DOCKER_BUILD="docker build --memory 8G --memory-swap 64G --cpu-period=100000 --cpu-quota=400000"
+
 # Without arguments builds all, with implementation name as argument builds just that one
 
 build_only="${1:-}"
@@ -24,8 +26,8 @@ for path in $implementations; do
         if [ "${build_only}" = "" ] || [ "${build_only}" = "${name}" ]; then
             echo "Latest of ${name} is ${latest_version}"
             echo "Building path ${latest_path}"
-            docker build "${latest_path}" --tag="schemers/${name}:latest"
-            docker build "${latest_path}" --tag="schemers/${name}:${latest_version}"
+            ${DOCKER_BUILD} "${latest_path}" --tag="schemers/${name}:latest"
+            ${DOCKER_BUILD} "${latest_path}" --tag="schemers/${name}:${latest_version}"
             if [ ! "${build_only}" = "${name}" ]; then
                 exit
             fi
