@@ -3,12 +3,12 @@
 # NOTE: A shallow clone (git clone --depth 1) causes an obscure build
 # failure for unknown reasons. That's why we use a full clone.
 
-FROM schemers/gambit AS build
+FROM schemers/gambit:latest AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ghostscript texinfo ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/gambit/gambit.git --depth 1
+RUN git clone https://github.com/gambit/gambit.git
 WORKDIR /build/gambit
 RUN ./configure --prefix=/usr/local \
       --enable-single-host \
