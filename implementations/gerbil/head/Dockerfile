@@ -4,6 +4,8 @@
 # <https://github.com/vyzo/gerbil/blob/master/Dockerfile>
 FROM schemers/gambit AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
+      ca-certificates \
+      git \
       build-essential \
       libsqlite3-dev \
       libssl-dev \
@@ -14,10 +16,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 ENV GERBIL_PREFIX=/usr/local
 ENV GERBIL_BUILD_CORES=4
 WORKDIR /build
-COPY checksum checksum
-ADD https://github.com/mighty-gerbils/gerbil/archive/refs/tags/v0.18.1.tar.gz gerbil.tar.gz
-RUN sha256sum gerbil.tar.gz && sha256sum -c checksum
-RUN mkdir gerbil && tar -C gerbil --strip-components 1 -xf gerbil.tar.gz
+RUN git clone https://github.com/mighty-gerbils/gerbil.git --depth 1
 WORKDIR /build/gerbil/src
 RUN ./build.sh
 
@@ -25,6 +24,7 @@ FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       ca-certificates gcc git libc-dev \
  && rm -rf /var/lib/apt/lists/*
+ENV GERBIL_PREFIX=/usr/local
 COPY --from=build /usr/local/ /usr/local/
 COPY --from=build /build/gerbil/bin/ /usr/local/bin/
 COPY --from=build /build/gerbil/lib/ /usr/local/lib/
