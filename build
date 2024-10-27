@@ -1,6 +1,9 @@
 #!/usr/bin/env -S gosh -r7 -A ./snow
 ; vim: ft=scheme
 
+;; This script reads Scheme implementation install data from data/ directory
+;; and builds docker images based on those.
+
 (import (scheme base)
         (scheme read)
         (scheme write)
@@ -26,6 +29,7 @@
         "If no argument is given builds all implementations and versions."
         #\newline))))
 
+;; Handle --help and -h arguments
 (when (and (> (length (command-line)) 1)
            (or (string=? (list-ref (command-line) 1) "--help")
                (string=? (list-ref (command-line) 1) "-h")))
@@ -36,6 +40,7 @@
 (define dockerfile-alpine (compile (slurp "templates/Dockerfile.alpine")))
 (define dockerfile-path "Dockerfile.generated")
 
+;; Choice of linux, this is mandatory
 (define linux
   (if (>= (length (command-line)) 2)
     (list-ref (command-line) 1)
@@ -46,16 +51,20 @@
   (show-help)
   (exit 1))
 
+;; Limit build to implementation from argument
 (define implementation-to-build
   (if (>= (length (command-line)) 3)
     (list-ref (command-line) 2)
     #f))
 
+;; Limit build to version from argument
 (define implementation-version-to-build
   (if (>= (length (command-line)) 4)
     (list-ref (command-line) 3)
     #f))
 
+;; Build tag in format schemers/implementation:version-linux
+;; or in Debians (default) case schemers/implementation:version
 (define make-tag
   (lambda (implementation-name version-name)
     (string-append "schemers/"
@@ -65,6 +74,8 @@
                    (cond ((string=? linux "alpine") "-alpine")
                          (else "")))))
 
+;; Something in line with:
+;; docker build -f Dockerfile . --tag=implementation:version-linux
 (define make-docker-command
   (lambda (implementation-name version-name)
     `(docker
@@ -81,6 +92,7 @@
             (with-input-from-file
               (string-append "data/" implementation-name ".scm")
               (lambda () (read)))))
+      ;; If user has given implementation as argument build only that
       (when (or (not implementation-to-build)
                 (string=? implementation-name implementation-to-build))
         (for-each
@@ -88,17 +100,18 @@
             (let* ((version-name (car version))
                    (version-data (cdr version))
                    (template-data (append version-data implementation-data))
-                   (dockerfile (cond
-                                 ((string=? linux "debian")
-                                  dockerfile-debian)
-                                 ((string=? linux "alpine")
-                                  dockerfile-alpine)
-                                 (else
-                                   (show-help)
-                                   (exit 1)))))
+                   (dockerfile (cond ((string=? linux "debian")
+                                      dockerfile-debian)
+                                     ((string=? linux "alpine")
+                                      dockerfile-alpine)
+                                     (else
+                                       (show-help)
+                                       (exit 1)))))
+              ;; If user has given version as argument build only that
               (when (or (not implementation-version-to-build)
                         (string=? version-name
                                   implementation-version-to-build))
+                ;; Write to temporary Dockerfile used by all builds
                 (with-output-to-file
                   dockerfile-path
                   (lambda ()
@@ -107,7 +120,7 @@
                 (display "Building tag: ")
                 (display (make-tag implementation-name version-name))
                 (newline)
-                ; Not portable!
+                ;; Not portable!
                 (when (not (do-process (make-docker-command implementation-name
                                                  version-name)))
                   (exit 1)))))

@@ -1,6 +1,9 @@
 #!/usr/bin/env -S gosh -r7 -A ./snow
 ; vim: ft=scheme
 
+;; This script reads Scheme implementation install data from data/ directory
+;; and builds Jenkinsfile based on that.
+
 (import (scheme base)
         (scheme read)
         (scheme write)
