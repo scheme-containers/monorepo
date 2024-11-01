@@ -9,4 +9,5 @@
     (git-origin . "5488cbd6cabbaeb066d02421ff4b3fc2c19e13ba")
     (git-tag . "FETCH_HEAD")
     (build-directory . "unix")))
+ (apk-dependencies . "libstdc++ gc")
  (scheme-banner . "foment \"$@\""))

@@ -60,7 +60,8 @@ used. If you overwrite these commands set the prefix to $PREFIX.
 
 Fields inside the version list are appended infront of the other fields, so
 if any field needs to be version specific then it can be added to both places
-or to the version only.
+or to the version only. The field in the version will override the one in
+implementation data.
 
 Many build dependencies are already included in the image, check the
 templates/Dockerfile.

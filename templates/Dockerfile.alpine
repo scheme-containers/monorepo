@@ -10,7 +10,8 @@ FROM alpine:3.20 AS build
 ENV PREFIX=/usr/local
 RUN mkdir -p $PREFIX
 
-RUN apk add alpine-sdk git wget curl make gcc m4 autoconf automake libtool sudo
+RUN apk add alpine-sdk git wget curl make gcc m4 autoconf automake libtool \
+    sudo unzip
 
 {{#apk-build-dependencies}}
 RUN apk add {{{apk-build-dependencies}}}
@@ -25,7 +26,16 @@ WORKDIR /build
 {{#url}}
 RUN wget --quiet -O scheme.tgz {{{url}}}
 RUN mkdir scheme && tar -C scheme --strip-components 1 -xzf scheme.tgz
+RUN echo "{{{checksum}}} scheme.tgz" > checksum
+RUN sha256sum scheme.tgz && sha256sum -c checksum
 {{/url}}
+
+{{#zip-url}}
+RUN wget --quiet -O scheme.zip {{{zip-url}}}
+RUN mkdir scheme && unzip -d scheme scheme.zip
+RUN echo "{{{checksum}}} scheme.zip" > checksum
+RUN sha256sum scheme.zip && sha256sum -c checksum
+{{/zip-url}}
 
 {{#git-url}}
 # Do not add --depth 1 it breaks Gambit builds
@@ -40,11 +50,6 @@ RUN cd scheme && git fetch origin 5488cbd6cabbaeb066d02421ff4b3fc2c19e13ba --tag
 RUN cd scheme && git reset --hard {{git-tag}}
 {{/git-tag}}
 
-{{#checksum}}
-RUN echo "{{{checksum}}} scheme.tgz" > checksum
-RUN sha256sum scheme.tgz && sha256sum -c checksum
-{{/checksum}}
-
 {{#build-directory}}
 WORKDIR /build/scheme/{{build-directory}}
 {{/build-directory}}
@@ -58,11 +63,9 @@ WORKDIR /build/scheme
 RUN {{{configure-command}}}
 {{/configure-command}}
 
-# If there is no configure file then ignores this stage
 {{^configure-command}}
-RUN test -f ./configure && ./configure --prefix=$PREFIX || true
+RUN ./configure --prefix=$PREFIX
 {{/configure-command}}
-
 
 # Make command can be overwritten in datafile
 {{#make-command}}
@@ -72,7 +75,6 @@ RUN {{{make-command}}}
 {{^make-command}}
 RUN make PREFIX=$PREFIX
 {{/make-command}}
-
 
 # Install command can be overwritten in datafile
 {{#install-command}}
@@ -85,7 +87,7 @@ RUN make PREFIX=$PREFIX install
 
 # Run image can be overwritten in datafile
 {{#run-image-alpine}}
-FROM {{{run-image-alpine}}} AS build
+FROM {{{run-image-alpine}}}
 {{/run-image-alpine}}
 
 {{^run-image-alpine}}
