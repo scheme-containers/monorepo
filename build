@@ -38,7 +38,9 @@
 
 (define dockerfile-debian (compile (slurp "templates/Dockerfile.debian")))
 (define dockerfile-alpine (compile (slurp "templates/Dockerfile.alpine")))
-(define dockerfile-path "Dockerfile.generated")
+(define dockerfile-path
+  (lambda (linux implementation)
+    (string-append "Dockerfile-generated-" linux "-" implementation)))
 
 ;; Choice of linux, this is mandatory
 (define linux
@@ -56,6 +58,12 @@
   (if (>= (length (command-line)) 3)
     (list-ref (command-line) 2)
     #f))
+
+(when (not (member implementation-to-build implementations string=?))
+  (display "Could not find datafile for implementation: ")
+  (display implementation-to-build)
+  (newline)
+  (exit 1))
 
 ;; Limit build to version from argument
 (define implementation-version-to-build
@@ -77,11 +85,11 @@
 ;; Something in line with:
 ;; docker build -f Dockerfile . --tag=implementation:version-linux
 (define make-docker-command
-  (lambda (implementation-name version-name)
+  (lambda (linux implementation-name version-name)
     `(docker
        build
        -f
-       ,dockerfile-path
+       ,(dockerfile-path linux implementation-name)
        "."
        ,(string-append "--tag="
                        (make-tag implementation-name version-name)))))
@@ -95,6 +103,13 @@
       ;; If user has given implementation as argument build only that
       (when (or (not implementation-to-build)
                 (string=? implementation-name implementation-to-build))
+        (when (not (assoc implementation-version-to-build
+                           (cdr (assoc 'versions implementation-data))
+                           string=?))
+          (display "Could not find version from datafile: ")
+          (display implementation-version-to-build)
+          (newline)
+          (exit 1))
         (for-each
           (lambda (version)
             (let* ((version-name (car version))
@@ -113,7 +128,7 @@
                                   implementation-version-to-build))
                 ;; Write to temporary Dockerfile used by all builds
                 (with-output-to-file
-                  dockerfile-path
+                  (dockerfile-path linux implementation-name)
                   (lambda ()
                     (display
                       (execute dockerfile template-data))))
@@ -121,8 +136,9 @@
                 (display (make-tag implementation-name version-name))
                 (newline)
                 ;; Not portable!
-                (when (not (do-process (make-docker-command implementation-name
-                                                 version-name)))
+                (when (not (do-process (make-docker-command linux
+                                                            implementation-name
+                                                            version-name)))
                   (exit 1)))))
           (cdr (assoc 'versions implementation-data))))))
   implementations)

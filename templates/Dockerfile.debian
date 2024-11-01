@@ -1,8 +1,7 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-
-# Build image
-
 FROM debian:bookworm-slim AS build
+ENV PREFIX=/usr/scheme
+RUN mkdir -p $PREFIX
 
 RUN apt-get update && apt-get install -y \
     wget git ca-certificates build-essential make autoconf automake m4 libtool \
@@ -11,6 +10,10 @@ RUN apt-get update && apt-get install -y \
 {{#apt-build-dependencies}}
 RUN apt-get install -y {{{apt-build-dependencies}}}
 {{/apt-build-dependencies}}
+
+{{#npm-build-dependencies}}
+RUN npm install -g {{{npm-build-dependencies}}}
+{{/npm-build-dependencies}}
 
 WORKDIR /build
 
@@ -31,6 +34,7 @@ RUN sha256sum scheme.tgz && sha256sum -c checksum
 
 WORKDIR /build/scheme
 
+# Configure command can be overwritten in datafile
 {{#configure-command}}
 RUN {{{configure-command}}}
 {{/configure-command}}
@@ -40,6 +44,7 @@ RUN test -f ./configure && ./configure || true
 {{/configure-command}}
 
 
+# Make command can be overwritten in datafile
 {{#make-command}}
 RUN {{{make-command}}}
 {{/make-command}}
@@ -49,6 +54,7 @@ RUN make
 {{/make-command}}
 
 
+# Install command can be overwritten in datafile
 {{#install-command}}
 RUN {{{install-command}}}
 {{/install-command}}
@@ -59,11 +65,15 @@ RUN make install
 
 # Run image
 FROM debian:bookworm-slim
-COPY --from=build /usr/local/ /usr/local/
+COPY --from=build /usr/scheme/ /usr/local/
 
 {{#apt-dependencies}}
 RUN apt-get update && apt-get -y --no-install-recommends install {{{apt-dependencies}}}
 {{/apt-dependencies}}
+
+{{#npm-dependencies}}
+RUN npm install -g {{{npm-dependencies}}}
+{{/npm-dependencies}}
 
 {{#run-image-extra-command}}
 RUN {{run-image-extra-command}}

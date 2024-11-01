@@ -54,6 +54,9 @@ supported implementatons and versions.
 Add implementation data into data directory as IMPLEMENTATION_NAME.scm.
 There should be enough examples by the previous implementations.
 See also templates/Dockerfile for supported all supported fields.
+Configure, make and install commands can be overwritten in the datafile.
+If those fields are not given then ./configure, make, make install combo is
+used. If you overwrite these commands set the prefix to /usr/scheme
 
 Many build dependencies are already included in the image, check the
 templates/Dockerfile.
