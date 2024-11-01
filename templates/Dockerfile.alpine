@@ -1,9 +1,16 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine:latest AS build
-ENV PREFIX=/usr/scheme
+{{#build-image-alpine}}
+FROM {{{build-image-alpine}}} AS build
+{{/build-image-alpine}}
+
+{{^build-image-alpine}}
+FROM alpine:3.20 AS build
+{{/build-image-alpine}}
+
+ENV PREFIX=/usr/local
 RUN mkdir -p $PREFIX
 
-RUN apk add alpine-sdk wget curl make
+RUN apk add alpine-sdk git wget curl make gcc m4 autoconf automake libtool sudo
 
 {{#apk-build-dependencies}}
 RUN apk add {{{apk-build-dependencies}}}
@@ -25,20 +32,35 @@ RUN mkdir scheme && tar -C scheme --strip-components 1 -xzf scheme.tgz
 RUN git clone {{{git-url}}} scheme
 {{/git-url}}
 
+{{#git-origin}}
+RUN cd scheme && git fetch origin 5488cbd6cabbaeb066d02421ff4b3fc2c19e13ba --tags
+{{/git-origin}}
+
+{{#git-tag}}
+RUN cd scheme && git reset --hard {{git-tag}}
+{{/git-tag}}
+
 {{#checksum}}
 RUN echo "{{{checksum}}} scheme.tgz" > checksum
 RUN sha256sum scheme.tgz && sha256sum -c checksum
 {{/checksum}}
 
+{{#build-directory}}
+WORKDIR /build/scheme/{{build-directory}}
+{{/build-directory}}
+
+{{^build-directory}}
 WORKDIR /build/scheme
+{{/build-directory}}
 
 # Configure command can be overwritten in datafile
 {{#configure-command}}
 RUN {{{configure-command}}}
 {{/configure-command}}
 
+# If there is no configure file then ignores this stage
 {{^configure-command}}
-RUN test -f ./configure --prefix=$PREFIX && ./configure || true
+RUN test -f ./configure && ./configure --prefix=$PREFIX || true
 {{/configure-command}}
 
 
@@ -61,9 +83,15 @@ RUN {{{install-command}}}
 RUN make PREFIX=$PREFIX install
 {{/install-command}}
 
-# Run image
-FROM alpine:latest
-COPY --from=build /usr/scheme/ /usr/local/
+# Run image can be overwritten in datafile
+{{#run-image-alpine}}
+FROM {{{run-image-alpine}}} AS build
+{{/run-image-alpine}}
+
+{{^run-image-alpine}}
+FROM alpine:3.20
+{{/run-image-alpine}}
+COPY --from=build /usr/local /usr/local/
 
 {{#apk-dependencies}}
 RUN apk add {{{apk-dependencies}}}
@@ -78,14 +106,14 @@ RUN {{run-image-extra-command}}
 {{/run-image-extra-command}}
 
 {{#scheme-script}}
-RUN printf "{{{scheme-script}}}" > /usr/local/bin/scheme-script && chmod +x /usr/local/bin/scheme-script
+RUN printf "#!/bin/sh\nset -eu\n{{{scheme-script}}}" > /usr/local/bin/scheme-script && chmod +x /usr/local/bin/scheme-script
 {{/scheme-script}}
 
 {{#scheme-banner}}
-RUN printf "{{{scheme-banner}}}" > /usr/local/bin/scheme-banner && chmod +x /usr/local/bin/scheme-banner
+RUN printf "#!/bin/sh\nset -eu\n{{{scheme-banner}}}" > /usr/local/bin/scheme-banner && chmod +x /usr/local/bin/scheme-banner
 {{/scheme-banner}}
 
 {{#scheme-r7rs}}
-RUN printf "{{{scheme-r7rs}}}" > /usr/local/bin/scheme-r7rs && chmod +x /usr/local/bin/scheme-r7rs
+RUN printf "#!/bin/sh\nset -eu\n{{{scheme-r7rs}}}" > /usr/local/bin/scheme-r7rs && chmod +x /usr/local/bin/scheme-r7rs
 {{/scheme-r7rs}}
 CMD ["scheme-banner"]

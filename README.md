@@ -56,7 +56,11 @@ There should be enough examples by the previous implementations.
 See also templates/Dockerfile for supported all supported fields.
 Configure, make and install commands can be overwritten in the datafile.
 If those fields are not given then ./configure, make, make install combo is
-used. If you overwrite these commands set the prefix to /usr/scheme
+used. If you overwrite these commands set the prefix to $PREFIX.
+
+Fields inside the version list are appended infront of the other fields, so
+if any field needs to be version specific then it can be added to both places
+or to the version only.
 
 Many build dependencies are already included in the image, check the
 templates/Dockerfile.

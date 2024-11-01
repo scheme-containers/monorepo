@@ -13,4 +13,4 @@
  (apk-build-dependencies . "autoconf automake patch zip openjdk17-jdk sqlite-dev musl-dev gmp-dev libunistring-dev pcre2-dev libssl3 libtool")
  (apk-dependencies . "openjdk17-jre sqlite3-dev gcc musl-dev gmp-dev libunistring-dev libpcre3-dev sqlite-dev libssl-dev")
  (install-command . "make install-sans-docs")
- (scheme-banner . "#!/bin/sh\\nbigloo"))
+ (scheme-banner . "bigloo"))

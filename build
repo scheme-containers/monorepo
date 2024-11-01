@@ -59,7 +59,8 @@
     (list-ref (command-line) 2)
     #f))
 
-(when (not (member implementation-to-build implementations string=?))
+(when (and implementation-to-build
+           (not (member implementation-to-build implementations string=?)))
   (display "Could not find datafile for implementation: ")
   (display implementation-to-build)
   (newline)
@@ -103,9 +104,10 @@
       ;; If user has given implementation as argument build only that
       (when (or (not implementation-to-build)
                 (string=? implementation-name implementation-to-build))
-        (when (not (assoc implementation-version-to-build
-                           (cdr (assoc 'versions implementation-data))
-                           string=?))
+        (when (and implementation-version-to-build
+                   (not (assoc implementation-version-to-build
+                               (cdr (assoc 'versions implementation-data))
+                               string=?)))
           (display "Could not find version from datafile: ")
           (display implementation-version-to-build)
           (newline)
