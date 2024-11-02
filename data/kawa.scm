@@ -1,0 +1,26 @@
+((versions
+   ("3"
+    (url . "https://ftp.gnu.org/pub/gnu/kawa/kawa-3.1.1.tar.gz")
+    (checksum . "8c9a50cd6b100154c901bd190b3acd2fb8353f33622c4a2ce8fa392a7f09e019"))
+   ("latest"
+    (url . "https://ftp.gnu.org/pub/gnu/kawa/kawa-3.1.1.tar.gz")
+    (checksum . "8c9a50cd6b100154c901bd190b3acd2fb8353f33622c4a2ce8fa392a7f09e019"))
+   ("head"
+    (git-url . "https://gitlab.com/kashell/Kawa.git")
+    (build-image-debian . "debian:trixie-slim")
+    (run-image-debian . "debian:trixie-slim")
+    (apt-build-dependencies . "openjdk-23-jdk")
+    (apt-dependencies . "openjdk-23-jre")
+    (apk-build-dependencies . "openjdk23")
+    (apk-dependencies . "openjdk23-jre")
+    (apt-build-dependencies . "makeinfo")
+    (apk-build-dependencies . "makeinfo")
+    (configure-command . "./autogen.sh && ./configure --prefix=$PREFIX")))
+ (build-image-debian . "debian:bullseye-slim")
+ (run-image-debian . "debian:bullseye-slim")
+ (apt-build-dependencies . "openjdk-11-jdk")
+ (apt-dependencies . "openjdk-11-jre")
+ (apk-build-dependencies . "openjdk11")
+ (apk-dependencies . "openjdk11-jre")
+ (scheme-banner . "kawa --version && kawa \"$@\"")
+ (scheme-r7rs . "kawa --version && kawa --r7rs \"$@\""))

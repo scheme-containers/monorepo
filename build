@@ -24,9 +24,9 @@
   (lambda ()
     (for-each
       display
-      '("Usage: build.scm debian/alpine [implementation name] [version]"
+      '("Usage: build.scm debian/alpine [implementation name] [release]"
         #\newline
-        "If no argument is given builds all implementations and versions."
+        "If no argument is given builds all implementations and releases."
         #\newline))))
 
 ;; Handle --help and -h arguments
@@ -66,81 +66,126 @@
   (newline)
   (exit 1))
 
-;; Limit build to version from argument
-(define implementation-version-to-build
+;; Limit build to release from argument
+(define implementation-release-to-build
   (if (>= (length (command-line)) 4)
     (list-ref (command-line) 3)
     #f))
 
-;; Build tag in format schemers/implementation:version-linux
-;; or in Debians (default) case schemers/implementation:version
+;; Build tag in format schemers/implementation:release-linux
+;; or in Debians (default) case schemers/implementation:release
 (define make-tag
-  (lambda (implementation-name version-name)
+  (lambda (implementation-name image-name)
     (string-append "schemers/"
                    implementation-name
                    ":"
-                   version-name
+                   image-name
                    (cond ((string=? linux "alpine") "-alpine")
                          (else "")))))
 
 ;; Something in line with:
-;; docker build -f Dockerfile . --tag=implementation:version-linux
+;; docker build -f Dockerfile . --tag=implementation:release-linux
 (define make-docker-command
-  (lambda (linux implementation-name version-name)
+  (lambda (linux implementation-name image-name)
     `(docker
        build
        -f
        ,(dockerfile-path linux implementation-name)
        "."
        ,(string-append "--tag="
-                       (make-tag implementation-name version-name)))))
+                       (make-tag implementation-name image-name)))))
+
+(define version->image-name
+  (lambda (version)
+    (let ((result (list))
+          (major-read? #f))
+      (string-for-each
+        (lambda (c)
+          (when (and (not major-read?)
+                     (not (char=? c #\.)))
+            (set! result (append result (list c))))
+          (when (char=? c #\.)
+            (set! major-read? #t)))
+        version)
+      (list->string result))))
 
 (for-each
   (lambda (implementation-name)
     (let ((implementation-data
-            (with-input-from-file
-              (string-append "data/" implementation-name ".scm")
-              (lambda () (read)))))
+            (read (open-input-string
+                    (string-append "("
+                                   (slurp (string-append "data/"
+                                                         implementation-name
+                                                         ".scm"))
+                                   ")")))))
       ;; If user has given implementation as argument build only that
       (when (or (not implementation-to-build)
                 (string=? implementation-name implementation-to-build))
-        (when (and implementation-version-to-build
-                   (not (assoc implementation-version-to-build
-                               (cdr (assoc 'versions implementation-data))
-                               string=?)))
-          (display "Could not find version from datafile: ")
-          (display implementation-version-to-build)
-          (newline)
-          (exit 1))
         (for-each
-          (lambda (version)
-            (let* ((version-name (car version))
-                   (version-data (cdr version))
-                   (template-data (append version-data implementation-data))
-                   (dockerfile (cond ((string=? linux "debian")
-                                      dockerfile-debian)
-                                     ((string=? linux "alpine")
-                                      dockerfile-alpine)
-                                     (else
-                                       (show-help)
-                                       (exit 1)))))
-              ;; If user has given version as argument build only that
-              (when (or (not implementation-version-to-build)
-                        (string=? version-name
-                                  implementation-version-to-build))
-                ;; Write to temporary Dockerfile used by all builds
-                (with-output-to-file
-                  (dockerfile-path linux implementation-name)
-                  (lambda ()
-                    (display
-                      (execute dockerfile template-data))))
-                (display "Building tag: ")
-                (display (make-tag implementation-name version-name))
+          (lambda (item)
+            (when (and (or (pair? item) (list? item))
+                       (equal? (car item) 'release))
+              (let* ((release item)
+                     (release-version (cdr (assoc 'version release)))
+                     (image-name (version->image-name release-version))
+                     (release-data (cdr release))
+                     (build-steps
+                       (if (not (assoc 'build-steps release))
+                         "./configure && make && make install"
+                         (apply string-append
+                                (append
+                                  (map (lambda (command)
+                                         (string-append command " && "))
+                                       (cadr (assoc 'build-steps release)))
+                                  (list " sleep 0")))))
+                     (build-deps
+                       (if (not (assoc 'build-deps release))
+                         (list)
+                         (map
+                           (lambda (item)
+                             (cons (car item)
+                                   (apply string-append (cadr item))))
+                           (cdr (assoc 'build-deps release)))))
+                     (run-deps
+                       (if (not (assoc 'run-deps release))
+                         (list)
+                         (map
+                           (lambda (item)
+                             (cons (car item)
+                                   (apply string-append (cadr item))))
+                           (cdr (assoc 'run-deps release)))))
+                     (template-data
+                       (append (list
+                                 (cons 'build-deps build-deps)
+                                 (cons 'run-deps run-deps)
+                                 (cons 'build-steps build-steps))release-data
+                               implementation-data))
+                     (dockerfile (cond ((string=? linux "debian")
+                                        dockerfile-debian)
+                                       ((string=? linux "alpine")
+                                        dockerfile-alpine)
+                                       (else
+                                         (show-help)
+                                         (exit 1)))))
+                (write template-data)
                 (newline)
-                ;; Not portable!
-                (when (not (do-process (make-docker-command linux
-                                                            implementation-name
-                                                            version-name)))
-                  (exit 1)))))
-          (cdr (assoc 'versions implementation-data))))))
+                ;; If user has given release as argument build only that
+                (when (or (not implementation-release-to-build)
+                          (string=? image-name
+                                    implementation-release-to-build))
+                  ;; Write to temporary Dockerfile used by all builds
+                  (with-output-to-file
+                    (dockerfile-path linux implementation-name)
+                    (lambda ()
+                      (display
+                        (execute dockerfile template-data))))
+                  (display "Building tag: ")
+                  (display (make-tag implementation-name image-name))
+                  (newline)
+                  ;; Not portable!
+                  (when (not (do-process (make-docker-command linux
+                                                              implementation-name
+                                                              image-name)))
+                    (exit 1))))))
+          implementation-data))))
   implementations)

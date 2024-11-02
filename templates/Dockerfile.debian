@@ -1,115 +1,64 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-# Build image can be overwritten in datafile
-{{#build-image-debian}}
-FROM {{{build-image-debian}}} AS build
-{{/build-image-debian}}
-
-{{^build-image-debian}}
 FROM debian:bookworm-slim AS build
-{{/build-image-debian}}
-
-
 ENV PREFIX=/usr/local
 RUN mkdir -p $PREFIX
 
-RUN apt-get update && apt-get install -y \
-    wget git ca-certificates build-essential make autoconf automake m4 libtool \
-    curl sudo unzip
+RUN apt update && apt install -y wget make git
 
-{{#apt-build-dependencies}}
-RUN apt-get install -y {{{apt-build-dependencies}}}
-{{/apt-build-dependencies}}
-
-{{#npm-build-dependencies}}
-RUN npm install -g {{{npm-build-dependencies}}}
-{{/npm-build-dependencies}}
+{{#build-deps}}
+    {{#apt}}
+        RUN apt-get install -y {{{apt}}}
+    {{/apt}}
+    {{#apk}}
+        RUN apk add -y {{{apk}}}
+    {{/apk}}
+    {{#npm}}
+        RUN npm install -g {{{npm}}}
+    {{/npm}}
+{{/build-deps}}
 
 WORKDIR /build
 
-{{#url}}
-RUN wget --quiet -O scheme.tgz {{{url}}}
-RUN mkdir scheme && tar -C scheme --strip-components 1 -xzf scheme.tgz
-RUN echo "{{{checksum}}} scheme.tgz" > checksum
-RUN sha256sum scheme.tgz && sha256sum -c checksum
-{{/url}}
+{{#sources}}
 
-{{#zip-url}}
-RUN wget --quiet -O scheme.zip {{{zip-url}}}
-RUN mkdir scheme && unzip -d scheme scheme.zip
-RUN echo "{{{checksum}}} scheme.zip" > checksum
-RUN sha256sum scheme.zip && sha256sum -c checksum
-{{/zip-url}}
+{{#archive}}
+    {{#url}}
+        RUN wget --quiet -O scheme.tgz {{.}} || true
+        RUN mkdir scheme && tar -C scheme --strip-components 1 -xzf scheme.tgz
+    {{/url}}
+    {{#hash}}
+        RUN echo "{{{hash}}} scheme.tgz" > checksum
+        RUN sha256sum scheme.tgz && sha256sum -c checksum
+    {{/hash}}
+{{/archive}}
 
-{{#git-url}}
-# Do not add --depth 1 it breaks Gambit builds
-RUN git clone {{{git-url}}} scheme
-{{/git-url}}
+{{#git}}
+    {{#url}}
+    RUN git clone {{{url}}} scheme
+    {{/url}}
 
-{{#git-origin}}
-RUN cd scheme && git fetch origin 5488cbd6cabbaeb066d02421ff4b3fc2c19e13ba --tags
-{{/git-origin}}
+    {{#origin}}
+    RUN cd scheme && git fetch origin {{{origin}}} --tags
+    {{/origin}}
 
-{{#git-tag}}
-RUN cd scheme && git reset --hard {{git-tag}}
-{{/git-tag}}
+    {{#tag}}
+    RUN cd scheme && git reset --hard {{tag}}
+    {{/tag}}
+{{/git}}
 
-{{#build-directory}}
-WORKDIR /build/scheme/{{build-directory}}
-{{/build-directory}}
+{{/sources}}
 
-{{^build-directory}}
 WORKDIR /build/scheme
-{{/build-directory}}
+RUN {{{build-steps}}}
 
-# Configure command can be overwritten in datafile
-{{#configure-command}}
-RUN {{{configure-command}}}
-{{/configure-command}}
-
-{{^configure-command}}
-RUN ./configure --prefix=$PREFIX
-{{/configure-command}}
-
-# Make command can be overwritten in datafile
-{{#build-command}}
-RUN {{{build-command}}}
-{{/build-command}}
-
-{{^build-command}}
-RUN make PREFIX=$PREFIX
-{{/build-command}}
-
-# Install command can be overwritten in datafile
-{{#install-command}}
-RUN {{{install-command}}}
-{{/install-command}}
-
-{{^install-command}}
-RUN make PREFIX=$PREFIX install
-{{/install-command}}
-
-# Run image can be overwritten in datafile
-{{#run-image-debian}}
-FROM {{{run-image-debian}}}
-{{/run-image-debian}}
-
-{{^run-image-debian}}
 FROM debian:bookworm-slim
-{{/run-image-debian}}
-
 COPY --from=build /usr/local /usr/local/
 
-{{#apt-dependencies}}
-RUN apt-get update && apt-get -y --no-install-recommends install {{{apt-dependencies}}}
-{{/apt-dependencies}}
-
-{{#npm-dependencies}}
-RUN npm install -g {{{npm-dependencies}}}
-{{/npm-dependencies}}
-
-{{#run-image-extra-command}}
-RUN {{run-image-extra-command}}
-{{/run-image-extra-command}}
+{{#run-deps}}
+{{#apt}} RUN apt-get update && apt-get install -y {{{apt}}} {{/apt}}
+{{#apk}} RUN apk add -y {{{apk}}} {{/apk}}
+{{#npm}} RUN npm install -g {{{npm}}} {{/npm}}
+{{/run-deps}}
 
 {{#scheme-script}}
 RUN printf "#!/bin/sh\nset -eu\n{{{scheme-script}}}" > /usr/local/bin/scheme-script && chmod +x /usr/local/bin/scheme-script
@@ -122,5 +71,6 @@ RUN printf "#!/bin/sh\nset -eu\n{{{scheme-banner}}}" > /usr/local/bin/scheme-ban
 {{#scheme-r7rs}}
 RUN printf "#!/bin/sh\nset -eu\n{{{scheme-r7rs}}}" > /usr/local/bin/scheme-r7rs && chmod +x /usr/local/bin/scheme-r7rs
 {{/scheme-r7rs}}
+
 RUN ldconfig
 CMD ["scheme-banner"]

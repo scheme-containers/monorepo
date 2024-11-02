@@ -11,7 +11,7 @@ ENV PREFIX=/usr/local
 RUN mkdir -p $PREFIX
 
 RUN apk add alpine-sdk git wget curl make gcc m4 autoconf automake libtool \
-    sudo unzip
+    sudo unzip texinfo
 
 {{#apk-build-dependencies}}
 RUN apk add {{{apk-build-dependencies}}}
