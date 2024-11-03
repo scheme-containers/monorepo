@@ -15,7 +15,8 @@
       (url . "https://github.com/ashinn/chibi-scheme.git")))
   (build-deps (apt ("build-essential")))
   (run-deps (apt ("curl")))
-  (build-steps ("make" "make install")))
+  (build-steps ("make"))
+  (install-steps ("make install")))
 
 (scheme-banner . "chibi-scheme -V && exec chibi-scheme \"$@\"")
 

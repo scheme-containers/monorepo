@@ -131,12 +131,21 @@
                      (release-data (cdr release))
                      (build-steps
                        (if (not (assoc 'build-steps release))
-                         "./configure && make && make install"
+                         "./configure && make"
                          (apply string-append
                                 (append
                                   (map (lambda (command)
                                          (string-append command " && "))
                                        (cadr (assoc 'build-steps release)))
+                                  (list " sleep 0")))))
+                     (install-steps
+                       (if (not (assoc 'install-steps release))
+                         "make install"
+                         (apply string-append
+                                (append
+                                  (map (lambda (command)
+                                         (string-append command " && "))
+                                       (cadr (assoc 'install-steps release)))
                                   (list " sleep 0")))))
                      (build-deps
                        (if (not (assoc 'build-deps release))
@@ -158,7 +167,9 @@
                        (append (list
                                  (cons 'build-deps build-deps)
                                  (cons 'run-deps run-deps)
-                                 (cons 'build-steps build-steps))release-data
+                                 (cons 'build-steps build-steps)
+                                 (cons 'install-steps install-steps))
+                               release-data
                                implementation-data))
                      (dockerfile (cond ((string=? linux "debian")
                                         dockerfile-debian)

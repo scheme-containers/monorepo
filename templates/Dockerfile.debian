@@ -50,6 +50,7 @@ WORKDIR /build
 
 WORKDIR /build/scheme
 RUN {{{build-steps}}}
+RUN {{{install-steps}}}
 
 FROM debian:bookworm-slim
 COPY --from=build /usr/local /usr/local/
