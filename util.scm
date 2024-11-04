@@ -18,5 +18,5 @@
                            (map (lambda (string-item)
                                   (string-append string-item between-string))
                                 list-of-strings))))
-      (string-copy combined (- (string-length combined) (string-length between-string))))))
+      (string-copy combined 0 (- (string-length combined) (string-length between-string))))))
 
