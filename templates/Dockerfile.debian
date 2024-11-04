@@ -23,7 +23,7 @@ WORKDIR /build
 
 {{#archive}}
     {{#url}}
-        RUN wget --quiet -O scheme.tgz {{.}} || true
+        RUN wget --quiet -O scheme.tgz {{.}}
         RUN mkdir scheme && tar -C scheme --strip-components 1 -xzf scheme.tgz
     {{/url}}
     {{#hash}}
