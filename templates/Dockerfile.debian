@@ -49,7 +49,8 @@ WORKDIR /build
 {{/sources}}
 
 WORKDIR /build/scheme
-RUN {{{build-steps}}}
+
+RUN {{#build-directory}} cd {{build-directory}} && {{/build-directory}} {{{build-steps}}}
 RUN {{{install-steps}}}
 
 FROM debian:bookworm-slim
