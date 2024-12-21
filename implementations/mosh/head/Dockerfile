@@ -1,16 +1,16 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 
-# TODO: This uses Jessie because newer gcc versions miscompile Mosh
-
 FROM schemers/mosh AS build
+# We install Gauche like this as compromise
 RUN apt-get update && apt-get -y --no-install-recommends install \
+      wget \
       autoconf \
       automake \
+      libtool \
       bison \
       build-essential \
       ca-certificates \
       cpio \
-      gauche \
       git \
       libffi-dev \
       libgmp-dev \
@@ -19,20 +19,22 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       pkg-config \
       re2c \
  && rm -rf /var/lib/apt/lists/*
+RUN wget https://github.com/shirok/Gauche/releases/download/release0_9_15/Gauche-0.9.15.tgz && tar -xf Gauche-0.9.15.tgz
+RUN cd Gauche-0.9.15 && ./configure && make && make install
 WORKDIR /build
-RUN git clone git://github.com/higepon/mosh.git --depth 1
+RUN git clone https://github.com/higepon/mosh.git --depth=1
 WORKDIR /build/mosh
 RUN ./gen-git-build.sh
 RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:jessie-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libssl1.0.0 \
-      libffi7 \
+      libssl3 \
+      libffi8 \
       libgmp10 \
-      libonig2 \
+      libonig5 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 CMD ["scheme-banner"]
