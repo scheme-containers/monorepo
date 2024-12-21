@@ -19,7 +19,6 @@ COPY onig-config /usr/local/bin/
 WORKDIR /build
 COPY checksum checksum
 ADD https://github.com/higepon/mosh/releases/download/mosh-0.2.9-rc1/mosh-0.2.9-rc1.tar.gz mosh.tar.gz
-#ADD http://storage.osdev.info/pub/mosh/mosh-current.tar.gz mosh.tar.gz
 RUN sha256sum mosh.tar.gz && sha256sum -c checksum
 RUN mkdir mosh && tar -C mosh --strip-components 1 -xf mosh.tar.gz
 WORKDIR /build/mosh
