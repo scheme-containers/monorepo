@@ -1,29 +1,35 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
+      cmake \
       ca-certificates \
       cpio \
       git \
+      libcurl4-openssl-dev \
+      libonig-dev \
       libffi-dev \
       libgmp-dev \
-      llvm \
-      clang \
-      llvm-dev \
-      lld \
+      llvm-15 \
+      clang-15 \
+      llvm-15-dev \
+      lld-15 \
  && rm -rf /var/lib/apt/lists/*
+RUN update-alternatives --install /usr/bin/clang clang++ /usr/bin/clang-15 0
+RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 0
+RUN update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-15 0
 WORKDIR /build/
 RUN git clone https://github.com/fujita-y/ypsilon.git --depth 1
 WORKDIR /build/ypsilon
-RUN make
-RUN make check
-RUN make install
+RUN CC=clang-15 CXX=clang++-15 cmake -DCMAKE_BUILD_TYPE=Release .
+RUN CC=clang-15 CXX=clang++-15 cmake --build .
+RUN CC=Clang-15 CXX=clang++-15 cmake --install .
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi7 \
+      libffi8 \
       libgmp10 \
-      libllvm11 \
+      libllvm15 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin
