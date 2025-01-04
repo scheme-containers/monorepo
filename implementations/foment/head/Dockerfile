@@ -3,11 +3,8 @@ FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
-WORKDIR /build/foment
-RUN git init \
- && git remote add origin https://github.com/leftmike/foment.git \
- && git fetch origin 5488cbd6cabbaeb066d02421ff4b3fc2c19e13ba --depth 1 --tags \
- && git reset --hard FETCH_HEAD
+WORKDIR /build
+RUN git clone https://github.com/leftmike/foment.git --depth=1
 WORKDIR /build/foment/unix
 RUN make
 
