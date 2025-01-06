@@ -2,11 +2,14 @@
 FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
+      ca-certificates \
       git \
       file \
       libtool \
       autoconf \
       automake \
+      autopoint \
+      gperf \
       libncurses5-dev \
       libreadline-dev \
       libltdl-dev \
@@ -19,13 +22,10 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       pkg-config \
       gettext \
  && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /build
-COPY checksum checksum
-ADD https://ftp.gnu.org/gnu/guile/guile-3.0.10.tar.gz guile.tar.gz
-RUN sha256sum guile.tar.gz && sha256sum -c checksum
-RUN mkdir guile && tar -C guile --strip-components 1 -xzf guile.tar.gz
-WORKDIR guile
+RUN git clone https://git.savannah.gnu.org/git/guile.git guile --depth=1
+WORKDIR /build/guile
+RUN ./autogen.sh
 RUN ./configure
 RUN make -j$(nproc)
 RUN make install
