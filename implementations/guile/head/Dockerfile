@@ -36,7 +36,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libltdl7
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
 RUN ln -s /usr/local/bin/guile /usr/local/bin/scheme-banner
-RUN ln -s /usr/local/bin/guile /usr/local/bin/scheme-r7rs
 RUN ldconfig || true
 CMD ["scheme-banner"]
