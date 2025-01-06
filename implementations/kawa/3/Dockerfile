@@ -22,5 +22,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       openjdk-22-jdk-headless \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-banner /usr/local/bin/scheme-banner
+COPY scheme-banner /usr/local/bin
+COPY scheme-r7rs /usr/local/bin
 CMD ["scheme-banner"]
