@@ -336,10 +336,6 @@ pipeline {
         sh 'docker build implementations/vx/head --tag=schemers/vx:head'
       }
     }
-    stage('xscheme') {
-      steps {
-      }
-    }
     stage('ypsilon') {
       steps {
         sh 'docker build implementations/ypsilon/head --tag=schemers/ypsilon:head'
