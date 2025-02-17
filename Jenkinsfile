@@ -1,6 +1,12 @@
+CRON_SETTINGS = BRANCH_NAME == "master" ? '''H H * * *'''
 pipeline {
   agent any
-  options { buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')) }
+  triggers {
+    cron(CRON_SETTINGS)
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+  }
   stages {
       stage('bigloo') {
         steps {
