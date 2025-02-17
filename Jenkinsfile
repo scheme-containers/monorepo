@@ -1,8 +1,7 @@
-CRON_SETTINGS = BRANCH_NAME == "master" ? '''H H * * *'''
 pipeline {
   agent any
   triggers {
-    cron(CRON_SETTINGS)
+    cron(0 0 * * *)
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
