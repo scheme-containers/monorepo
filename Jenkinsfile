@@ -6,8 +6,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/bigloo/4 --tag=schemers/bigloo:4'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/bigloo/head --tag=schemers/bigloo:head'
           }
         }
@@ -23,8 +21,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/chezscheme/10 --tag=schemers/chezscheme:10'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/chezscheme/9 --tag=schemers/chezscheme:9'
           }
         }
@@ -33,8 +29,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/chibi/0 --tag=schemers/chibi:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/chibi/head --tag=schemers/chibi:head'
           }
         }
@@ -43,11 +37,7 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/chicken/4 --tag=schemers/chicken:4'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/chicken/5 --tag=schemers/chicken:5'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/chicken/head --tag=schemers/chicken:head'
           }
         }
@@ -63,8 +53,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/cyclone/0 --tag=schemers/cyclone:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/cyclone/head --tag=schemers/cyclone:head'
           }
         }
@@ -101,8 +89,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/foment/0 --tag=schemers/foment:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/foment/head --tag=schemers/foment:head'
           }
         }
@@ -111,8 +97,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/gambit/4 --tag=schemers/gambit:4'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/gambit/head --tag=schemers/gambit:head'
           }
         }
@@ -121,8 +105,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/gauche/0 --tag=schemers/gauche:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/gauche/head --tag=schemers/gauche:head'
           }
         }
@@ -138,11 +120,7 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/guile/2.2 --tag=schemers/guile:2.2'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/guile/3.0 --tag=schemers/guile:3.0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/guile/head --tag=schemers/guile:head'
           }
         }
@@ -179,8 +157,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/kawa/3 --tag=schemers/kawa:3'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/kawa/head --tag=schemers/kawa:head'
           }
         }
@@ -210,8 +186,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/loko/0 --tag=schemers/loko:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/loko/head --tag=schemers/loko:head'
           }
         }
@@ -227,11 +201,7 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/mit-scheme/10 --tag=schemers/mit-scheme:10'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/mit-scheme/11 --tag=schemers/mit-scheme:11'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/mit-scheme/12 --tag=schemers/mit-scheme:12'
           }
         }
@@ -240,8 +210,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/mosh/0 --tag=schemers/mosh:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/mosh/head --tag=schemers/mosh:head'
           }
         }
@@ -264,8 +232,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/owl/0 --tag=schemers/owl:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/owl/head --tag=schemers/owl:head'
           }
         }
@@ -281,8 +247,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/picrin/0 --tag=schemers/picrin:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/picrin/head --tag=schemers/picrin:head'
           }
         }
@@ -333,8 +297,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/sagittarius/0 --tag=schemers/sagittarius:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/sagittarius/head --tag=schemers/sagittarius:head'
           }
         }
@@ -413,8 +375,6 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/skint/0 --tag=schemers/skint:0'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/skint/head --tag=schemers/skint:head'
           }
         }
@@ -430,11 +390,7 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/stklos/1 --tag=schemers/stklos:1'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/stklos/2 --tag=schemers/stklos:2'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/stklos/head --tag=schemers/stklos:head'
           }
         }
@@ -457,11 +413,7 @@ pipeline {
         steps {
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/tr7/1 --tag=schemers/tr7:1'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/tr7/2 --tag=schemers/tr7:2'
-          }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             sh 'docker build implementations/tr7/head --tag=schemers/tr7:head'
           }
         }
