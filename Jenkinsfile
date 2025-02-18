@@ -20,11 +20,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make bigloo-4'
-          sh 'docker push schemers/bigloo:4'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/bigloo:4
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make bigloo-head'
-          sh 'docker push schemers/bigloo:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/bigloo:head
+              }
+          }
         }
       }
     }
@@ -32,7 +40,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make biwascheme-head'
-          sh 'docker push schemers/biwascheme:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/biwascheme:head
+              }
+          }
         }
       }
     }
@@ -40,19 +52,35 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chezscheme-10'
-          sh 'docker push schemers/chezscheme:10'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chezscheme:10
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chezscheme-9'
-          sh 'docker push schemers/chezscheme:9'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chezscheme:9
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chezscheme-9-alpine'
-          sh 'docker push schemers/chezscheme:9-alpine'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chezscheme:9-alpine
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chezscheme-9-threads'
-          sh 'docker push schemers/chezscheme:9-threads'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chezscheme:9-threads
+              }
+          }
         }
       }
     }
@@ -60,11 +88,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chibi-0'
-          sh 'docker push schemers/chibi:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chibi:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chibi-head'
-          sh 'docker push schemers/chibi:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chibi:head
+              }
+          }
         }
       }
     }
@@ -72,15 +108,27 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chicken-4'
-          sh 'docker push schemers/chicken:4'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chicken:4
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chicken-5'
-          sh 'docker push schemers/chicken:5'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chicken:5
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chicken-head'
-          sh 'docker push schemers/chicken:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/chicken:head
+              }
+          }
         }
       }
     }
@@ -88,7 +136,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make conscheme-head'
-          sh 'docker push schemers/conscheme:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/conscheme:head
+              }
+          }
         }
       }
     }
@@ -96,11 +148,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make cyclone-0'
-          sh 'docker push schemers/cyclone:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/cyclone:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make cyclone-head'
-          sh 'docker push schemers/cyclone:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/cyclone:head
+              }
+          }
         }
       }
     }
@@ -108,7 +168,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make dfsch-head'
-          sh 'docker push schemers/dfsch:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/dfsch:head
+              }
+          }
         }
       }
     }
@@ -116,7 +180,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make digamma-head'
-          sh 'docker push schemers/digamma:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/digamma:head
+              }
+          }
         }
       }
     }
@@ -124,7 +192,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make elk-3'
-          sh 'docker push schemers/elk:3'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/elk:3
+              }
+          }
         }
       }
     }
@@ -132,11 +204,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make femtolisp-head'
-          sh 'docker push schemers/femtolisp:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/femtolisp:head
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make femtolisp-head-lambdaconservatory'
-          sh 'docker push schemers/femtolisp:head-lambdaconservatory'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/femtolisp:head-lambdaconservatory
+              }
+          }
         }
       }
     }
@@ -144,11 +224,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make foment-0'
-          sh 'docker push schemers/foment:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/foment:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make foment-head'
-          sh 'docker push schemers/foment:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/foment:head
+              }
+          }
         }
       }
     }
@@ -156,11 +244,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gambit-4'
-          sh 'docker push schemers/gambit:4'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/gambit:4
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gambit-head'
-          sh 'docker push schemers/gambit:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/gambit:head
+              }
+          }
         }
       }
     }
@@ -168,11 +264,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gauche-0'
-          sh 'docker push schemers/gauche:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/gauche:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gauche-head'
-          sh 'docker push schemers/gauche:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/gauche:head
+              }
+          }
         }
       }
     }
@@ -180,7 +284,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gerbil-0'
-          sh 'docker push schemers/gerbil:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/gerbil:0
+              }
+          }
         }
       }
     }
@@ -188,15 +296,27 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make guile-2'
-          sh 'docker push schemers/guile:2'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/guile:2
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make guile-3'
-          sh 'docker push schemers/guile:3'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/guile:3
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make guile-head'
-          sh 'docker push schemers/guile:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/guile:head
+              }
+          }
         }
       }
     }
@@ -204,7 +324,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make husk-head'
-          sh 'docker push schemers/husk:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/husk:head
+              }
+          }
         }
       }
     }
@@ -212,7 +336,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ikarus-head'
-          sh 'docker push schemers/ikarus:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/ikarus:head
+              }
+          }
         }
       }
     }
@@ -220,11 +348,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ironscheme-1'
-          sh 'docker push schemers/ironscheme:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/ironscheme:1
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ironscheme-1-mono'
-          sh 'docker push schemers/ironscheme:1-mono'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/ironscheme:1-mono
+              }
+          }
         }
       }
     }
@@ -232,7 +368,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make jazz-head'
-          sh 'docker push schemers/jazz:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/jazz:head
+              }
+          }
         }
       }
     }
@@ -240,11 +380,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make kawa-3'
-          sh 'docker push schemers/kawa:3'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/kawa:3
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make kawa-head'
-          sh 'docker push schemers/kawa:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/kawa:head
+              }
+          }
         }
       }
     }
@@ -252,7 +400,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ksi-3'
-          sh 'docker push schemers/ksi:3'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/ksi:3
+              }
+          }
         }
       }
     }
@@ -260,7 +412,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make larceny-1'
-          sh 'docker push schemers/larceny:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/larceny:1
+              }
+          }
         }
       }
     }
@@ -268,7 +424,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make lips-head'
-          sh 'docker push schemers/lips:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/lips:head
+              }
+          }
         }
       }
     }
@@ -276,15 +436,27 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make loko-0'
-          sh 'docker push schemers/loko:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/loko:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make loko-0-base'
-          sh 'docker push schemers/loko:0-base'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/loko:0-base
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make loko-head'
-          sh 'docker push schemers/loko:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/loko:head
+              }
+          }
         }
       }
     }
@@ -292,7 +464,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make minischeme-0'
-          sh 'docker push schemers/minischeme:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/minischeme:0
+              }
+          }
         }
       }
     }
@@ -300,15 +476,27 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make mit-scheme-10'
-          sh 'docker push schemers/mit-scheme:10'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/mit-scheme:10
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make mit-scheme-11'
-          sh 'docker push schemers/mit-scheme:11'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/mit-scheme:11
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make mit-scheme-12'
-          sh 'docker push schemers/mit-scheme:12'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/mit-scheme:12
+              }
+          }
         }
       }
     }
@@ -316,11 +504,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make mosh-0'
-          sh 'docker push schemers/mosh:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/mosh:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make mosh-head'
-          sh 'docker push schemers/mosh:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/mosh:head
+              }
+          }
         }
       }
     }
@@ -328,7 +524,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make oaklisp-1'
-          sh 'docker push schemers/oaklisp:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/oaklisp:1
+              }
+          }
         }
       }
     }
@@ -336,7 +536,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make otus-2'
-          sh 'docker push schemers/otus:2'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/otus:2
+              }
+          }
         }
       }
     }
@@ -344,11 +548,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make owl-0'
-          sh 'docker push schemers/owl:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/owl:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make owl-head'
-          sh 'docker push schemers/owl:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/owl:head
+              }
+          }
         }
       }
     }
@@ -356,7 +568,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make pc-scheme-3'
-          sh 'docker push schemers/pc-scheme:3'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/pc-scheme:3
+              }
+          }
         }
       }
     }
@@ -364,11 +580,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make picrin-0'
-          sh 'docker push schemers/picrin:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/picrin:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make picrin-head'
-          sh 'docker push schemers/picrin:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/picrin:head
+              }
+          }
         }
       }
     }
@@ -376,7 +600,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make racket-8'
-          sh 'docker push schemers/racket:8'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/racket:8
+              }
+          }
         }
       }
     }
@@ -384,7 +612,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make rep-0'
-          sh 'docker push schemers/rep:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/rep:0
+              }
+          }
         }
       }
     }
@@ -392,7 +624,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make rhizome-pi-0'
-          sh 'docker push schemers/rhizome-pi:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/rhizome-pi:0
+              }
+          }
         }
       }
     }
@@ -400,7 +636,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make rscheme-0'
-          sh 'docker push schemers/rscheme:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/rscheme:0
+              }
+          }
         }
       }
     }
@@ -408,11 +648,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make s7-head'
-          sh 'docker push schemers/s7:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/s7:head
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make s7-latest'
-          sh 'docker push schemers/s7:latest'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/s7:latest
+              }
+          }
         }
       }
     }
@@ -420,7 +668,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make s9fes-2018'
-          sh 'docker push schemers/s9fes:2018'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/s9fes:2018
+              }
+          }
         }
       }
     }
@@ -428,11 +680,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sagittarius-0'
-          sh 'docker push schemers/sagittarius:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/sagittarius:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sagittarius-head'
-          sh 'docker push schemers/sagittarius:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/sagittarius:head
+              }
+          }
         }
       }
     }
@@ -440,7 +700,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make scheme48-1'
-          sh 'docker push schemers/scheme48:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/scheme48:1
+              }
+          }
         }
       }
     }
@@ -448,7 +712,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make schemik-1'
-          sh 'docker push schemers/schemik:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/schemik:1
+              }
+          }
         }
       }
     }
@@ -456,7 +724,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make schluessel-0'
-          sh 'docker push schemers/schluessel:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/schluessel:0
+              }
+          }
         }
       }
     }
@@ -464,7 +736,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make scm-5'
-          sh 'docker push schemers/scm:5'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/scm:5
+              }
+          }
         }
       }
     }
@@ -472,7 +748,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make scsh-0'
-          sh 'docker push schemers/scsh:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/scsh:0
+              }
+          }
         }
       }
     }
@@ -480,7 +760,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make shoe-0'
-          sh 'docker push schemers/shoe:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/shoe:0
+              }
+          }
         }
       }
     }
@@ -488,7 +772,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sigscheme-0'
-          sh 'docker push schemers/sigscheme:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/sigscheme:0
+              }
+          }
         }
       }
     }
@@ -496,7 +784,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make siod-3'
-          sh 'docker push schemers/siod:3'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/siod:3
+              }
+          }
         }
       }
     }
@@ -504,7 +796,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sisc-1'
-          sh 'docker push schemers/sisc:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/sisc:1
+              }
+          }
         }
       }
     }
@@ -512,7 +808,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sizzle-0'
-          sh 'docker push schemers/sizzle:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/sizzle:0
+              }
+          }
         }
       }
     }
@@ -520,11 +820,19 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make skint-0'
-          sh 'docker push schemers/skint:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/skint:0
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make skint-head'
-          sh 'docker push schemers/skint:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/skint:head
+              }
+          }
         }
       }
     }
@@ -532,7 +840,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make stalin-0'
-          sh 'docker push schemers/stalin:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/stalin:0
+              }
+          }
         }
       }
     }
@@ -540,15 +852,27 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make stklos-1'
-          sh 'docker push schemers/stklos:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/stklos:1
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make stklos-2'
-          sh 'docker push schemers/stklos:2'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/stklos:2
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make stklos-head'
-          sh 'docker push schemers/stklos:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/stklos:head
+              }
+          }
         }
       }
     }
@@ -556,7 +880,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sxm-1'
-          sh 'docker push schemers/sxm:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/sxm:1
+              }
+          }
         }
       }
     }
@@ -564,7 +892,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make tinyscheme-1'
-          sh 'docker push schemers/tinyscheme:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/tinyscheme:1
+              }
+          }
         }
       }
     }
@@ -572,15 +904,27 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make tr7-1'
-          sh 'docker push schemers/tr7:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/tr7:1
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make tr7-2'
-          sh 'docker push schemers/tr7:2'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/tr7:2
+              }
+          }
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make tr7-head'
-          sh 'docker push schemers/tr7:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/tr7:head
+              }
+          }
         }
       }
     }
@@ -588,7 +932,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make umb-3'
-          sh 'docker push schemers/umb:3'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/umb:3
+              }
+          }
         }
       }
     }
@@ -596,7 +944,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make unlikely-head'
-          sh 'docker push schemers/unlikely:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/unlikely:head
+              }
+          }
         }
       }
     }
@@ -604,7 +956,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make unsyntax-head'
-          sh 'docker push schemers/unsyntax:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/unsyntax:head
+              }
+          }
         }
       }
     }
@@ -612,7 +968,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make vicare-0'
-          sh 'docker push schemers/vicare:0'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/vicare:0
+              }
+          }
         }
       }
     }
@@ -620,7 +980,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make vscm-1'
-          sh 'docker push schemers/vscm:1'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/vscm:1
+              }
+          }
         }
       }
     }
@@ -628,7 +992,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make vx-head'
-          sh 'docker push schemers/vx:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/vx:head
+              }
+          }
         }
       }
     }
@@ -636,7 +1004,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make xscheme-head-lambdaconservatory'
-          sh 'docker push schemers/xscheme:head-lambdaconservatory'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/xscheme:head-lambdaconservatory
+              }
+          }
         }
       }
     }
@@ -644,7 +1016,11 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ypsilon-head'
-          sh 'docker push schemers/ypsilon:head'
+          script {
+              if (env.BRANCH_NAME = 'master') {
+                  docker push schemers/ypsilon:head
+              }
+          }
         }
       }
     }
