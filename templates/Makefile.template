@@ -4,7 +4,7 @@ build:
 {{#implementations}}
 {{#versions}}
 {{implementation}}-{{version}}:
-	docker build implementations/{{implementation}}/{{version}} --tag={{implementation}}:{{version}}
+	docker build implementations/{{implementation}}/{{version}} --tag=schemers/{{implementation}}:{{version}}
 
 {{/versions}}
 {{/implementations}}

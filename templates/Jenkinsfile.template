@@ -22,6 +22,7 @@ pipeline {
       {{#versions}}
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make {{implementation}}-{{version}}'
+          sh 'docker push schemers/{{implementation}}:{{version}}'
         }
       {{/versions}}
       }
