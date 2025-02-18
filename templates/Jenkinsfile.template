@@ -18,14 +18,14 @@ pipeline {
     }
     {{#implementations}}
     stage('{{implementation}}') {
+      environment {
+          BRANCH = env.BRANCH_NAME
+      }
       steps {
       {{#versions}}
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make {{implementation}}-{{version}}'
-          script {
-              if (env.BRANCH_NAME = 'master') {
-                  docker push schemers/{{implementation}}:{{version}}
-              }
+          sh 'if [ "$BRANCH" = "master" ]; then docker push schemers/{{implementation}}:{{version}}; fi'
           }
         }
       {{/versions}}
