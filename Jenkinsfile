@@ -553,7 +553,6 @@ pipeline {
       }
     }
     }
-  }
 
   post {
       always {
