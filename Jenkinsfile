@@ -12,7 +12,9 @@ pipeline {
             DOCKER_USERNAME = credentials('DOCKER_USERNAME')
             DOCKER_ACCESS_TOKEN = credentials('DOCKER_ACCESS_TOKEN')
         }
-        sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_ACCESS_TOKEN}'
+        steps {
+            sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_ACCESS_TOKEN}'
+        }
     }
     stage('bigloo') {
       steps {
