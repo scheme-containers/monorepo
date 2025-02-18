@@ -22,12 +22,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make bigloo-head'
         }
+      }
     }
     stage('biwascheme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make biwascheme-head'
         }
+      }
     }
     stage('chezscheme') {
       steps {
@@ -43,6 +45,7 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chezscheme-9-threads'
         }
+      }
     }
     stage('chibi') {
       steps {
@@ -52,6 +55,7 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chibi-head'
         }
+      }
     }
     stage('chicken') {
       steps {
@@ -64,12 +68,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chicken-head'
         }
+      }
     }
     stage('conscheme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make conscheme-head'
         }
+      }
     }
     stage('cyclone') {
       steps {
@@ -79,24 +85,28 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make cyclone-head'
         }
+      }
     }
     stage('dfsch') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make dfsch-head'
         }
+      }
     }
     stage('digamma') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make digamma-head'
         }
+      }
     }
     stage('elk') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make elk-3'
         }
+      }
     }
     stage('femtolisp') {
       steps {
@@ -106,6 +116,7 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make femtolisp-head-lambdaconservatory'
         }
+      }
     }
     stage('foment') {
       steps {
@@ -115,6 +126,7 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make foment-head'
         }
+      }
     }
     stage('gambit') {
       steps {
@@ -124,6 +136,7 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gambit-head'
         }
+      }
     }
     stage('gauche') {
       steps {
@@ -133,12 +146,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gauche-head'
         }
+      }
     }
     stage('gerbil') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gerbil-0'
         }
+      }
     }
     stage('guile') {
       steps {
@@ -151,18 +166,21 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make guile-head'
         }
+      }
     }
     stage('husk') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make husk-head'
         }
+      }
     }
     stage('ikarus') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ikarus-head'
         }
+      }
     }
     stage('ironscheme') {
       steps {
@@ -172,12 +190,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ironscheme-1-mono'
         }
+      }
     }
     stage('jazz') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make jazz-head'
         }
+      }
     }
     stage('kawa') {
       steps {
@@ -187,24 +207,28 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make kawa-head'
         }
+      }
     }
     stage('ksi') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ksi-3'
         }
+      }
     }
     stage('larceny') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make larceny-1'
         }
+      }
     }
     stage('lips') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make lips-head'
         }
+      }
     }
     stage('loko') {
       steps {
@@ -217,12 +241,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make loko-head'
         }
+      }
     }
     stage('minischeme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make minischeme-0'
         }
+      }
     }
     stage('mit-scheme') {
       steps {
@@ -235,6 +261,7 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make mit-scheme-12'
         }
+      }
     }
     stage('mosh') {
       steps {
@@ -244,18 +271,21 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make mosh-head'
         }
+      }
     }
     stage('oaklisp') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make oaklisp-1'
         }
+      }
     }
     stage('otus') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make otus-2'
         }
+      }
     }
     stage('owl') {
       steps {
@@ -265,12 +295,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make owl-head'
         }
+      }
     }
     stage('pc-scheme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make pc-scheme-3'
         }
+      }
     }
     stage('picrin') {
       steps {
@@ -280,30 +312,35 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make picrin-head'
         }
+      }
     }
     stage('racket') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make racket-8'
         }
+      }
     }
     stage('rep') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make rep-0'
         }
+      }
     }
     stage('rhizome-pi') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make rhizome-pi-0'
         }
+      }
     }
     stage('rscheme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make rscheme-0'
         }
+      }
     }
     stage('s7') {
       steps {
@@ -313,12 +350,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make s7-latest'
         }
+      }
     }
     stage('s9fes') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make s9fes-2018'
         }
+      }
     }
     stage('sagittarius') {
       steps {
@@ -328,66 +367,77 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sagittarius-head'
         }
+      }
     }
     stage('scheme48') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make scheme48-1'
         }
+      }
     }
     stage('schemik') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make schemik-1'
         }
+      }
     }
     stage('schluessel') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make schluessel-0'
         }
+      }
     }
     stage('scm') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make scm-5'
         }
+      }
     }
     stage('scsh') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make scsh-0'
         }
+      }
     }
     stage('shoe') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make shoe-0'
         }
+      }
     }
     stage('sigscheme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sigscheme-0'
         }
+      }
     }
     stage('siod') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make siod-3'
         }
+      }
     }
     stage('sisc') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sisc-1'
         }
+      }
     }
     stage('sizzle') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sizzle-0'
         }
+      }
     }
     stage('skint') {
       steps {
@@ -397,12 +447,14 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make skint-head'
         }
+      }
     }
     stage('stalin') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make stalin-0'
         }
+      }
     }
     stage('stklos') {
       steps {
@@ -415,18 +467,21 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make stklos-head'
         }
+      }
     }
     stage('sxm') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sxm-1'
         }
+      }
     }
     stage('tinyscheme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make tinyscheme-1'
         }
+      }
     }
     stage('tr7') {
       steps {
@@ -439,54 +494,63 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make tr7-head'
         }
+      }
     }
     stage('umb') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make umb-3'
         }
+      }
     }
     stage('unlikely') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make unlikely-head'
         }
+      }
     }
     stage('unsyntax') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make unsyntax-head'
         }
+      }
     }
     stage('vicare') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make vicare-0'
         }
+      }
     }
     stage('vscm') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make vscm-1'
         }
+      }
     }
     stage('vx') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make vx-head'
         }
+      }
     }
     stage('xscheme') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make xscheme-head-lambdaconservatory'
         }
+      }
     }
     stage('ypsilon') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make ypsilon-head'
         }
+      }
     }
     }
   }

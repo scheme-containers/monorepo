@@ -14,7 +14,7 @@ pipeline {
         }
         sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_ACCESS_TOKEN}'
     }
-  {{#implementations}}
+    {{#implementations}}
     stage('{{implementation}}') {
       steps {
       {{#versions}}
@@ -22,8 +22,9 @@ pipeline {
           sh 'make {{implementation}}-{{version}}'
         }
       {{/versions}}
+      }
     }
-  {{/implementations}}
+    {{/implementations}}
     }
   }
 
