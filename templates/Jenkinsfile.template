@@ -1,0 +1,35 @@
+pipeline {
+  agent any
+  triggers {
+    cron('0 0 * * *')
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+  }
+  stages {
+    stage('Docker login') {
+        environment {
+            DOCKER_USERNAME = credentials('DOCKER_USERNAME')
+            DOCKER_ACCESS_TOKEN = credentials('DOCKER_ACCESS_TOKEN')
+        }
+        sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_ACCESS_TOKEN}'
+    }
+  {{#implementations}}
+    stage('{{implementation}}') {
+      steps {
+      {{#versions}}
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make {{implementation}}-{{version}}'
+        }
+      {{/versions}}
+    }
+  {{/implementations}}
+    }
+  }
+
+  post {
+      always {
+          sh 'docker logout'
+      }
+  }
+}

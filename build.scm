@@ -1,53 +1,47 @@
 (import (scheme base)
         (scheme write)
         (scheme file)
+        (scheme process-context)
+        (arvyy mustache)
         (srfi 170))
 
+(define slurp-loop
+  (lambda (line result)
+    (if (eof-object? line)
+      result
+      (slurp-loop (read-line) (string-append result line (string #\newline))))))
 
-(define implementations (directory-files "implementations"))
-(define print
-  (lambda items
-    (for-each
-      (lambda (item)
-        (display item)
-        (newline))
-      items)))
+(define slurp
+  (lambda (path)
+    (with-input-from-file
+      path
+      (lambda ()
+        (slurp-loop (read-line) "")))))
 
-(print
-  "pipeline {"
-  "  agent any"
-  "  triggers {"
-  "    cron('0 0 * * *')"
-  "  }"
-  "  options {"
-  "    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))"
-  "  }"
-  "  stages {")
+(define implementations
+  (list->vector
+    (map
+      (lambda (implementation)
+        (let ((versions (map (lambda (name)
+                               (list (cons 'version name)))
+                             (directory-files (string-append "implementations/"
+                                                             implementation)))))
+          (list (cons 'implementation implementation)
+                (cons 'versions (list->vector versions)))))
+      (directory-files "implementations"))))
 
-(for-each
-  (lambda (implementation)
-    (let ((versions (directory-files (string-append "implementations/"
-                                                    implementation))))
-      (when (member #t (map (lambda (item)
-                                   (or (number? (string->number item))
-                                       (string=? item "head")))
-                                 versions))
-      (print (string-append "      stage('" implementation "') {")
-             "        steps {")
-      (for-each
-        (lambda (version)
-          (when (or (string->number version)
-                    (string=? version "head"))
-            (print "          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
-              (string-append "            sh 'docker build"
-                                  " implementations/" implementation "/" version
-                                  " --tag=schemers/" implementation ":" version
-                                  "'")
-              "          }")))
-          versions)
-      (print "        }")
-      (print "      }"))))
-    implementations)
+;; Jenkinsfile
+(call-with-output-file
+  "Jenkinsfile"
+  (lambda (out)
+    (execute (compile (slurp "templates/Jenkinsfile.template"))
+             (list (cons 'implementations implementations))
+             out)))
 
-(print "    }"
-       "}")
+;; Makefile
+(call-with-output-file
+  "Makefile"
+  (lambda (out)
+    (execute (compile (slurp "templates/Makefile.template"))
+             (list (cons 'implementations implementations))
+             out)))

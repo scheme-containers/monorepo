@@ -1,0 +1,10 @@
+build:
+	gosh -r7 -I ./snow build.scm
+
+{{#implementations}}
+{{#versions}}
+{{implementation}}-{{version}}:
+	docker build implementations/{{implementation}}/{{version}} --tag={{implementation}}:{{version}}
+
+{{/versions}}
+{{/implementations}}

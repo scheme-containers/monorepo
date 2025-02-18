@@ -7,9 +7,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://code.call-cc.org/git/chicken-core.git chicken
 WORKDIR /build/chicken
-RUN make PLATFORM=linux spotless
-RUN make PLATFORM=linux CHICKEN=/usr/local/bin/chicken
-RUN make PLATFORM=linux install
+RUN chicken-install r7rs
+RUN ./configure --platform=linux --chicken=/usr/local/bin/chicken --prefix=/usr/local
+RUN make spotless
+RUN make
+RUN make install
 
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
