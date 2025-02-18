@@ -11,9 +11,10 @@ pipeline {
         environment {
             DOCKER_USERNAME = credentials('DOCKER_USERNAME')
             DOCKER_ACCESS_TOKEN = credentials('DOCKER_ACCESS_TOKEN')
+            BRANCH = "env.BRANCH_NAME"
         }
         steps {
-            sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_ACCESS_TOKEN}'
+            sh 'test "$BRANCH" = "master" && docker login -u ${DOCKER_USERNAME} -p ${DOCKER_ACCESS_TOKEN} || true'
         }
     }
     {{#implementations}}
@@ -35,7 +36,7 @@ pipeline {
 
   post {
       always {
-          sh 'docker logout'
+          sh 'test "$BRANCH" = "master" && docker logout || true'
       }
   }
 }
