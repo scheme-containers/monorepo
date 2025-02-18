@@ -19,7 +19,7 @@ pipeline {
     {{#implementations}}
     stage('{{implementation}}') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
       {{#versions}}

@@ -18,7 +18,7 @@ pipeline {
     }
     stage('bigloo') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -33,7 +33,7 @@ pipeline {
     }
     stage('biwascheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -44,7 +44,7 @@ pipeline {
     }
     stage('chezscheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -67,7 +67,7 @@ pipeline {
     }
     stage('chibi') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -82,7 +82,7 @@ pipeline {
     }
     stage('chicken') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -101,7 +101,7 @@ pipeline {
     }
     stage('conscheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -112,7 +112,7 @@ pipeline {
     }
     stage('cyclone') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -127,7 +127,7 @@ pipeline {
     }
     stage('dfsch') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -138,7 +138,7 @@ pipeline {
     }
     stage('digamma') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -149,7 +149,7 @@ pipeline {
     }
     stage('elk') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -160,7 +160,7 @@ pipeline {
     }
     stage('femtolisp') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -175,7 +175,7 @@ pipeline {
     }
     stage('foment') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -190,7 +190,7 @@ pipeline {
     }
     stage('gambit') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -205,7 +205,7 @@ pipeline {
     }
     stage('gauche') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -220,7 +220,7 @@ pipeline {
     }
     stage('gerbil') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -231,7 +231,7 @@ pipeline {
     }
     stage('guile') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -250,7 +250,7 @@ pipeline {
     }
     stage('husk') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -261,7 +261,7 @@ pipeline {
     }
     stage('ikarus') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -272,7 +272,7 @@ pipeline {
     }
     stage('ironscheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -287,7 +287,7 @@ pipeline {
     }
     stage('jazz') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -298,7 +298,7 @@ pipeline {
     }
     stage('kawa') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -313,7 +313,7 @@ pipeline {
     }
     stage('ksi') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -324,7 +324,7 @@ pipeline {
     }
     stage('larceny') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -335,7 +335,7 @@ pipeline {
     }
     stage('lips') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -346,7 +346,7 @@ pipeline {
     }
     stage('loko') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -365,7 +365,7 @@ pipeline {
     }
     stage('minischeme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -376,7 +376,7 @@ pipeline {
     }
     stage('mit-scheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -395,7 +395,7 @@ pipeline {
     }
     stage('mosh') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -410,7 +410,7 @@ pipeline {
     }
     stage('oaklisp') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -421,7 +421,7 @@ pipeline {
     }
     stage('otus') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -432,7 +432,7 @@ pipeline {
     }
     stage('owl') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -447,7 +447,7 @@ pipeline {
     }
     stage('pc-scheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -458,7 +458,7 @@ pipeline {
     }
     stage('picrin') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -473,7 +473,7 @@ pipeline {
     }
     stage('racket') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -484,7 +484,7 @@ pipeline {
     }
     stage('rep') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -495,7 +495,7 @@ pipeline {
     }
     stage('rhizome-pi') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -506,7 +506,7 @@ pipeline {
     }
     stage('rscheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -517,7 +517,7 @@ pipeline {
     }
     stage('s7') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -532,7 +532,7 @@ pipeline {
     }
     stage('s9fes') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -543,7 +543,7 @@ pipeline {
     }
     stage('sagittarius') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -558,7 +558,7 @@ pipeline {
     }
     stage('scheme48') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -569,7 +569,7 @@ pipeline {
     }
     stage('schemik') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -580,7 +580,7 @@ pipeline {
     }
     stage('schluessel') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -591,7 +591,7 @@ pipeline {
     }
     stage('scm') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -602,7 +602,7 @@ pipeline {
     }
     stage('scsh') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -613,7 +613,7 @@ pipeline {
     }
     stage('shoe') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -624,7 +624,7 @@ pipeline {
     }
     stage('sigscheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -635,7 +635,7 @@ pipeline {
     }
     stage('siod') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -646,7 +646,7 @@ pipeline {
     }
     stage('sisc') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -657,7 +657,7 @@ pipeline {
     }
     stage('sizzle') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -668,7 +668,7 @@ pipeline {
     }
     stage('skint') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -683,7 +683,7 @@ pipeline {
     }
     stage('stalin') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -694,7 +694,7 @@ pipeline {
     }
     stage('stklos') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -713,7 +713,7 @@ pipeline {
     }
     stage('sxm') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -724,7 +724,7 @@ pipeline {
     }
     stage('tinyscheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -735,7 +735,7 @@ pipeline {
     }
     stage('tr7') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -754,7 +754,7 @@ pipeline {
     }
     stage('umb') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -765,7 +765,7 @@ pipeline {
     }
     stage('unlikely') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -776,7 +776,7 @@ pipeline {
     }
     stage('unsyntax') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -787,7 +787,7 @@ pipeline {
     }
     stage('vicare') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -798,7 +798,7 @@ pipeline {
     }
     stage('vscm') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -809,7 +809,7 @@ pipeline {
     }
     stage('vx') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -820,7 +820,7 @@ pipeline {
     }
     stage('xscheme') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -831,7 +831,7 @@ pipeline {
     }
     stage('ypsilon') {
       environment {
-          BRANCH = env.BRANCH_NAME
+          BRANCH = "env.BRANCH_NAME"
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
