@@ -1,0 +1,485 @@
+pipeline {
+  agent any
+  triggers {
+    cron('0 0 * * *')
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+  }
+  stages {
+        stage('bigloo') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-bigloo-4'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-bigloo-head'
+                }
+            }
+        stage('biwascheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-biwascheme-head'
+                }
+            }
+        stage('chezscheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chezscheme-10'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chezscheme-9'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chezscheme-9-alpine'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chezscheme-9-threads'
+                }
+            }
+        stage('chibi') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chibi-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chibi-head'
+                }
+            }
+        stage('chicken') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chicken-4'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chicken-5'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-chicken-head'
+                }
+            }
+        stage('conscheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-conscheme-head'
+                }
+            }
+        stage('cyclone') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-cyclone-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-cyclone-head'
+                }
+            }
+        stage('dfsch') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-dfsch-head'
+                }
+            }
+        stage('digamma') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-digamma-head'
+                }
+            }
+        stage('elk') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-elk-3'
+                }
+            }
+        stage('femtolisp') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-femtolisp-head'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-femtolisp-head-lambdaconservatory'
+                }
+            }
+        stage('foment') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-foment-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-foment-head'
+                }
+            }
+        stage('gambit') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-gambit-4'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-gambit-head'
+                }
+            }
+        stage('gauche') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-gauche-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-gauche-head'
+                }
+            }
+        stage('gerbil') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-gerbil-0'
+                }
+            }
+        stage('guile') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-guile-2'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-guile-3'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-guile-head'
+                }
+            }
+        stage('husk') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-husk-head'
+                }
+            }
+        stage('ikarus') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-ikarus-head'
+                }
+            }
+        stage('ironscheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-ironscheme-1'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-ironscheme-1-mono'
+                }
+            }
+        stage('jazz') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-jazz-head'
+                }
+            }
+        stage('kawa') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-kawa-3'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-kawa-head'
+                }
+            }
+        stage('ksi') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-ksi-3'
+                }
+            }
+        stage('larceny') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-larceny-1'
+                }
+            }
+        stage('lips') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-lips-head'
+                }
+            }
+        stage('loko') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-loko-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-loko-0-base'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-loko-head'
+                }
+            }
+        stage('minischeme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-minischeme-0'
+                }
+            }
+        stage('mit-scheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-mit-scheme-10'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-mit-scheme-11'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-mit-scheme-12'
+                }
+            }
+        stage('mosh') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-mosh-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-mosh-head'
+                }
+            }
+        stage('oaklisp') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-oaklisp-1'
+                }
+            }
+        stage('otus') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-otus-2'
+                }
+            }
+        stage('owl') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-owl-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-owl-head'
+                }
+            }
+        stage('pc-scheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-pc-scheme-3'
+                }
+            }
+        stage('picrin') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-picrin-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-picrin-head'
+                }
+            }
+        stage('racket') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-racket-8'
+                }
+            }
+        stage('rep') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-rep-0'
+                }
+            }
+        stage('rhizome-pi') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-rhizome-pi-0'
+                }
+            }
+        stage('rscheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-rscheme-0'
+                }
+            }
+        stage('s7') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-s7-head'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-s7-latest'
+                }
+            }
+        stage('s9fes') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-s9fes-2018'
+                }
+            }
+        stage('sagittarius') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-sagittarius-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-sagittarius-head'
+                }
+            }
+        stage('scheme48') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-scheme48-1'
+                }
+            }
+        stage('schemik') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-schemik-1'
+                }
+            }
+        stage('schluessel') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-schluessel-0'
+                }
+            }
+        stage('scm') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-scm-5'
+                }
+            }
+        stage('scsh') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-scsh-0'
+                }
+            }
+        stage('shoe') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-shoe-0'
+                }
+            }
+        stage('sigscheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-sigscheme-0'
+                }
+            }
+        stage('siod') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-siod-3'
+                }
+            }
+        stage('sisc') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-sisc-1'
+                }
+            }
+        stage('sizzle') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-sizzle-0'
+                }
+            }
+        stage('skint') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-skint-0'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-skint-head'
+                }
+            }
+        stage('stalin') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-stalin-0'
+                }
+            }
+        stage('stklos') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-stklos-1'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-stklos-2'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-stklos-head'
+                }
+            }
+        stage('sxm') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-sxm-1'
+                }
+            }
+        stage('tinyscheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-tinyscheme-1'
+                }
+            }
+        stage('tr7') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-tr7-1'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-tr7-2'
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-tr7-head'
+                }
+            }
+        stage('umb') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-umb-3'
+                }
+            }
+        stage('unlikely') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-unlikely-head'
+                }
+            }
+        stage('unsyntax') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-unsyntax-head'
+                }
+            }
+        stage('vicare') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-vicare-0'
+                }
+            }
+        stage('vscm') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-vscm-1'
+                }
+            }
+        stage('vx') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-vx-head'
+                }
+            }
+        stage('xscheme') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-xscheme-head-lambdaconservatory'
+                }
+            }
+        stage('ypsilon') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make -f Makefile.build build-ypsilon-head'
+                }
+            }
+  }
+}
