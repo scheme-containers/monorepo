@@ -25,7 +25,7 @@ pipeline {
       {{#versions}}
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make {{implementation}}-{{version}}'
-          sh 'if [ "$BRANCH" = "master" ]; then docker push schemers/{{implementation}}:{{version}}; fi'
+          sh 'test "$BRANCH" = "master" && docker push schemers/{{implementation}}:{{version}}'
         }
       {{/versions}}
       }
