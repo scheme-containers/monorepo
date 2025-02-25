@@ -5,22 +5,21 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       default-jdk-headless sqlite3 \
       gcc libc-dev libgmp-dev libunistring-dev \
       libpcre3-dev libsqlite3-dev libssl-dev \
-      git ca-certificates \
+      git ca-certificates wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/manuel-serrano/bigloo.git
+RUN git clone https://github.com/manuel-serrano/bigloo.git --depth=1
 WORKDIR /build/bigloo
-RUN git checkout 4.4b
 RUN ./configure
-RUN LD_LIBRARY_PATH=/usr/local/lib/bigloo/4.4b \
-      make bigboot BGLBUILDBINDIR=/usr/local/bin
-RUN find /usr/local -type f -delete
-RUN make install-progs
-RUN make fullbootstrap-sans-log
-RUN make install-sans-docs
-RUN make fulltest
+RUN make
+#RUN LD_LIBRARY_PATH=/usr/local/lib/bigloo/* \ make bigboot BGLBUILDBINDIR=/usr/local/bin
+#RUN find /usr/local -type f -delete
+#RUN make install-progs
+#RUN make fullbootstrap-sans-log
+#RUN make install-sans-docs
+#RUN make fulltest
 
-FROM debian:bullseye
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       default-jre-headless sqlite3 \
       gcc libc-dev libgmp-dev libunistring-dev \

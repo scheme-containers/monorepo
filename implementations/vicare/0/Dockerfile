@@ -1,36 +1,25 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-       ca-certificates \
-       gcc \
-       libc6-dev \
-       libffi-dev \
-       libgmp-dev \
-       libreadline-dev \
-       file \
-       make \
-       wget \
-       xz-utils \
+       ca-certificates gcc libc6-dev libffi-dev libgmp-dev libreadline-dev \
+       file make wget xz-utils build-essential automake autoconf libtool \
+       texinfo \
   && rm -rf /var/lib/apt/lists/*
 
-RUN set -uxe; \
-    expectedSha256="47c6b275ce8abf9fe4e0fd7f1b895e45db85e9ed326b75afdf8c75d1eac73163"; \
-    url="https://bitbucket.org/marcomaggi/vicare-scheme/downloads/vicare-scheme-0.4.1-devel.3.tar.xz"; \
-    wget --no-verbose "$url" -O vs.tar.xz; \
-    echo "${expectedSha256} *vs.tar.xz" | sha256sum -c -; \
-    mkdir vs; \
-    tar -C vs --strip-components 1 -xaf vs.tar.xz; \
-    rm vs.tar.xz
-WORKDIR vs
-RUN set -uxe; \
-    ./configure --prefix=/usr/local/vicare; \
-    make; \
-    make install; \
-    make clean
+WORKDIR /build
+COPY checksum checksum
+RUN wget https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4d1.2.tar.gz && mv v0.4d1.2.tar.gz vicare.tar.gz
+RUN sha256sum vicare.tar.gz && sha256sum -c checksum
+RUN tar -xf vicare.tar.gz && mv vicare-0.4d1.2 vicare
+WORKDIR /build/vicare
+RUN bash autogen.sh
+RUN ./configure
+RUN make
+RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-       libffi7 \
+       libffi8 \
        libgmp10 \
        libreadline8 \
   && rm -rf /var/lib/apt/lists/*

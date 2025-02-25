@@ -5,12 +5,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       default-jdk-headless sqlite3 \
       gcc libc-dev libgmp-dev libunistring-dev \
       libpcre2-dev libsqlite3-dev libssl-dev \
-      curl \
+      wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN curl --fail --silent --show-error -o bigloo.tar.gz \
-      ftp://ftp-sop.inria.fr/indes/fp/Bigloo/bigloo-4.5b.tar.gz
+RUN wget ftp://ftp-sop.inria.fr/indes/fp/Bigloo/bigloo-4.5a-1.tar.gz && mv bigloo-4.5a-1.tar.gz bigloo.tar.gz
 RUN sha256sum bigloo.tar.gz && sha256sum -c checksum
 RUN mkdir bigloo && tar -C bigloo --strip-components 1 -xf bigloo.tar.gz
 WORKDIR /build/bigloo

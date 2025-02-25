@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       libffi-dev \
@@ -12,10 +12,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libunistring-dev \
       pkg-config \
       xz-utils \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://ftp.gnu.org/gnu/guile/guile-2.2.7.tar.xz guile.tar.xz
+RUN wget https://ftp.gnu.org/gnu/guile/guile-2.2.7.tar.xz && mv guile-2.2.7.tar.xz guile.tar.xz
 RUN sha256sum guile.tar.xz && sha256sum -c checksum
 RUN mkdir guile && tar -C guile --strip-components 1 -xf guile.tar.xz
 WORKDIR /build/guile
@@ -24,9 +26,9 @@ RUN make
 RUN make check
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi7 \
+      libffi8 \
       libgc1 \
       libgmp10 \
       libltdl7 \
