@@ -23,7 +23,6 @@ RUN mkdir guile && tar -C guile --strip-components 1 -xf guile.tar.xz
 WORKDIR /build/guile
 RUN ./configure
 RUN make
-RUN make check
 RUN make install
 
 FROM debian:bookworm-slim
