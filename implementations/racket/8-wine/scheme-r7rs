@@ -1,0 +1,2 @@
+#!/bin/sh
+exec wine racket.exe -I r7rs "$@"
