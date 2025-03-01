@@ -13,6 +13,9 @@ biwascheme-head:
 chezscheme-10:
 	docker build implementations/chezscheme/10 --tag=schemers/chezscheme:10
 
+chezscheme-10-wine:
+	docker build implementations/chezscheme/10-wine --tag=schemers/chezscheme:10-wine
+
 chezscheme-9:
 	docker build implementations/chezscheme/9 --tag=schemers/chezscheme:9
 
@@ -21,6 +24,9 @@ chezscheme-9-alpine:
 
 chezscheme-9-threads:
 	docker build implementations/chezscheme/9-threads --tag=schemers/chezscheme:9-threads
+
+chezscheme-9-wine:
+	docker build implementations/chezscheme/9-wine --tag=schemers/chezscheme:9-wine
 
 chibi-0:
 	docker build implementations/chibi/0 --tag=schemers/chibi:0
@@ -76,6 +82,9 @@ gambit-head:
 gauche-0:
 	docker build implementations/gauche/0 --tag=schemers/gauche:0
 
+gauche-0-wine:
+	docker build implementations/gauche/0-wine --tag=schemers/gauche:0-wine
+
 gauche-head:
 	docker build implementations/gauche/head --tag=schemers/gauche:head
 
@@ -117,6 +126,9 @@ ksi-3:
 
 larceny-1:
 	docker build implementations/larceny/1 --tag=schemers/larceny:1
+
+larceny-1-wine:
+	docker build implementations/larceny/1-wine --tag=schemers/larceny:1-wine
 
 lips-head:
 	docker build implementations/lips/head --tag=schemers/lips:head
@@ -172,6 +184,9 @@ picrin-head:
 racket-8:
 	docker build implementations/racket/8 --tag=schemers/racket:8
 
+racket-8-wine:
+	docker build implementations/racket/8-wine --tag=schemers/racket:8-wine
+
 rep-0:
 	docker build implementations/rep/0 --tag=schemers/rep:0
 
@@ -193,6 +208,9 @@ s9fes-2018:
 sagittarius-0:
 	docker build implementations/sagittarius/0 --tag=schemers/sagittarius:0
 
+sagittarius-0-wine:
+	docker build implementations/sagittarius/0-wine --tag=schemers/sagittarius:0-wine
+
 sagittarius-head:
 	docker build implementations/sagittarius/head --tag=schemers/sagittarius:head
 
@@ -207,6 +225,9 @@ schluessel-0:
 
 scm-5:
 	docker build implementations/scm/5 --tag=schemers/scm:5
+
+scm-5-wine:
+	docker build implementations/scm/5-wine --tag=schemers/scm:5-wine
 
 scsh-0:
 	docker build implementations/scsh/0 --tag=schemers/scsh:0

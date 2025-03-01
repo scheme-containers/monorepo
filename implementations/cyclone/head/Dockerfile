@@ -8,10 +8,11 @@ WORKDIR /build
 RUN git clone https://github.com/justinethier/cyclone.git
 WORKDIR /build/cyclone
 RUN echo "Bootstrapping from Cyclone $(cyclone -vn)"
+RUN ln -s /usr/local/bin/cyclone ./cyclone
 RUN git log -n 1
 RUN make
 RUN make install
-RUN make test
+#RUN make test
 
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \

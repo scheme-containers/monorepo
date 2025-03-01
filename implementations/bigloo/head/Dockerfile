@@ -12,6 +12,7 @@ RUN git clone https://github.com/manuel-serrano/bigloo.git --depth=1
 WORKDIR /build/bigloo
 RUN ./configure
 RUN make
+RUN make install
 #RUN LD_LIBRARY_PATH=/usr/local/lib/bigloo/* \ make bigboot BGLBUILDBINDIR=/usr/local/bin
 #RUN find /usr/local -type f -delete
 #RUN make install-progs
@@ -26,5 +27,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libpcre3-dev libsqlite3-dev libssl-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
-RUN ln -s bigloo /usr/local/bin/scheme-banner
+RUN ln -sf bigloo /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

@@ -53,6 +53,10 @@ pipeline {
           sh 'test "$BRANCH" = "master" && docker push schemers/chezscheme:10 || true'
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make chezscheme-10-wine'
+          sh 'test "$BRANCH" = "master" && docker push schemers/chezscheme:10-wine || true'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chezscheme-9'
           sh 'test "$BRANCH" = "master" && docker push schemers/chezscheme:9 || true'
         }
@@ -63,6 +67,10 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make chezscheme-9-threads'
           sh 'test "$BRANCH" = "master" && docker push schemers/chezscheme:9-threads || true'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make chezscheme-9-wine'
+          sh 'test "$BRANCH" = "master" && docker push schemers/chezscheme:9-wine || true'
         }
       }
     }
@@ -214,6 +222,10 @@ pipeline {
           sh 'test "$BRANCH" = "master" && docker push schemers/gauche:0 || true'
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make gauche-0-wine'
+          sh 'test "$BRANCH" = "master" && docker push schemers/gauche:0-wine || true'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make gauche-head'
           sh 'test "$BRANCH" = "master" && docker push schemers/gauche:head || true'
         }
@@ -331,6 +343,10 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make larceny-1'
           sh 'test "$BRANCH" = "master" && docker push schemers/larceny:1 || true'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make larceny-1-wine'
+          sh 'test "$BRANCH" = "master" && docker push schemers/larceny:1-wine || true'
         }
       }
     }
@@ -481,6 +497,10 @@ pipeline {
           sh 'make racket-8'
           sh 'test "$BRANCH" = "master" && docker push schemers/racket:8 || true'
         }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make racket-8-wine'
+          sh 'test "$BRANCH" = "master" && docker push schemers/racket:8-wine || true'
+        }
       }
     }
     stage('rep') {
@@ -552,6 +572,10 @@ pipeline {
           sh 'test "$BRANCH" = "master" && docker push schemers/sagittarius:0 || true'
         }
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make sagittarius-0-wine'
+          sh 'test "$BRANCH" = "master" && docker push schemers/sagittarius:0-wine || true'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make sagittarius-head'
           sh 'test "$BRANCH" = "master" && docker push schemers/sagittarius:head || true'
         }
@@ -598,6 +622,10 @@ pipeline {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'make scm-5'
           sh 'test "$BRANCH" = "master" && docker push schemers/scm:5 || true'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'make scm-5-wine'
+          sh 'test "$BRANCH" = "master" && docker push schemers/scm:5-wine || true'
         }
       }
     }
