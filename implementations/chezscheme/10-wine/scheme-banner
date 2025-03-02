@@ -1,3 +1,2 @@
 #!/bin/sh
-# We need this script because argv[0] needs to be "scheme".
-exec wine scheme.exe "$@"
+exec scheme "$@"

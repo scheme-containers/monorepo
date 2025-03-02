@@ -1,2 +1,2 @@
 #!/bin/sh
-exec wine sash.exe -r 7 "$@"
+exec sash -r 7 "$@"

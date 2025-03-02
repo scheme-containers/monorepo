@@ -19,5 +19,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /root/.wine /root/.wine
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Chez/bin/ta6nt
-COPY scheme-banner /usr/local/bin/
+COPY scheme scheme-banner /usr/local/bin/
 CMD scheme-banner

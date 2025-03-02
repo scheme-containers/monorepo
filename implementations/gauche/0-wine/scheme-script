@@ -1,2 +1,2 @@
 #!/bin/sh
-exec wine gosh.exe "$@"
+exec gosh "$@"

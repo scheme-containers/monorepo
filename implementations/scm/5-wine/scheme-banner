@@ -1,2 +1,2 @@
 #!/bin/sh
-exec wine scm.exe
+exec scm "$@"

@@ -15,5 +15,5 @@ RUN apk add wine
 COPY --from=build /root/.wine /root/.wine
 ENV DISPLAY=
 ENV WINEPATH="/root/.wine/drive_c/Program Files (x86)/scm"
-COPY scheme-banner /usr/local/bin/
+COPY scm scheme-banner /usr/local/bin/
 CMD scheme-banner
