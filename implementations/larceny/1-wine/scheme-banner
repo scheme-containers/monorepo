@@ -1,3 +1,2 @@
 #!/bin/sh
-# We need this script because argv[0] needs to be "larceny".
-exec wine larceny "$@"
+exec larceny "$@"

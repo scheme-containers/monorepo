@@ -20,5 +20,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /root/.wine /root/.wine
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Racket
-COPY scheme-banner scheme-r7rs scheme-script /usr/local/bin/
+COPY racket scheme-banner scheme-r7rs scheme-script /usr/local/bin/
 CMD scheme-banner

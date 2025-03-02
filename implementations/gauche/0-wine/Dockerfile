@@ -18,5 +18,5 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /root/.wine /root/.wine
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Gauche/bin
-COPY scheme-banner scheme-r7rs scheme-script /usr/local/bin/
+COPY gosh scheme-banner scheme-r7rs scheme-script /usr/local/bin/
 CMD scheme-banner

@@ -13,5 +13,5 @@ RUN apk add wine
 COPY --from=build /root/.wine /root/.wine
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Sagittarius
 ENV DISPLAY=
-COPY scheme-banner scheme-r7rs scheme-script /usr/local/bin/
+COPY sash scheme-banner scheme-r7rs scheme-script /usr/local/bin/
 CMD scheme-banner

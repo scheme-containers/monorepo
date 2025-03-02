@@ -1,4 +1,4 @@
 #!/bin/sh
 set -eu
-wine gosh.exe -V
-exec wine gosh.exe "$@"
+gosh -V
+exec gosh "$@"
