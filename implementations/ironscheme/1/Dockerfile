@@ -9,7 +9,7 @@ ADD https://github.com/IronScheme/IronScheme/releases/download/1.0.575/IronSchem
 RUN sha256sum IronScheme.zip && sha256sum -c checksum
 RUN unzip -d IronScheme IronScheme.zip && mv IronScheme /usr/local
 
-FROM mcr.microsoft.com/dotnet/runtime:10.0.0-preview.3-trixie-slim
+FROM mcr.microsoft.com/dotnet/runtime:9.0.4-bookworm-slim
 COPY --from=build /usr/local/IronScheme /usr/local/IronScheme/
 ENV LANG C.UTF-8
 COPY ironscheme /usr/local/bin/
