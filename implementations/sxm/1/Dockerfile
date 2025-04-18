@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
  && rm -rf /var/lib/apt/lists/*
@@ -13,7 +13,7 @@ RUN make
 #RUN make test  # Causes a segfault.
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s sxi /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

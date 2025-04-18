@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc \
       libc6-dev \
@@ -28,7 +28,7 @@ RUN make install
 RUN rm -rf /usr/lib/csv9.5.4/examples
 RUN scheme --version
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \
  && rm -rf /var/lib/apt/lists/*

@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ncurses-dev \
  && rm -rf /var/lib/apt/lists/*
@@ -12,7 +12,7 @@ WORKDIR /build/s9fes
 RUN make PREFIX=/usr/local
 RUN make PREFIX=/usr/local install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
        libncurses6 \
   && rm -rf /var/lib/apt/lists/*

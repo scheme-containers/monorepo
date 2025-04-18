@@ -1,8 +1,8 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential autoconf automake libtool \
-      gcc-multilib lib32gcc-10-dev \
+      gcc-multilib lib32gcc-11-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -16,7 +16,7 @@ RUN ./configure --disable-docs
 RUN make
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       lib32gcc-s1 \
  && rm -rf /var/lib/apt/lists/*

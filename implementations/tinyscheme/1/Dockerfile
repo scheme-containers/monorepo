@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
         build-essential \
   && rm -rf /var/lib/apt/lists/*
@@ -12,7 +12,7 @@ RUN mkdir tinyscheme && tar -C tinyscheme --strip-components 1 -xf tinyscheme.ta
 WORKDIR /build/tinyscheme
 RUN make
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
        libncurses6 \
   && rm -rf /var/lib/apt/lists/*

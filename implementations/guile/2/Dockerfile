@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       libffi-dev \
@@ -24,9 +24,9 @@ RUN make
 RUN make check
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi7 \
+      libffi8 \
       libgc1 \
       libgmp10 \
       libltdl7 \

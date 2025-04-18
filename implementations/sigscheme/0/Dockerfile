@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential file \
  && rm -rf /var/lib/apt/lists/*
@@ -16,7 +16,7 @@ RUN make install
 COPY write-scheme-version write-scheme-version
 RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/scheme-banner
 RUN ldconfig

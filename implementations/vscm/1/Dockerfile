@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
  && rm -rf /var/lib/apt/lists/*
@@ -16,7 +16,7 @@ RUN mkdir /usr/local/lib/vscm \
  && install -m 644 .scheme-boot /usr/local/lib/vscm/lib/ \
  && install -m 755 scheme /usr/local/bin/
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 CMD ["scheme-banner"]
