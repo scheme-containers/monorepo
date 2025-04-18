@@ -1,4 +1,0 @@
-#!/bin/sh
-set -eu
-printf "Picrin "
-git describe --dirty --always --tags
