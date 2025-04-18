@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+meevax --version
+exec meevax --interactive

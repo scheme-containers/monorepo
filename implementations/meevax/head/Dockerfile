@@ -13,6 +13,6 @@ RUN make install
 
 FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
-RUN ln -s /usr/local/bin/meevax /usr/local/bin/scheme-banner \
- && ln -s /usr/local/bin/meevax /usr/local/bin/scheme-r7rs
+COPY scheme-banner /usr/local/bin/
+RUN ldconfig
 CMD ["scheme-banner"]
