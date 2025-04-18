@@ -1,12 +1,9 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ca-certificates curl unzip zip \
- && rm -rf /var/lib/apt/lists/*
-SHELL ["/bin/bash", "-c"]
-RUN curl https://get.sdkman.io | bash
-RUN source /root/.sdkman/bin/sdkman-init.sh && sdk install java 11.0.24-tem
-ENV PATH=/root/.sdkman/candidates/java/11.0.24-tem/bin:${PATH}
+      build-essential ca-certificates curl unzip zip wget
+RUN wget https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.26+4/openlogic-openjdk-11.0.26+4-linux-x64-deb.deb
+RUN apt-get install -y ./*.deb
 WORKDIR /build
 COPY checksum checksum
 ADD https://ftp.gnu.org/pub/gnu/kawa/kawa-3.1.1.tar.gz kawa.tar.gz
@@ -17,10 +14,10 @@ RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:trixie-slim
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      openjdk-22-jdk-headless \
- && rm -rf /var/lib/apt/lists/*
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get -y --no-install-recommends install wget ca-certificates
+RUN wget https://builds.openlogic.com/downloadJDK/openlogic-openjdk/22.0.2+9/openlogic-openjdk-22.0.2+9-linux-x64-deb.deb
+RUN apt-get install -y ./*.deb
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin
 COPY scheme-r7rs /usr/local/bin
