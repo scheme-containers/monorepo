@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
@@ -11,7 +11,7 @@ RUN git init \
 RUN make
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s uscheme /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

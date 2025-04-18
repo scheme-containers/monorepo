@@ -9,7 +9,7 @@ WORKDIR /build/owl
 RUN make PREFIX=/usr/local
 RUN make PREFIX=/usr/local install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc make libc-dev \
  && rm -rf /var/lib/apt/lists/*
@@ -15,7 +15,7 @@ RUN mkdir /usr/local/share/miniscm \
  && install -m 755 miniscm /usr/local/bin/ \
  && install -m 644 *.scm /usr/local/share/miniscm/
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s miniscm /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

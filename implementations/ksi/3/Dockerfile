@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential file libgc-dev libgmp-dev \
  && rm -rf /var/lib/apt/lists/*
@@ -14,7 +14,7 @@ RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libgc1 libgmp10 \
  && rm -rf /var/lib/apt/lists/*

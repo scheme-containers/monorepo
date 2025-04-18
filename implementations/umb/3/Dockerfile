@@ -2,7 +2,7 @@
 
 # NetBSD port: lang/umb-scheme
 
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc make libc-dev patch \
  && rm -rf /var/lib/apt/lists/*
@@ -26,7 +26,7 @@ RUN mkdir /usr/local/man/man1                                      \
  && install -m 644 slib/*.scm               /usr/local/lib/slib/   \
  && true
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s scheme /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
