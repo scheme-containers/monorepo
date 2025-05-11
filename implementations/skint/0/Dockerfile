@@ -5,7 +5,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://github.com/false-schemers/skint/archive/refs/tags/v011.tar.gz skint.tar.gz
+#ADD https://github.com/false-schemers/skint/archive/refs/tags/v011.tar.gz skint.tar.gz
+ADD https://github.com/false-schemers/skint/archive/refs/tags/v052.tar.gz skint.tar.gz
 RUN sha256sum skint.tar.gz && sha256sum -c checksum
 RUN mkdir skint && tar -C skint --strip-components 1 -xf skint.tar.gz
 WORKDIR /build/skint
