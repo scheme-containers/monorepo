@@ -5,7 +5,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-#ADD https://gambitscheme.org/latest/gambit-v4_9_5.tgz gambit.tgz
 ADD https://github.com/gambit/gambit/archive/refs/tags/v4.9.6.tar.gz gambit.tgz
 RUN sha256sum gambit.tgz && sha256sum -c checksum
 RUN mkdir gambit && tar -C gambit --strip-components 1 -xf gambit.tgz
