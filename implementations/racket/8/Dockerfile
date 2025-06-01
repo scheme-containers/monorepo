@@ -1,13 +1,12 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    wget \
     build-essential \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O racket.tgz https://download.racket-lang.org/releases/8.16/installers/racket-minimal-8.16-src.tgz
+ADD https://download.racket-lang.org/releases/8.17/installers/racket-minimal-8.17-src.tgz racket.tgz
 RUN sha256sum racket.tgz && sha256sum -c checksum
 RUN mkdir racket && tar -C racket --strip-components 1 -xf racket.tgz
 WORKDIR /build/racket/src
