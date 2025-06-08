@@ -14,6 +14,7 @@ RUN make
 RUN make install
 
 FROM debian:bookworm-slim
+RUN mkdir -p ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 COPY scheme-r7rs /usr/local/bin/
