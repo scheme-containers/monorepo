@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://bitbucket.org/ktakashi/sagittarius-scheme/downloads/sagittarius-0.9.12.tar.gz \
+ADD https://github.com/ktakashi/sagittarius-scheme/releases/download/v0.9.13/sagittarius-0.9.13.tar.gz \
     sagittarius.tar.gz
 RUN sha256sum sagittarius.tar.gz && sha256sum -c checksum
 RUN mkdir sagittarius \
