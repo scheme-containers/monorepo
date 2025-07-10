@@ -13,8 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Parallel') {
-        parallels {
         stage('Heads') {
             environment {
                 DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
@@ -63,8 +61,6 @@ pipeline {
                 }
             }
         }
-        }
-    }
     }
 
     post {
