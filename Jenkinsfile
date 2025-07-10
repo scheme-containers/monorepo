@@ -47,17 +47,20 @@ pipeline {
             steps {
                 script {
                     def implementations = "gambit guile gerbil".split()
-                    parallel implementations.each { implementation->
-                        stage("${implementation}") {
-                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                dir("implementations/${implementation}/head") {
-                                    sh "docker build . --tag=schemers/${implementation}:head"
-                                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                                    sh "docker push schemers/${implementation}:head"
-                                    sh "docker logout"
+                    parallel implementations.collectEntries { implementation->
+                        [(implementation): {
+                                stage("${implementation}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        dir("implementations/${implementation}/head") {
+                                            sh "docker build . --tag=schemers/${implementation}:head"
+                                            sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                            sh "docker push schemers/${implementation}:head"
+                                            sh "docker logout"
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        ]
                     }
                 }
             }
