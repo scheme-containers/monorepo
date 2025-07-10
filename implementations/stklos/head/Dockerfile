@@ -10,6 +10,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libgc-dev \
       libgmp-dev \
       libpcre3-dev \
+      automake \
+      autoconf \
       bash-completion \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
