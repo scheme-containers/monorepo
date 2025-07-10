@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'linux-x86-64'
+        label 'linux-x86_64'
     }
 
     triggers {
