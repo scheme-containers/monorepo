@@ -13,6 +13,10 @@ pipeline {
     }
 
     stages {
+        stage('Docker login') {
+            sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+        }
+
         stage('Heads') {
             environment {
                 DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
@@ -27,9 +31,7 @@ pipeline {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         dir("implementations/${implementation}/head") {
                                             sh "docker build . --tag=schemers/${implementation}:head"
-                                            sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                             sh "docker push schemers/${implementation}:head"
-                                            sh "docker logout"
                                         }
                                     }
                                 }
@@ -53,9 +55,7 @@ pipeline {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         dir("implementations/${implementation}/head") {
                                             sh "docker build . --tag=schemers/${implementation}:head"
-                                            sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                             sh "docker push schemers/${implementation}:head"
-                                            sh "docker logout"
                                         }
                                     }
                                 }
