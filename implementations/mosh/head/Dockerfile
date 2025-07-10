@@ -18,6 +18,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libssl-dev \
       pkg-config \
       re2c \
+      gzip \
+      texinfo \
  && rm -rf /var/lib/apt/lists/*
 RUN wget https://github.com/shirok/Gauche/releases/download/release0_9_15/Gauche-0.9.15.tgz && tar -xf Gauche-0.9.15.tgz
 RUN cd Gauche-0.9.15 && ./configure && make && make install
