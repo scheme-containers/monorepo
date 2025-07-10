@@ -14,16 +14,16 @@ pipeline {
 
     stages {
         stage('Docker login') {
+            environment {
+                DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
+                DOCKER_HUB_TOKEN = credentials('DOCKER_HUB_TOKEN')
+            }
             steps {
                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
             }
         }
 
         stage('Heads') {
-            environment {
-                DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
-                DOCKER_HUB_TOKEN = credentials('DOCKER_HUB_TOKEN')
-            }
             steps {
                 script {
                     def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh skint stak stklos tr7 ypsilon".split()
@@ -44,10 +44,6 @@ pipeline {
             }
         }
         stage('Heads slow') {
-            environment {
-                DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
-                DOCKER_HUB_TOKEN = credentials('DOCKER_HUB_TOKEN')
-            }
             steps {
                 script {
                     def implementations = "gambit guile gerbil racket".split()
