@@ -23,13 +23,15 @@ pipeline {
                     def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh racket skint stak stklos tr7 ypsilon".split()
 
                     implementations.each { implementation->
-                        stage("${implementation}") {
-                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                dir("implementations/${implementation}/head") {
-                                    sh "docker build . --tag=schemers/${implementation}:head"
-                                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                                    sh "docker push schemers/${implementation}:head"
-                                    sh "docker logout"
+                        parallel {
+                            stage("${implementation}") {
+                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                    dir("implementations/${implementation}/head") {
+                                        sh "docker build . --tag=schemers/${implementation}:head"
+                                            sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                            sh "docker push schemers/${implementation}:head"
+                                            sh "docker logout"
+                                    }
                                 }
                             }
                         }
@@ -46,14 +48,17 @@ pipeline {
                 script {
                     def implementations = "gambit guile gerbil".split()
 
-                    implementations.each { implementation->
-                        stage("${implementation}") {
-                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                dir("implementations/${implementation}/head") {
-                                    sh "docker build . --tag=schemers/${implementation}:head"
-                                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                                    sh "docker push schemers/${implementation}:head"
-                                    sh "docker logout"
+                        implementations.each { implementation->
+                            parallel {
+                                stage("${implementation}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        dir("implementations/${implementation}/head") {
+                                            sh "docker build . --tag=schemers/${implementation}:head"
+                                                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                                sh "docker push schemers/${implementation}:head"
+                                                sh "docker logout"
+                                        }
+                                    }
                                 }
                             }
                         }
