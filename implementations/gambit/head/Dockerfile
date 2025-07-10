@@ -16,9 +16,9 @@ RUN ./configure --prefix=/usr/local \
       --enable-default-compile-options="(compactness 9)"
 RUN ln -s /usr/local/bin/gsc gsc-boot
 RUN make || (rm -rf boot/ gsc-boot && make)
-RUN make modules
-RUN make check
-RUN make install
+RUN make -j 8 modules
+RUN make -j 8 check
+RUN make -j 8 install
 
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
