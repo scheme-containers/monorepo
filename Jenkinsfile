@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh racket skint stak stklos tr7 ypsilon".split()
-                    parallel implementations { implementation->
+                    parallel implementations.collectEntries { implementation->
                         [(implementation): {
                                 stage("${implementation}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
