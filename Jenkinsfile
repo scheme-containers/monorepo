@@ -13,6 +13,8 @@ pipeline {
     }
 
     stages {
+        stage('Parallel') {
+        parallels {
         stage('Heads') {
             environment {
                 DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
@@ -22,7 +24,6 @@ pipeline {
                 script {
                     def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh racket skint stak stklos tr7 ypsilon".split()
 
-                    parallel {
                     implementations.each { implementation->
                         stage("${implementation}") {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -34,7 +35,6 @@ pipeline {
                                 }
                             }
                         }
-                    }
                     }
                 }
             }
@@ -63,6 +63,8 @@ pipeline {
                 }
             }
         }
+        }
+    }
     }
 
     post {
