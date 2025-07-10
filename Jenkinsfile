@@ -14,8 +14,7 @@ pipeline {
             }
             steps {
                 script {
-                    //def implementations = "biwascheme chezscheme chibi foment gambit gauche gerbil guile kawa lips loko meevax mit-scheme mosh racket skint stak stklos tr8 ypsilon".split()
-                    def implementations = "biwascheme chezscheme chibi".split()
+                    def implementations = "biwascheme chezscheme chibi foment gambit gauche gerbil guile kawa lips loko meevax mit-scheme mosh racket skint stak stklos tr7 ypsilon".split()
 
                     implementations.each { implementation->
                         stage("${implementation}") {
