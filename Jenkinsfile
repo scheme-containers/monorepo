@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers{
+        cron(@midnight)
+    }
+
     options {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
@@ -22,7 +26,7 @@ pipeline {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${implementation}/head") {
                                     sh "docker build . --tag=schemers/${implementation}:head"
-                                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                     sh "docker push schemers/${implementation}:head"
                                     sh "docker logout"
                                 }
