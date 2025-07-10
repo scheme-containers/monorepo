@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 script {
-                    def implementations = "biwascheme chezscheme chibi foment gauche guile kawa lips loko meevax mit-scheme mosh racket skint stak stklos tr7 ypsilon".split()
+                    def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh racket skint stak stklos tr7 ypsilon".split()
 
                     implementations.each { implementation->
                         stage("${implementation}") {
@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 script {
-                    def implementations = "gambit gerbil".split()
+                    def implementations = "gambit guile gerbil".split()
 
                     implementations.each { implementation->
                         stage("${implementation}") {
