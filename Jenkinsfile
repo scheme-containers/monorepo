@@ -14,7 +14,9 @@ pipeline {
 
     stages {
         stage('Docker login') {
-            sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+            steps {
+                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+            }
         }
 
         stage('Heads') {
