@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    triggers{
-        cron(@midnight)
-    }
-
     options {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
