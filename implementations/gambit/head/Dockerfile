@@ -15,7 +15,7 @@ RUN ./configure --prefix=/usr/local \
       --enable-targets=js \
       --enable-default-compile-options="(compactness 9)"
 RUN ln -s /usr/local/bin/gsc gsc-boot
-RUN make || (rm -rf boot/ gsc-boot && make)
+RUN make -j 8 || (rm -rf boot/ gsc-boot && make)
 RUN make -j 8 modules
 RUN make -j 8 check
 RUN make -j 8 install
