@@ -43,6 +43,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Heads slow') {
             steps {
                 script {
@@ -63,6 +64,7 @@ pipeline {
                 }
             }
         }
+        */
     }
 
     post {
