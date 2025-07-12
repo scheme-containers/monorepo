@@ -61,8 +61,8 @@ pipeline {
             }
         }
 
-        timeout(time: 6, unit: 'HOURS') {
-            stage('gambit') {
+        stage('gambit') {
+            timeout(time: 6, unit: 'HOURS') {
                 steps {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -74,8 +74,8 @@ pipeline {
             }
         }
 
-        timeout(time: 6, unit: 'HOURS') {
-            stage('guile') {
+        stage('guile') {
+            timeout(time: 6, unit: 'HOURS') {
                 steps {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -87,8 +87,8 @@ pipeline {
             }
         }
 
-        timeout(time: 6, unit: 'HOURS') {
-            stage('racket') {
+        stage('racket') {
+            timeout(time: 6, unit: 'HOURS') {
                 steps {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build . --tag=schemers/${STAGE_NAME}:head"
