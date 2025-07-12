@@ -62,8 +62,8 @@ pipeline {
         }
 
         stage('gambit') {
-            timeout(time: 6, unit: 'HOURS') {
-                steps {
+            steps {
+                timeout(time: 6, unit: 'HOURS') {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                         sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
@@ -75,8 +75,8 @@ pipeline {
         }
 
         stage('guile') {
-            timeout(time: 6, unit: 'HOURS') {
-                steps {
+            steps {
+                timeout(time: 6, unit: 'HOURS') {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                         sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
@@ -88,8 +88,8 @@ pipeline {
         }
 
         stage('racket') {
-            timeout(time: 6, unit: 'HOURS') {
-                steps {
+            steps {
+                timeout(time: 6, unit: 'HOURS') {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                         sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
