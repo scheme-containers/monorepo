@@ -27,7 +27,7 @@ pipeline {
         stage('Heads') {
             steps {
                 script {
-                    def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh skint stak stklos tr7 ypsilon".split()
+                    def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
                                 stage("${implementation} build") {
@@ -58,6 +58,21 @@ pipeline {
         stage('Docker logout') {
             steps {
                 sh "docker logout"
+            }
+        }
+
+        stage('cyclone') {
+            steps {
+                timeout(time: 6, unit: 'HOURS') {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        dir("implementations/${STAGE_NAME}/head") {
+                            sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        }
+                        sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                        sh "docker push schemers/${STAGE_NAME}:head"
+                        sh "docker logout"
+                    }
+                }
             }
         }
 
