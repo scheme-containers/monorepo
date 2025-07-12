@@ -27,7 +27,7 @@ pipeline {
         stage('Heads') {
             steps {
                 script {
-                    def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
+                    def implementations = "biwascheme chezscheme chibi chicken foment gauche kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
                                 stage("${implementation} build") {
