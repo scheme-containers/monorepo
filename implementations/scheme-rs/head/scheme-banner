@@ -1,4 +1,0 @@
-#!/bin/sh
-grep "version" /build/scheme-rs/Cargo.toml | head -n 1
-exec scheme-rs "@$"
-
