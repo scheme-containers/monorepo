@@ -31,10 +31,12 @@ pipeline {
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
                                 stage("${implementation}") {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        dir("implementations/${implementation}/head") {
-                                            sh "docker build . --tag=schemers/${implementation}:head"
-                                            sh "docker push schemers/${implementation}:head"
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${implementation}/head") {
+                                                sh "docker build . --tag=schemers/${implementation}:head"
+                                                sh "docker push schemers/${implementation}:head"
+                                            }
                                         }
                                     }
                                 }
@@ -51,29 +53,36 @@ pipeline {
             }
         }
 
-        stage('gambit') {
-            steps {
-                sh "docker build . --tag=schemers/${STAGENAME}:head"
-                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                sh "docker push schemers/${STAGENAME}:head"
-                sh "docker logout"
+        timeout(time: 6, unit: 'HOURS') {
+            stage('gambit') {
+                steps {
+                    sh "docker build . --tag=schemers/${STAGENAME}:head"
+                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                    sh "docker push schemers/${STAGENAME}:head"
+                    sh "docker logout"
+                }
             }
         }
 
-        stage('guile') {
-            steps {
-                sh "docker build . --tag=schemers/${STAGENAME}:head"
-                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                sh "docker push schemers/${STAGENAME}:head"
-                sh "docker logout"
+        timeout(time: 6, unit: 'HOURS') {
+            stage('guile') {
+                steps {
+                    sh "docker build . --tag=schemers/${STAGENAME}:head"
+                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                    sh "docker push schemers/${STAGENAME}:head"
+                    sh "docker logout"
+                }
             }
         }
-        stage('racket') {
-            steps {
-                sh "docker build . --tag=schemers/${STAGENAME}:head"
-                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                sh "docker push schemers/${STAGENAME}:head"
-                sh "docker logout"
+
+        timeout(time: 6, unit: 'HOURS') {
+            stage('racket') {
+                steps {
+                    sh "docker build . --tag=schemers/${STAGENAME}:head"
+                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                    sh "docker push schemers/${STAGENAME}:head"
+                    sh "docker logout"
+                }
             }
         }
     }
