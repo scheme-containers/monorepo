@@ -64,10 +64,12 @@ pipeline {
         timeout(time: 6, unit: 'HOURS') {
             stage('gambit') {
                 steps {
-                    sh "docker build . --tag=schemers/${STAGENAME}:head"
-                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                    sh "docker push schemers/${STAGENAME}:head"
-                    sh "docker logout"
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                        sh "docker push schemers/${STAGE_NAME}:head"
+                        sh "docker logout"
+                    }
                 }
             }
         }
@@ -75,10 +77,12 @@ pipeline {
         timeout(time: 6, unit: 'HOURS') {
             stage('guile') {
                 steps {
-                    sh "docker build . --tag=schemers/${STAGENAME}:head"
-                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                    sh "docker push schemers/${STAGENAME}:head"
-                    sh "docker logout"
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                        sh "docker push schemers/${STAGE_NAME}:head"
+                        sh "docker logout"
+                    }
                 }
             }
         }
@@ -86,10 +90,12 @@ pipeline {
         timeout(time: 6, unit: 'HOURS') {
             stage('racket') {
                 steps {
-                    sh "docker build . --tag=schemers/${STAGENAME}:head"
-                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                    sh "docker push schemers/${STAGENAME}:head"
-                    sh "docker logout"
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                        sh "docker push schemers/${STAGE_NAME}:head"
+                        sh "docker logout"
+                    }
                 }
             }
         }
