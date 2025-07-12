@@ -65,7 +65,9 @@ pipeline {
             steps {
                 timeout(time: 6, unit: 'HOURS') {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        dir("implementations/${STAGE_NAME}/head") {
+                            sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        }
                         sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                         sh "docker push schemers/${STAGE_NAME}:head"
                         sh "docker logout"
@@ -78,7 +80,9 @@ pipeline {
             steps {
                 timeout(time: 6, unit: 'HOURS') {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        dir("implementations/${STAGE_NAME}/head") {
+                            sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        }
                         sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                         sh "docker push schemers/${STAGE_NAME}:head"
                         sh "docker logout"
@@ -91,7 +95,9 @@ pipeline {
             steps {
                 timeout(time: 6, unit: 'HOURS') {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        dir("implementations/${STAGE_NAME}/head") {
+                            sh "docker build . --tag=schemers/${STAGE_NAME}:head"
+                        }
                         sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                         sh "docker push schemers/${STAGE_NAME}:head"
                         sh "docker logout"
