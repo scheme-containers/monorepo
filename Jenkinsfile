@@ -30,11 +30,19 @@ pipeline {
                     def implementations = "biwascheme chezscheme chibi foment gauche kawa lips loko meevax mit-scheme mosh skint stak stklos tr7 ypsilon".split()
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
-                                stage("${implementation}") {
+                                stage("${implementation} build") {
                                     timeout(time: 6, unit: 'HOURS') {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             dir("implementations/${implementation}/head") {
                                                 sh "docker build . --tag=schemers/${implementation}:head"
+                                            }
+                                        }
+                                    }
+                                }
+                                stage("${implementation} push") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${implementation}/head") {
                                                 sh "docker push schemers/${implementation}:head"
                                             }
                                         }
