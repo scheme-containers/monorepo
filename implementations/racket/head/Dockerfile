@@ -23,7 +23,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local /usr/local
-#RUN raco pkg install --auto --no-docs r6rs
-RUN raco pkg install --auto --no-docs r7rs
+RUN raco pkg install --scope installation --auto --no-docs r6rs
+RUN raco pkg install --scope installation --auto --no-docs r7rs
 RUN ln -sf /usr/local/bin/racket /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
