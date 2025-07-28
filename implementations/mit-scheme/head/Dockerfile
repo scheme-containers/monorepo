@@ -1,28 +1,32 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential \
+      gcc \
+      libc-dev \
+      libncurses-dev \
+      m4 \
+      make \
+      texinfo \
+      mit-scheme \
       ca-certificates \
-      libck-dev \
       git \
+      automake \
+      texinfo \
+      libtool \
+      build-essential \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/justinethier/cyclone-bootstrap.git --depth=1
-WORKDIR /build/cyclone-bootstrap
+RUN git clone https://git.savannah.gnu.org/git/mit-scheme.git --depth=1
+WORKDIR /build/mit-scheme/src
+RUN bash Setup.sh
+RUN ./configure
 RUN make
 RUN make install
-WORKDIR /build
-RUN git clone https://github.com/justinethier/cyclone.git
-WORKDIR /build/cyclone
-RUN echo "Bootstrapping from Cyclone $(cyclone -vn)"
-RUN git log -n 1
-RUN make
-RUN make install
-RUN make test
 
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      gcc libc-dev libck0 libck-dev libtommath1 libtommath-dev \
+      libncurses6 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
+RUN ln -s mit-scheme /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

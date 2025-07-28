@@ -1,0 +1,11 @@
+#!/bin/bash
+set -eu
+script="$1"
+shift
+export LARCENY_ROOT=/usr/local/lib/larceny
+if head -n1 "$script" | grep -q -e '^#! ' -e '^#!/'; then
+  # Remove the shebang.
+  exec larceny -r6rs -program "$script" -ignore1 -- "$@"
+else
+  exec larceny -r6rs -program "$script" -- "$@"
+fi
