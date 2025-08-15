@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
@@ -13,7 +13,7 @@ RUN mkdir /usr/local/lib/s7 \
     && cp *.scm libc_s7.so /usr/local/lib/s7/ \
     && cp -v s7 /usr/local/bin/
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 ENV LANG=en_US.UTF-8
 RUN ln -s s7 /usr/local/bin/scheme-banner

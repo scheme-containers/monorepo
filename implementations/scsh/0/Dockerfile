@@ -17,7 +17,7 @@ RUN make
 RUN make test
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s scsh /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

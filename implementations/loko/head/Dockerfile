@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       make build-essential autoconf automake guile-3.0 guile-3.0-dev git ca-certificates libcurl4-openssl-dev pkg-config chezscheme \
  && rm -rf /var/lib/apt/lists/*
@@ -20,7 +20,7 @@ RUN akku --debug install
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       guile-3.0 \
  && rm -rf /var/lib/apt/lists/*

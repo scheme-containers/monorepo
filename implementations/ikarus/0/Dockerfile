@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
@@ -20,7 +20,7 @@ RUN ./configure --prefix=/usr/local --build=i686-pc-linux-gnu CFLAGS=-m32 CXXFLA
 RUN make PREFIX=/usr/local
 RUN make PREFIX=/usr/local install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libffi8:i386 \

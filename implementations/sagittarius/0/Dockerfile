@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
        build-essential \
        cmake \
@@ -20,7 +20,7 @@ RUN cmake . -DCMAKE_INSTALL_PREFIX=/usr/local
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
        libffi8 \
        libgc1 \

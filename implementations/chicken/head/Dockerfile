@@ -7,11 +7,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://code.call-cc.org/git/chicken-core.git chicken
 WORKDIR /build/chicken
+RUN ./configure
 RUN make PLATFORM=linux spotless
 RUN make PLATFORM=linux CHICKEN=/usr/local/bin/chicken
 RUN make PLATFORM=linux install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc libc-dev \
  && rm -rf /var/lib/apt/lists/*

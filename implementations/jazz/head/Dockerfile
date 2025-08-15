@@ -1,6 +1,4 @@
-# NOTE: Parallel make of single-host Gambit takes ~1G RAM per core.
-
-FROM debian:bullseye
+FROM debian:bullseye AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       ca-certificates build-essential ghostscript texinfo \
       autoconf automake m4 git \
@@ -18,7 +16,6 @@ RUN ./configure \
       --enable-rtlib-debug-location \
       --enable-rtlib-debug-environments
 RUN make
-#RUN make check
 RUN make install
 ENV GAMBITDIR=/usr/local/jazz-gambit
 ENV PATH=${GAMBITDIR}/bin:${PATH}
@@ -34,5 +31,8 @@ RUN ln -s /build/jazz/build/develop/c4             /usr/local/bin/ \
  && ln -s /build/jazz/build/develop/jazz-interpret /usr/local/bin/ \
  && ln -s /build/jazz/build/develop/shader         /usr/local/bin/ \
  && ln -s jazz /usr/local/bin/scheme-banner
-WORKDIR /root
+
+FROM debian:trixie-slim
+COPY --from=build /build /build
+COPY --from=build /usr/local/ /usr/local/
 CMD ["scheme-banner"]

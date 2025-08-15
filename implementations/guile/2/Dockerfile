@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       libffi-dev \
@@ -24,7 +24,7 @@ RUN make
 RUN make check
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libffi8 \
       libgc1 \
@@ -33,7 +33,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \
       libreadline8 \
       libtinfo6 \
-      libunistring2 \
+      libunistring5 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin/

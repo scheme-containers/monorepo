@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential
 RUN apt-get update && apt-get -y install \
@@ -11,7 +11,7 @@ WORKDIR /build/tr7
 RUN make
 RUN cp tr7i /usr/local/bin/
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 COPY scheme-r7rs /usr/local/bin/

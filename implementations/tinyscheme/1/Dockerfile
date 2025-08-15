@@ -1,18 +1,19 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
         build-essential \
+        wget \
+        ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://sourceforge.net/projects/tinyscheme/files/tinyscheme/tinyscheme-1.41/tinyscheme-1.41.tar.gz/download \
-  tinyscheme.tar.gz
+RUN wget -O tinyscheme.tar.gz https://sourceforge.net/projects/tinyscheme/files/tinyscheme/tinyscheme-1.41/tinyscheme-1.41.tar.gz/download
 RUN sha256sum tinyscheme.tar.gz && sha256sum -c checksum
 RUN mkdir tinyscheme && tar -C tinyscheme --strip-components 1 -xf tinyscheme.tar.gz
 WORKDIR /build/tinyscheme
 RUN make
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
        libncurses6 \
   && rm -rf /var/lib/apt/lists/*

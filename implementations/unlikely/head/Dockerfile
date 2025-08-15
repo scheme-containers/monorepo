@@ -1,7 +1,10 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ca-certificates git \
+      build-essential \
+      wget \
+      ca-certificates \
+      git \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build/picrin
 RUN git init \
@@ -11,7 +14,7 @@ RUN git init \
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s uscheme /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

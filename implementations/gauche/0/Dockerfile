@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential pkg-config ca-certificates \
       netbase openssh-client libmbedtls-dev zlib1g-dev \
@@ -14,9 +14,9 @@ RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libmbedtls14 ca-certificates \
+      libmbedtls21 ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner scheme-eval /usr/local/bin/

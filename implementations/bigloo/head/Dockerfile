@@ -4,7 +4,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       autoconf automake libtool make patch zip \
       default-jdk-headless sqlite3 \
       gcc libc-dev libgmp-dev libunistring-dev \
-      libpcre3-dev libsqlite3-dev libssl-dev \
+      libpcre2-dev libsqlite3-dev libssl-dev \
       git ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
@@ -20,11 +20,11 @@ RUN make fullbootstrap-sans-log
 RUN make install-sans-docs
 RUN make fulltest
 
-FROM debian:bullseye
+FROM debian:trixie
 RUN apt-get update && apt-get -y --no-install-recommends install \
       default-jre-headless sqlite3 \
       gcc libc-dev libgmp-dev libunistring-dev \
-      libpcre3-dev libsqlite3-dev libssl-dev \
+      libpcre2-dev libsqlite3-dev libssl-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s bigloo /usr/local/bin/scheme-banner

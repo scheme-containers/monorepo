@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       make \
  && rm -rf /var/lib/apt/lists/*
@@ -12,7 +12,7 @@ WORKDIR /build/loko
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local /usr/local
 RUN ln -s loko /usr/local/bin/scheme-banner \
  && ln -s loko /usr/local/bin/scheme-script

@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
         ca-certificates wget gpg wine \
@@ -14,7 +14,7 @@ RUN mkdir -p /root/.wine/drive_c/Program\ Files/ \
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Racket
 RUN wine raco.exe pkg install --auto r7rs > /dev/null
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates wine \
     && rm -rf /var/lib/apt/lists/*

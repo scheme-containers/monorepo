@@ -1,6 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y install \
       autoconf \
       automake \
@@ -14,11 +13,13 @@ RUN apt-get update && apt-get -y install \
       libonig-dev \
       libssl-dev \
       pkg-config \
-      re2c
+      re2c \
+      wget \
+    && rm -rf /var/lib/apt/lists/*
 COPY onig-config /usr/local/bin/
 WORKDIR /build
 COPY checksum checksum
-ADD https://github.com/higepon/mosh/releases/download/mosh-0.2.9-rc1/mosh-0.2.9-rc1.tar.gz mosh.tar.gz
+RUN wget -O mosh.tar.gz https://github.com/higepon/mosh/releases/download/mosh-0.2.9-rc1/mosh-0.2.9-rc1.tar.gz
 RUN sha256sum mosh.tar.gz && sha256sum -c checksum
 RUN mkdir mosh && tar -C mosh --strip-components 1 -xf mosh.tar.gz
 WORKDIR /build/mosh
@@ -26,7 +27,7 @@ RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libssl3 \
       libffi8 \

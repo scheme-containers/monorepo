@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc \
       libc6-dev \
@@ -18,7 +18,7 @@ RUN ./configure --prefix=/usr/local
 RUN make build
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local /usr/local
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \

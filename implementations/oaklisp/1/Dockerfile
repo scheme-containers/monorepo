@@ -1,8 +1,12 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential autoconf automake libtool \
-      gcc-multilib lib32gcc-11-dev \
+      build-essential \
+      autoconf \
+      automake \
+      libtool \
+      gcc-multilib \
+      lib32gcc-14-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -16,7 +20,7 @@ RUN ./configure --disable-docs
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       lib32gcc-s1 \
  && rm -rf /var/lib/apt/lists/*

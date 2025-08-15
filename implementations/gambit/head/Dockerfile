@@ -20,9 +20,11 @@ RUN make modules
 RUN make check
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      gcc libc-dev \
+      gcc \
+      libc-dev \
+      libmbedtls21 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 CMD ["scheme-banner"]

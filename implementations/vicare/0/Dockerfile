@@ -3,6 +3,11 @@ FROM debian:bullseye AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
        ca-certificates \
        gcc \
+       libtool \
+       m4 \
+       texinfo \
+       autoconf \
+       automake \
        libc6-dev \
        libffi-dev \
        libgmp-dev \
@@ -14,14 +19,15 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
   && rm -rf /var/lib/apt/lists/*
 
 RUN set -uxe; \
-    expectedSha256="47c6b275ce8abf9fe4e0fd7f1b895e45db85e9ed326b75afdf8c75d1eac73163"; \
-    url="https://bitbucket.org/marcomaggi/vicare-scheme/downloads/vicare-scheme-0.4.1-devel.3.tar.xz"; \
+    expectedSha256="577dd0831c9bc260cc283671e8be16b23af998ff4a21f95ff07957033482843d"; \
+    url="https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4d1.tar.gz"; \
     wget --no-verbose "$url" -O vs.tar.xz; \
     echo "${expectedSha256} *vs.tar.xz" | sha256sum -c -; \
     mkdir vs; \
     tar -C vs --strip-components 1 -xaf vs.tar.xz; \
     rm vs.tar.xz
 WORKDIR vs
+RUN sh autogen.sh
 RUN set -uxe; \
     ./configure --prefix=/usr/local/vicare; \
     make; \

@@ -2,7 +2,9 @@
 FROM debian:bullseye-slim AS build
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      make gcc:i386 libc6-dev:i386 \
+      make \
+      gcc:i386 \
+      libc6-dev:i386 \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -21,10 +23,12 @@ RUN make
 RUN mkdir /usr/local/lib/rhizome \
  && make install
 
-FROM debian:bullseye-slim
+FROM debian:trixie-slim
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      make gcc:i386 libc6-dev:i386 \
+      make \
+      gcc:i386 \
+      libc6-dev:i386 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/

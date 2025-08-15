@@ -1,22 +1,41 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential libffi-dev libgdbm-dev libgmp-dev texinfo \
+      build-essential \
+      pkg-config \
+      perl \
+      gdbmtool \
+      autoconf \
+      autoconf-archive \
+      libtool \
+      automake \
+      autoconf \
+      m4 \
+      libffi-dev \
+      libgdbm-dev \
+      libgmp-dev \
+      texinfo \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://download.tuxfamily.org/librep/librep_0.92.7.tar.xz \
-  librep.tar.xz
-RUN sha256sum librep.tar.xz && sha256sum -c checksum
-RUN mkdir librep && tar -C librep --strip-components 1 -xf librep.tar.xz
+#RUN wget -O librep.tar.xz https://download.tuxfamily.org/librep/librep_0.92.7.tar.xz
+RUN wget -O librep.tar.gz https://github.com/SawfishWM/librep/archive/refs/tags/librep-0.92.7.tar.gz
+RUN sha256sum librep.tar.gz && sha256sum -c checksum
+RUN mkdir librep && tar -C librep --strip-components 1 -xf librep.tar.gz
 WORKDIR /build/librep
-RUN ./configure
+#RUN autoupdate --force
+RUN ./autogen.sh --with-value-type="long long"
+RUN ./configure --with-value-type="long long" --prefix=/usr/local
 RUN make
 RUN make install
 
-FROM debian:bullseye-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi7 libgdbm6 libgmp10 \
+      libffi8 \
+      libgdbm6 \
+      libgmp10 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s rep /usr/local/bin/scheme-banner

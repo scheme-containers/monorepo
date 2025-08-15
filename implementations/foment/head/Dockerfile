@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
@@ -8,7 +8,7 @@ RUN git clone https://github.com/leftmike/foment.git --depth=1
 WORKDIR /build/foment/unix
 RUN make
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /build/foment/unix/release/foment /usr/local/bin/
 RUN ln -s foment /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

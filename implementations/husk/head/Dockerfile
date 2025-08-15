@@ -10,7 +10,7 @@ RUN cabal update
 RUN cabal build
 RUN cabal install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /root/.cabal /root/.cabal
 ENV PATH=/root/.cabal/bin:${PATH}
 RUN ln -s /root/.cabal/bin/huski /usr/local/bin/scheme-banner

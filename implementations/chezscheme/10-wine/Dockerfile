@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
     ca-certificates wget gpg cabextract msitools \
@@ -15,7 +15,7 @@ RUN mkdir -p /root/.wine/drive_c/Program\ Files/Chez
 RUN cp -r Program\ Files/Chez\ Scheme\ 10.1.0/* /root/.wine/drive_c/Program\ Files/Chez/
 RUN cp -r Chez\ Scheme\ 10.1.0/* /root/.wine/drive_c/Program\ Files/Chez/
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
     ca-certificates wine \
