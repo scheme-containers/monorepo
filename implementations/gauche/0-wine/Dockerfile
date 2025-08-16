@@ -1,8 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
-        msitools ca-certificates wget gpg \
+        msitools \
+        ca-certificates \
+        wget \
+        gpg \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -11,10 +14,11 @@ RUN sha256sum gauche.exe && sha256sum -c checksum
 RUN mkdir -p /root/.wine/drive_c/Program\ Files/
 RUN msiextract gauche.exe && cp -r Gauche /root/.wine/drive_c/Program\ Files/Gauche
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
-        ca-certificates wine \
+        ca-certificates \
+        wine \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /root/.wine /root/.wine
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Gauche/bin

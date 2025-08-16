@@ -3,10 +3,11 @@ FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
+    wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://download.racket-lang.org/releases/8.17/installers/racket-minimal-8.17-src.tgz racket.tgz
+RUN wget -O racket.tgz https://download.racket-lang.org/releases/8.17/installers/racket-minimal-8.17-src.tgz
 RUN sha256sum racket.tgz && sha256sum -c checksum
 RUN mkdir racket && tar -C racket --strip-components 1 -xf racket.tgz
 WORKDIR /build/racket/src

@@ -1,11 +1,23 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      make build-essential autoconf automake guile-3.0 guile-3.0-dev git ca-certificates libcurl4-openssl-dev pkg-config chezscheme \
+      make \
+      build-essential \
+      autoconf \
+      automake \
+      guile-3.0 \
+      guile-3.0-dev \
+      git \
+      ca-certificates \
+      libcurl4-openssl-dev \
+      pkg-config \
+      chezscheme \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://gitlab.com/akkuscm/akku/-/archive/v1.1.0/akku-v1.1.0.tar.gz akku.tar.gz
+RUN wget -O akku.tar.gz https://gitlab.com/akkuscm/akku/-/archive/v1.1.0/akku-v1.1.0.tar.gz
 RUN sha256sum akku.tar.gz && sha256sum -c checksum
 RUN mkdir akku && tar -C akku --strip-components 1 -xf akku.tar.gz
 WORKDIR /build/akku

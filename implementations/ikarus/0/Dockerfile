@@ -9,10 +9,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     git \
     libffi-dev:i386 \
     libgmp-dev:i386 \
+    wget \
+    ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://files.scheme.org/ikarus-0.0.3.tar.gz ikarus.tar.gz
+RUN wget -O ikarus.tar.gz https://files.scheme.org/ikarus-0.0.3.tar.gz
 RUN sha256sum ikarus.tar.gz && sha256sum -c checksum
 RUN mkdir ikarus && tar -C ikarus --strip-components 1 -xf ikarus.tar.gz
 WORKDIR /build/ikarus

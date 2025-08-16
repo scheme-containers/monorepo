@@ -1,7 +1,12 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM schemers/picrin AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ca-certificates git libedit-dev perl pkg-config \
+      build-essential \
+      ca-certificates \
+      git \
+      libedit-dev \
+      perl \
+      pkg-config \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/picrin-scheme/picrin.git --depth 1 --tags

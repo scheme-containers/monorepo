@@ -2,7 +2,10 @@
 FROM debian:trixie-slim AS build
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
-        ca-certificates wget gpg wine \
+        ca-certificates \
+        wget \
+        gpg \
+        wine \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -16,7 +19,8 @@ RUN wine raco.exe pkg install --auto r7rs > /dev/null
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    ca-certificates wine \
+    ca-certificates \
+    wine \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /root/.wine /root/.wine
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Racket

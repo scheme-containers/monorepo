@@ -18,11 +18,13 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libffi-dev \
       pkg-config \
       gettext \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 COPY checksum checksum
-ADD https://ftp.gnu.org/gnu/guile/guile-3.0.10.tar.gz guile.tar.gz
+RUN wget -O guile.tar.gz https://ftp.gnu.org/gnu/guile/guile-3.0.10.tar.gz
 RUN sha256sum guile.tar.gz && sha256sum -c checksum
 RUN mkdir guile && tar -C guile --strip-components 1 -xzf guile.tar.gz
 WORKDIR guile
@@ -32,8 +34,10 @@ RUN make install
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libgc1 \
-      libltdl7
+    libffi8 \
+    libunistring5 \
+    libgc1 \
+    libltdl7
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin/
 COPY scheme-r7rs /usr/local/bin/

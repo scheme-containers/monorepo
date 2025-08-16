@@ -4,10 +4,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc \
       make \
       libc-dev \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://raw.githubusercontent.com/lambdaconservatory/scheme-release-archive/master/minischeme/0.85k4/minischeme.tar.gz minischeme.tar.gz
+RUN wget -O minischeme.tar.gz https://raw.githubusercontent.com/lambdaconservatory/scheme-release-archive/master/minischeme/0.85k4/minischeme.tar.gz
 RUN sha256sum minischeme.tar.gz && sha256sum -c checksum
 RUN mkdir minischeme && tar -C minischeme --strip-components 1 -xf minischeme.tar.gz
 WORKDIR /build/minischeme

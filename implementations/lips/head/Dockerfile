@@ -1,7 +1,8 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      nodejs npm \
+      nodejs \
+      npm \
  && rm -rf /var/lib/apt/lists/*
 RUN npm install -g @jcubic/lips@beta
 

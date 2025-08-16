@@ -1,7 +1,8 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM schemers/chicken AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      git ca-certificates \
+      git \
+      ca-certificates \
       build-essential \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
@@ -14,7 +15,8 @@ RUN make PLATFORM=linux install
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      gcc libc-dev \
+      gcc \
+      libc-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN chicken-install r7rs

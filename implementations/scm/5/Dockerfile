@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       install-info \
@@ -16,11 +16,11 @@ RUN sha256sum scm.zip slib.zip && sha256sum -c checksum
 RUN unzip scm.zip
 RUN unzip slib.zip
 WORKDIR /build/slib
-RUN ./configure
+RUN ./configure --prefix=/usr/local
 RUN make
 RUN make install
 WORKDIR /build/scm
-RUN ./configure
+RUN ./configure --prefix=/usr/local
 RUN make scmlit
 RUN make all
 RUN make install

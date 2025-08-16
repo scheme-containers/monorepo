@@ -1,9 +1,20 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM schemers/gauche:latest AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      autoconf automake libtool m4 git \
-      build-essential pkg-config ca-certificates \
-      netbase openssh-client libmbedtls-dev zlib1g-dev \
+      autoconf \
+      automake \
+      texinfo \
+      bzip2 \
+      libtool \
+      m4 \
+      git \
+      build-essential \
+      pkg-config \
+      ca-certificates \
+      netbase \
+      openssh-client \
+      libmbedtls-dev \
+      zlib1g-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/shirok/Gauche.git gauche --depth 1 --tags
@@ -17,7 +28,8 @@ RUN echo "Gauche ($(git describe --always --tags))" \
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libmbedtls21 ca-certificates \
+      libmbedtls21 \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/

@@ -1,7 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    ca-certificates wget gpg cabextract msitools
+    ca-certificates \
+    wget \
+    gpg \
+    cabextract \
+    msitools
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O chez.exe https://github.com/cisco/ChezScheme/releases/download/v9.6.4/ChezScheme9.6.4.exe
@@ -13,9 +17,10 @@ RUN mkdir -p /root/.wine/drive_c/Program\ Files/Chez
 RUN cp -r Program\ Files/Chez\ Scheme\ 9.6.4/* /root/.wine/drive_c/Program\ Files/Chez/
 RUN cp -r Chez\ Scheme\ 9.6.4/* /root/.wine/drive_c/Program\ Files/Chez/
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    ca-certificates wine \
+    ca-certificates \
+    wine \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /root/.wine /root/.wine
 ENV WINEPATH=/root/.wine/drive_c/Program\ Files/Chez/bin/ta6nt

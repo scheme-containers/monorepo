@@ -1,8 +1,16 @@
 FROM debian:bullseye AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      ca-certificates build-essential ghostscript texinfo \
-      autoconf automake m4 git \
-      libcairo-dev libglu1-mesa libglu1-mesa-dev \
+      ca-certificates \
+      build-essential \
+      ghostscript \
+      texinfo \
+      autoconf \
+      automake \
+      m4 \
+      git \
+      libcairo-dev \
+      libglu1-mesa \
+      libglu1-mesa-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/jazzscheme/jazz

@@ -20,12 +20,10 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-#RUN wget -O librep.tar.xz https://download.tuxfamily.org/librep/librep_0.92.7.tar.xz
 RUN wget -O librep.tar.gz https://github.com/SawfishWM/librep/archive/refs/tags/librep-0.92.7.tar.gz
 RUN sha256sum librep.tar.gz && sha256sum -c checksum
 RUN mkdir librep && tar -C librep --strip-components 1 -xf librep.tar.gz
 WORKDIR /build/librep
-#RUN autoupdate --force
 RUN ./autogen.sh --with-value-type="long long"
 RUN ./configure --with-value-type="long long" --prefix=/usr/local
 RUN make

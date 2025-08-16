@@ -1,11 +1,14 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ncurses-dev \
+      build-essential \
+      ncurses-dev \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://www.t3x.org/s9fes/s9fes-20181205.tgz s9fes.tgz
+RUN wget -O s9fes.tgz https://www.t3x.org/s9fes/s9fes-20181205.tgz
 RUN sha256sum s9fes.tgz && sha256sum -c checksum
 RUN mkdir s9fes && tar -C s9fes --strip-components 1 -xf s9fes.tgz
 WORKDIR /build/s9fes

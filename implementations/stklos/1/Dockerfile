@@ -8,10 +8,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libgc-dev \
       libgmp-dev \
       libpcre2-dev \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://www.stklos.net/download/stklos-1.70.tar.gz stklos.tar.gz
+RUN wget -O stklos.tar.gz https://www.stklos.net/download/stklos-1.70.tar.gz
 RUN sha256sum stklos.tar.gz && sha256sum -c checksum
 RUN mkdir stklos && tar -C stklos --strip-components 1 -xf stklos.tar.gz
 WORKDIR /build/stklos
