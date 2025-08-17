@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bullseye AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
        ca-certificates \
        gcc \
@@ -17,26 +17,18 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
        wget \
        xz-utils \
   && rm -rf /var/lib/apt/lists/*
-
-RUN set -uxe; \
-    expectedSha256="577dd0831c9bc260cc283671e8be16b23af998ff4a21f95ff07957033482843d"; \
-    url="https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4d1.tar.gz"; \
-    wget --no-verbose "$url" -O vs.tar.xz; \
-    echo "${expectedSha256} *vs.tar.xz" | sha256sum -c -; \
-    mkdir vs; \
-    tar -C vs --strip-components 1 -xaf vs.tar.xz; \
-    rm vs.tar.xz
-WORKDIR vs
+WORKDIR /build
+RUN wget -O vs.tar.xz https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4.1-devel.3.tar.gz
+RUN mkdir vs && tar -C vs --strip-components 1 -xaf vs.tar.xz
+WORKDIR /build/vs
 RUN sh autogen.sh
-RUN set -uxe; \
-    ./configure --prefix=/usr/local/vicare; \
-    make; \
-    make install; \
-    make clean
+RUN VERSION=v0.4.1-devel3 ./configure --prefix=/usr/local
+RUN make
+RUN make isntall
 
-FROM debian:bullseye-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-       libffi7 \
+       libffi8 \
        libgmp10 \
        libreadline8 \
   && rm -rf /var/lib/apt/lists/*

@@ -17,8 +17,10 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libssl-dev \
       git ca-certificates \
  && rm -rf /var/lib/apt/lists/*
-RUN wget -O jdk-8.deb https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u442-b06/openlogic-openjdk-8u442-b06-linux-x64-deb.deb
-RUN apt-get install -y ./jdk-8.deb
+#RUN wget -O jdk-8.deb https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u442-b06/openlogic-openjdk-8u442-b06-linux-x64-deb.deb
+#RUN apt-get install -y ./jdk-8.deb
+RUN wget -O jdk-11.deb https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.28+6/openlogic-openjdk-11.0.28+6-linux-x64-deb.deb
+RUN apt-get install -y ./jdk-11.deb
 WORKDIR /build
 RUN git clone https://github.com/manuel-serrano/bigloo.git --depth=1
 WORKDIR /build/bigloo
