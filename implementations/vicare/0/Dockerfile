@@ -15,16 +15,25 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
        file \
        make \
        wget \
+       git \
        xz-utils \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN wget -O vs.tar.xz https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4.1-devel.3.tar.gz
-RUN mkdir vs && tar -C vs --strip-components 1 -xaf vs.tar.xz
+#RUN wget -O vs.tar.xz https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4.1-devel.3.tar.gz
+#RUN mkdir vs && tar -C vs --strip-components 1 -xaf vs.tar.xz
+RUN git clone https://github.com/marcomaggi/vicare.git --depth=1 vs
 WORKDIR /build/vs
 RUN sh autogen.sh
-RUN VERSION=v0.4.1-devel3 ./configure --prefix=/usr/local
-RUN make
-RUN make isntall
+#RUN echo "2" && ./configure --help
+#RUN exit 1
+RUN VERSION=v0.4.1-devel3 ./configure \
+	--prefix=/usr/local \
+	--disable-posix \
+	--disable-glibc \
+	--disable-linux \
+	--enable-maintainer-mode
+RUN make CFLAGS=-std=gnu99
+RUN make install
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
