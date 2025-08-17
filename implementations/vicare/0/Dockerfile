@@ -19,13 +19,10 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
        xz-utils \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-#RUN wget -O vs.tar.xz https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4.1-devel.3.tar.gz
-#RUN mkdir vs && tar -C vs --strip-components 1 -xaf vs.tar.xz
-RUN git clone https://github.com/marcomaggi/vicare.git --depth=1 vs
+RUN wget -O vs.tar.xz https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4.1-devel.3.tar.gz
+RUN mkdir vs && tar -C vs --strip-components 1 -xaf vs.tar.xz
 WORKDIR /build/vs
 RUN sh autogen.sh
-#RUN echo "2" && ./configure --help
-#RUN exit 1
 RUN VERSION=v0.4.1-devel3 ./configure \
 	--prefix=/usr/local \
 	--disable-posix \
