@@ -11,8 +11,9 @@ RUN wget -O skint.tar.gz https://github.com/false-schemers/skint/archive/refs/ta
 RUN sha256sum skint.tar.gz && sha256sum -c checksum
 RUN mkdir skint && tar -C skint --strip-components 1 -xf skint.tar.gz
 WORKDIR /build/skint
-RUN gcc -o skint [skint].c -lm
-RUN install skint /usr/local/bin/
+RUN ./configure --prefix=/usr/local
+RUN make CC=clang CFLAGS="-O3 -D NDEBUG -D NAN_BOXING"
+RUN make install
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/

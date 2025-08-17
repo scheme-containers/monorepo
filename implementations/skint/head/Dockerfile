@@ -8,7 +8,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/false-schemers/skint.git --depth=1
 WORKDIR /build/skint
-RUN make
+RUN ./configure --prefix=/usr/local
+RUN make CC=clang CFLAGS="-O3 -D NDEBUG -D NAN_BOXING"
 RUN make install
 
 FROM debian:trixie-slim
