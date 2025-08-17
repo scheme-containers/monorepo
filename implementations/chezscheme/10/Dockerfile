@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc \
       libc6-dev \
@@ -7,10 +7,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       uuid-dev \
       make \
       ncurses-dev \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://github.com/cisco/ChezScheme/releases/download/v10.1.0/csv10.1.0.tar.gz chezscheme.tar.gz
+RUN wget -O chezscheme.tar.gz https://github.com/cisco/ChezScheme/releases/download/v10.1.0/csv10.1.0.tar.gz
 RUN sha256sum chezscheme.tar.gz && sha256sum -c checksum
 RUN mkdir chezscheme && tar -C chezscheme -xf chezscheme.tar.gz --strip-components 1
 WORKDIR /build/chezscheme
@@ -18,7 +20,7 @@ RUN ./configure --prefix=/usr/local
 RUN make build
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local /usr/local
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \

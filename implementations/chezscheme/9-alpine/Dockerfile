@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine:3.8 AS build
+FROM alpine:3.22 AS build
 RUN apk add --no-cache \
       ca-certificates \
       curl \
@@ -30,7 +30,7 @@ RUN make install
 RUN rm -rf /usr/lib/csv9.5.4/examples
 RUN scheme --version
 
-FROM alpine:3.8
+FROM alpine:3.22
 RUN apk add --no-cache \
       libuuid \
       ncurses

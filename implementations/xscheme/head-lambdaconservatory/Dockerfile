@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       ca-certificates git \
       build-essential \
@@ -10,7 +10,7 @@ WORKDIR /build/xscheme
 RUN make
 RUN cp xscheme /usr/local/bin/xscheme
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s xscheme /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

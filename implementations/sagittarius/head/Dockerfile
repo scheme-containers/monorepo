@@ -23,7 +23,7 @@ RUN cmake .
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
        libffi8 \
        libgc1 \

@@ -10,8 +10,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libgc-dev \
       libgmp-dev \
       libpcre3-dev \
-      automake \
-      autoconf \
       bash-completion \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
@@ -22,12 +20,12 @@ RUN ./configure \
 RUN make ACLOCAL=aclocal AUTOMAKE=automake
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libffi8 \
       libgc1 \
       libgmp10 \
-      libpcre3 \
+      libpcre2-8-0 \
       libreadline8 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/

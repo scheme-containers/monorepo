@@ -1,7 +1,9 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential git ca-certificates \
+      build-essential \
+      git \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/lambdaconservatory/vx-scheme.git vx
@@ -13,7 +15,7 @@ RUN { echo "#include <limits>" && cat vx-scheme.h; } >vx-scheme.h.new \
 RUN make
 RUN install -m 755 vx-scheme /usr/local/bin/
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 CMD ["scheme-banner"]

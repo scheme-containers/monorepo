@@ -1,5 +1,4 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-
 FROM schemers/mosh AS build
 # We install Gauche like this as compromise
 RUN apt-get update && apt-get -y --no-install-recommends install \
@@ -31,7 +30,7 @@ RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libssl3 \
       libffi8 \

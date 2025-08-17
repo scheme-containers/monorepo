@@ -1,7 +1,8 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      stalin gcc \
+      stalin \
+      gcc \
  && rm -rf /var/lib/apt/lists/*
 COPY scheme-banner /usr/local/bin/
 CMD ["scheme-banner"]

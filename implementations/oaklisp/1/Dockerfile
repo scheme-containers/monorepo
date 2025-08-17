@@ -1,13 +1,18 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential autoconf automake libtool \
-      gcc-multilib lib32gcc-11-dev \
+      build-essential \
+      autoconf \
+      automake \
+      libtool \
+      gcc-multilib \
+      lib32gcc-14-dev \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://github.com/barak/oaklisp/archive/upstream/1.3.7.tar.gz \
-  oaklisp.tar.gz
+RUN wget -O oaklisp.tar.gz https://github.com/barak/oaklisp/archive/upstream/1.3.7.tar.gz
 RUN sha256sum oaklisp.tar.gz && sha256sum -c checksum
 RUN mkdir oaklisp && tar -C oaklisp --strip-components 1 -xf oaklisp.tar.gz
 WORKDIR /build/oaklisp
@@ -16,7 +21,7 @@ RUN ./configure --disable-docs
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       lib32gcc-s1 \
  && rm -rf /var/lib/apt/lists/*

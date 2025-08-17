@@ -1,9 +1,12 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ca-certificates git \
+      build-essential \
+      wget \
+      ca-certificates \
+      git \
  && rm -rf /var/lib/apt/lists/*
-WORKDIR /build/picrin
+WORKDIR /build/unlikely
 RUN git init \
  && git remote add origin https://github.com/marijnh/uscheme.git \
  && git fetch origin 7fce0b6e7875337da9a6a2300d8074f01e4b68d2 --depth 1 --tags \
@@ -11,7 +14,7 @@ RUN git init \
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s uscheme /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

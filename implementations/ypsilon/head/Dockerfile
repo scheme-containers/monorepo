@@ -1,8 +1,9 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       cmake \
+      wget \
       ca-certificates \
       cpio \
       git \
@@ -10,26 +11,25 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libonig-dev \
       libffi-dev \
       libgmp-dev \
-      llvm-15 \
-      clang-15 \
-      llvm-15-dev \
-      lld-15 \
  && rm -rf /var/lib/apt/lists/*
-RUN update-alternatives --install /usr/bin/clang clang++ /usr/bin/clang-15 0
-RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 0
-RUN update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-15 0
+WORKDIR /opt
+RUN wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.5/clang+llvm-15.0.5-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+RUN mkdir llvm && tar -C llvm --strip-components 1 -xf llvm.tar.xz
+RUN cp -r /opt/llvm/bin/* /usr/bin/
+RUN cp -r /opt/llvm/lib/* /usr/lib/
+RUN cp -r /opt/llvm/include/* /usr/include/
 WORKDIR /build/
 RUN git clone https://github.com/fujita-y/ypsilon.git --depth 1
 WORKDIR /build/ypsilon
-RUN CC=clang-15 CXX=clang++-15 cmake -DCMAKE_BUILD_TYPE=Release .
-RUN CC=clang-15 CXX=clang++-15 cmake --build .
-RUN CC=Clang-15 CXX=clang++-15 cmake --install .
+RUN cmake -DCMAKE_BUILD_TYPE=Release .
+RUN cmake --build .
+RUN cmake --install .
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libffi8 \
       libgmp10 \
-      libllvm15 \
+      libllvm19 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin

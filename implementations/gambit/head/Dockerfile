@@ -5,7 +5,11 @@
 
 FROM schemers/gambit:latest AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ghostscript texinfo ca-certificates git \
+      build-essential \
+      ghostscript \
+      texinfo \
+      ca-certificates \
+      git \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/gambit/gambit.git
@@ -20,9 +24,11 @@ RUN make modules
 RUN make check
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      gcc libc-dev \
+      gcc \
+      libc-dev \
+      libmbedtls21 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 CMD ["scheme-banner"]

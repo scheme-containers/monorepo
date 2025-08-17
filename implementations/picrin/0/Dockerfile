@@ -1,18 +1,25 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ca-certificates git libedit-dev perl pkg-config \
+      build-essential \
+      ca-certificates \
+      git \
+      libedit-dev \
+      perl \
+      pkg-config \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://github.com/picrin-scheme/picrin/archive/refs/tags/v0.4.tar.gz picrin.tar.gz
+RUN wget -O picrin.tar.gz https://github.com/picrin-scheme/picrin/archive/refs/tags/v0.4.tar.gz
 RUN sha256sum picrin.tar.gz && sha256sum -c checksum
 RUN mkdir picrin && tar -C picrin --strip-components 1 -xf picrin.tar.gz
 WORKDIR /build/picrin
 RUN make
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libedit2 \
  && rm -rf /var/lib/apt/lists/*

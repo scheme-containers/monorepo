@@ -1,11 +1,15 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential ghostscript texinfo \
+      build-essential \
+      ghostscript \
+      texinfo \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-ADD https://gambitscheme.org/latest/gambit-v4_9_7.tgz gambit.tgz
+RUN wget -O gambit.tgz https://github.com/gambit/gambit/archive/refs/tags/v4.9.6.tar.gz
 RUN sha256sum gambit.tgz && sha256sum -c checksum
 RUN mkdir gambit && tar -C gambit --strip-components 1 -xf gambit.tgz
 WORKDIR /build/gambit
@@ -14,7 +18,7 @@ RUN make
 RUN make check
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc libc-dev \
  && rm -rf /var/lib/apt/lists/*

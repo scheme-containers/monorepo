@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ca-certificates \
@@ -30,10 +30,12 @@ RUN ./configure
 RUN make -j$(nproc)
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libgc1 \
-      libltdl7
+    libffi8 \
+    libunistring5 \
+    libgc1 \
+    libltdl7
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin/
 COPY scheme-r7rs /usr/local/bin/

@@ -11,7 +11,7 @@ WORKDIR /build/meevax/build
 RUN make all
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 RUN ldconfig

@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
         ca-certificates wget gpg \
@@ -12,7 +12,7 @@ RUN mkdir larceny && tar -C larceny --strip-components 1 -xf larceny.tar.gz
 RUN mkdir -p /root/.wine/drive_c/Program\ Files/ \
     && mv larceny /root/.wine/drive_c/Program\ Files/Larceny
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates wget gpg wine wine32:i386 \
