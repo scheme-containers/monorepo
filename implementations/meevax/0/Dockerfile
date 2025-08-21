@@ -7,14 +7,15 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       cmake \
       libgmp-dev \
       git \
+      clang \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O meevax.tar.gz https://github.com/yamacir-kit/meevax/archive/refs/tags/v0.5.402.tar.gz
+RUN wget -O meevax.tar.gz https://github.com/yamacir-kit/meevax/archive/refs/tags/v0.5.424.tar.gz
 RUN sha256sum meevax.tar.gz && sha256sum -c checksum
 RUN mkdir meevax && tar -C meevax --strip-components 1 -xf meevax.tar.gz
 WORKDIR /build/meevax
-RUN cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+RUN CC=clang cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
 WORKDIR /build/meevax/build
 RUN make
 RUN make install
