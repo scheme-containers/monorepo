@@ -2,6 +2,8 @@
 FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
+      autoconf \
+      automake \
       file \
       texinfo \
       git \
