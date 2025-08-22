@@ -1,9 +1,10 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ca-certificates \
       git \
+      clang \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/false-schemers/skint.git --depth=1
