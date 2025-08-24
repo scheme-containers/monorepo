@@ -10,7 +10,7 @@ WORKDIR /build
 RUN git clone https://github.com/false-schemers/skint.git --depth=1
 WORKDIR /build/skint
 RUN ./configure --prefix=/usr/local
-RUN make CC=clang CFLAGS="-O3 -D NDEBUG -D NAN_BOXING"
+RUN make CC=clang
 RUN make install
 
 FROM debian:trixie-slim
