@@ -8,7 +8,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/larcenists/larceny.git --depth=1
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libc6-i386 \
  && rm -rf /var/lib/apt/lists/*
