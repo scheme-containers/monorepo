@@ -25,10 +25,48 @@ pipeline {
         }
 
         stage('Heads') {
+            agent {
+                label 'linux-x86_64'
+            }
             steps {
                 script {
                     def implementations = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
                     parallel implementations.collectEntries { implementation->
+                        [(implementation): {
+                                stage("${implementation} build") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${implementation}/head") {
+                                                sh "docker build . --tag=schemers/${implementation}:head"
+                                            }
+                                        }
+                                    }
+                                }
+                                stage("${implementation} push") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${implementation}/head") {
+                                                sh "docker push schemers/${implementation}:head"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+
+        stage('Heads arm') {
+            agent {
+                label 'linux-arm'
+            }
+            steps {
+                script {
+                    //def implementations = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
+                    def implementations = "chibi tr7".split()
+                    parallel implementations.collectEntries { implementation ->
                         [(implementation): {
                                 stage("${implementation} build") {
                                     timeout(time: 6, unit: 'HOURS') {
