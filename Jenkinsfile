@@ -26,7 +26,7 @@ pipeline {
 
         stage('Heads') {
             agent {
-                label 'linux-x86_64'
+                label 'agent1'
             }
             steps {
                 script {
