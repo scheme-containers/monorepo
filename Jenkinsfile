@@ -58,6 +58,18 @@ pipeline {
             }
         }
 
+        stage('Docker logout') {
+            steps {
+                sh "docker logout"
+            }
+        }
+
+        stage('Docker login') {
+            steps {
+                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+            }
+        }
+
         stage('Heads arm') {
             agent {
                 label 'linux-arm'
