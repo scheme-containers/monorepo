@@ -18,7 +18,7 @@ pipeline {
     }
 
     stages {
-        stage('Docker login') {
+        stage('Docker login 1') {
             steps {
                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
             }
@@ -58,13 +58,13 @@ pipeline {
             }
         }
 
-        stage('Docker logout') {
+        stage('Docker logout 1') {
             steps {
                 sh "docker logout"
             }
         }
 
-        stage('Docker login') {
+        stage('Docker login 2') {
             steps {
                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
             }
@@ -105,7 +105,7 @@ pipeline {
             }
         }
 
-        stage('Docker logout') {
+        stage('Docker logout 2') {
             steps {
                 sh "docker logout"
             }
