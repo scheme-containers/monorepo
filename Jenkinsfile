@@ -21,38 +21,34 @@ pipeline {
 
         stage('Heads') {
             parallel {
-
                 stage('x86_64') {
                     agent {
                         label 'agent1'
                     }
                     steps {
                         script {
-                            def implementations = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
-                             implementations.collectEntries { implementation->
-                                [(implementation): {
-                                        stage("${implementation} build") {
-                                            timeout(time: 6, unit: 'HOURS') {
-                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                    dir("implementations/${implementation}/head") {
-                                                        sh "docker build . --tag=schemers/${implementation}:head"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        stage("${implementation} push") {
-                                            timeout(time: 6, unit: 'HOURS') {
-                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                    dir("implementations/${implementation}/head") {
-                                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                                        sh "docker push schemers/${implementation}:head"
-                                                        sh "docker logout"
-                                                    }
-                                                }
+                            def schemes = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
+                            schemes.each { SCHEME ->
+                                stage("${SCHEME} build") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker build . --tag=schemers/${SCHEME}:head"
                                             }
                                         }
                                     }
-                                ]
+                                }
+                                stage("${SCHEME} push") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                                sh "docker push schemers/${SCHEME}:head"
+                                                sh "docker logout"
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -64,38 +60,32 @@ pipeline {
                     }
                     steps {
                         script {
-                            def implementations = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
-                             implementations.collectEntries { implementation->
-                                [(implementation): {
-                                        stage("${implementation} build") {
-                                            timeout(time: 6, unit: 'HOURS') {
-                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                    dir("implementations/${implementation}/head") {
-                                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                                        sh "docker build . --tag=schemers/${implementation}:head"
-                                                        sh "docker logout"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        stage("${implementation} push") {
-                                            timeout(time: 6, unit: 'HOURS') {
-                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                    dir("implementations/${implementation}/head") {
-                                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                                        sh "docker push schemers/${implementation}:head"
-                                                        sh "docker logout"
-                                                    }
-                                                }
+                            def schemes = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
+                            schemes.each { SCHEME ->
+                                stage("${SCHEME} build") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker build . --tag=schemers/${SCHEME}:head"
                                             }
                                         }
                                     }
-                                ]
+                                }
+                                stage("${SCHEME} push") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                                sh "docker push schemers/${SCHEME}:head"
+                                                sh "docker logout"
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
-
             }
         }
 
