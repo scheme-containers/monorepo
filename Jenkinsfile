@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     def implementations = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
-                    implementations.collectEntries { implementation->
+                     implementations.collectEntries { implementation->
                         [(implementation): {
                                 stage("${implementation} build") {
                                     timeout(time: 6, unit: 'HOURS') {
