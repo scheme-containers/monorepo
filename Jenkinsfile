@@ -22,15 +22,6 @@ pipeline {
         stage('Heads') {
             parallel {
 
-                stage('Docker login 1') {
-                    agent {
-                        label 'agent1'
-                    }
-                    steps {
-                        sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                    }
-                }
-
                 stage('x86_64') {
                     agent {
                         label 'agent1'
@@ -53,7 +44,9 @@ pipeline {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     dir("implementations/${implementation}/head") {
+                                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
                                                         sh "docker push schemers/${implementation}:head"
+                                                        sh "docker logout"
                                                     }
                                                 }
                                             }
@@ -64,27 +57,10 @@ pipeline {
                         }
                     }
                 }
-                stage('Docker logout 1') {
-                    agent {
-                        label 'agent1'
-                    }
-                    steps {
-                        sh 'docker logout'
-                    }
-                }
-
-                stage('Docker login 2') {
-                    agent {
-                        label 'linux-arm'
-                    }
-                    steps {
-                        sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
-                    }
-                }
 
                 stage('arm') {
                     agent {
-                        label 'linux-arm'
+                        label 'agent3'
                     }
                     steps {
                         script {
@@ -95,7 +71,9 @@ pipeline {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     dir("implementations/${implementation}/head") {
+                                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
                                                         sh "docker build . --tag=schemers/${implementation}:head"
+                                                        sh "docker logout"
                                                     }
                                                 }
                                             }
@@ -104,7 +82,9 @@ pipeline {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     dir("implementations/${implementation}/head") {
+                                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
                                                         sh "docker push schemers/${implementation}:head"
+                                                        sh "docker logout"
                                                     }
                                                 }
                                             }
@@ -113,15 +93,6 @@ pipeline {
                                 ]
                             }
                         }
-                    }
-                }
-
-                stage('Docker logout 2') {
-                    agent {
-                        label 'linux-arm'
-                    }
-                    steps {
-                        sh 'docker logout'
                     }
                 }
 
@@ -200,6 +171,24 @@ pipeline {
                         sh "docker logout"
                     }
                 }
+            }
+        }
+
+        stage('Docker logout x86') {
+            agent {
+                label 'agent1'
+            }
+            steps {
+                sh "docker logout"
+            }
+        }
+
+        stage('Docker logout arm') {
+            agent {
+                label 'agent3'
+            }
+            steps {
+                sh "docker logout"
             }
         }
     }
