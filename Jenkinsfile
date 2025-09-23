@@ -21,7 +21,7 @@ pipeline {
 
         stage('Heads') {
             parallel {
-                stage('x86_64') {
+                stage('x86_64 fast') {
                     agent {
                         label 'agent1'
                     }
@@ -54,7 +54,7 @@ pipeline {
                     }
                 }
 
-                stage('arm') {
+                stage('arm fast') {
                     agent {
                         label 'agent3'
                     }
@@ -87,7 +87,7 @@ pipeline {
                     }
                 }
 
-                stage('x86_64') {
+                stage('x86_64 slow') {
                     agent {
                         label 'agent1'
                     }
@@ -120,7 +120,7 @@ pipeline {
                     }
                 }
 
-                stage('arm') {
+                stage('arm slow') {
                     agent {
                         label 'agent3'
                     }
