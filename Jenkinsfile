@@ -94,7 +94,7 @@ pipeline {
                 stage('x86_64') {
                     agent { label 'agent1' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -109,7 +109,7 @@ pipeline {
                 stage('arm') {
                     agent { label 'agent3' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -128,7 +128,7 @@ pipeline {
                 stage('x86_64') {
                     agent { label 'agent1' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -143,7 +143,7 @@ pipeline {
                 stage('arm') {
                     agent { label 'agent3' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -162,7 +162,7 @@ pipeline {
                 stage('x86_64') {
                     agent { label 'agent1' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -177,7 +177,7 @@ pipeline {
                 stage('arm') {
                     agent { label 'agent3' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -196,7 +196,7 @@ pipeline {
                 stage('x86_64') {
                     agent { label 'agent1' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -211,7 +211,7 @@ pipeline {
                 stage('arm') {
                     agent { label 'agent3' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -230,7 +230,7 @@ pipeline {
                 stage('x86_64') {
                     agent { label 'agent1' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
@@ -245,7 +245,7 @@ pipeline {
                 stage('arm') {
                     agent { label 'agent3' }
                     steps {
-                        timeout(time: 6, unit: 'HOURS') {
+                        timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
                                     sh "docker build . --tag=schemers/${STAGE_NAME}:head"
