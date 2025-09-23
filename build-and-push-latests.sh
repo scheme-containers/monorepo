@@ -17,6 +17,9 @@ for path in $implementations; do
         rhizome-pi)
             echo "Skipping ${name} as it does not build"
             ;;
+        ikarus)
+            echo "Skipping ${name} as it does not build"
+            ;;
         *) case ${latest_version} in
             '' | *[!0-9]*)
                 echo "Latest of ${name} is ${latest_version} which is not valid and won't be built"
