@@ -121,6 +121,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
 
         stage('cyclone') {
@@ -155,6 +156,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
 
         stage('gambit') {
@@ -189,6 +191,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
 
         stage('guile') {
@@ -223,6 +226,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
 
         stage('racket') {
@@ -257,6 +261,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
 
         stage('Docker logout x86') {
