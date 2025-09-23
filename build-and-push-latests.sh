@@ -17,23 +17,22 @@ for path in $implementations; do
         rhizome-pi)
             echo "Skipping ${name} as it does not build"
             ;;
-    esac
-
-    case ${latest_version} in
-    '' | *[!0-9]*)
-        echo "Latest of ${name} is ${latest_version} which is not valid and won't be built"
-        ;;
-    *)
-        echo "Latest of ${name} is ${latest_version}"
-        echo "Building path ${latest_path}"
-        docker build "${latest_path}" --tag="schemers/${name}:latest"
-        #docker push schemers/${name}:latest
-        #docker build "${latest_path}" --tag="schemers/${name}:${latest_version}"
-        #docker push schemers/${name}:${latest_version}
-        #if [ ! "${build_only}" = "${name}" ]; then
-            #exit
-        #fi
-        ;;
+        *) case ${latest_version} in
+            '' | *[!0-9]*)
+                echo "Latest of ${name} is ${latest_version} which is not valid and won't be built"
+                ;;
+            *)
+                echo "Latest of ${name} is ${latest_version}"
+                echo "Building path ${latest_path}"
+                docker build "${latest_path}" --tag="schemers/${name}:latest"
+                #docker push schemers/${name}:latest
+                #docker build "${latest_path}" --tag="schemers/${name}:${latest_version}"
+                #docker push schemers/${name}:${latest_version}
+                #if [ ! "${build_only}" = "${name}" ]; then
+                    #exit
+                #fi
+                ;;
+            esac
     esac
 
 done
