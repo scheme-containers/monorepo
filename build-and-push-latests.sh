@@ -13,7 +13,8 @@ fi
 if [ "${arch}" = "aarch64" ]; then
     implementations=$(echo ${implementations} \
         | sed 's/rhizome-pi//' \
-        | sed 's/ikarus//')
+        | sed 's/ikarus//'
+        | sed 's/loko//')
 fi
 
 for path in $implementations; do
