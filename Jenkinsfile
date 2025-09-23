@@ -18,42 +18,86 @@ pipeline {
     }
 
     stages {
+
         stage('Heads') {
-            steps {
-                script {
-                    def schemes = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
-                        schemes.each { SCHEME ->
-                            stage("${SCHEME} build") {
-                                timeout(time: 6, unit: 'HOURS') {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        dir("implementations/${SCHEME}/head") {
-                                            sh "docker build . --platform linux/amd64,linux/arm64 --tag=schemers/${SCHEME}:head"
+            parallel {
+                stage('x86_64') {
+                    agent {
+                        label 'agent1'
+                    }
+                    steps {
+                        script {
+                            def schemes = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
+                            schemes.each { SCHEME ->
+                                stage("${SCHEME} build") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker build . --tag=schemers/${SCHEME}:head"
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            stage("${SCHEME} push") {
-                                timeout(time: 6, unit: 'HOURS') {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        dir("implementations/${SCHEME}/head") {
-                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                stage("${SCHEME} push") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
                                                 sh "docker push schemers/${SCHEME}:head"
                                                 sh "docker logout"
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+                }
+
+                stage('arm') {
+                    agent {
+                        label 'agent3'
+                    }
+                    steps {
+                        script {
+                            def schemes = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
+                            schemes.each { SCHEME ->
+                                stage("${SCHEME} build") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker build . --tag=schemers/${SCHEME}:head-arm"
+                                            }
+                                        }
+                                    }
+                                }
+                                stage("${SCHEME} push") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            dir("implementations/${SCHEME}/head") {
+                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                                sh "docker push schemers/${SCHEME}:head-arm"
+                                                sh "docker logout"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
         stage('bigloo') {
+            parallel {
+                stage('x86_64') {
+                    agent { label 'agent1' }
                     steps {
                         timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
-                                    sh "docker build . --platform linux/amd64,linux/arm64 --tag=schemers/${STAGE_NAME}:head"
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                                 }
                                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                     sh "docker push schemers/${STAGE_NAME}:head"
@@ -62,13 +106,33 @@ pipeline {
                         }
                     }
                 }
+                stage('arm') {
+                    agent { label 'agent3' }
+                    steps {
+                        timeout(time: 10, unit: 'HOURS') {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                dir("implementations/${STAGE_NAME}/head") {
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head-arm"
+                                }
+                                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                    sh "docker push schemers/${STAGE_NAME}:head-arm"
+                                    sh "docker logout"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         stage('cyclone') {
+            parallel {
+                stage('x86_64') {
+                    agent { label 'agent1' }
                     steps {
                         timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
-                                    sh "docker build . --platform linux/amd64,linux/arm64 --tag=schemers/${STAGE_NAME}:head"
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                                 }
                                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                     sh "docker push schemers/${STAGE_NAME}:head"
@@ -77,13 +141,33 @@ pipeline {
                         }
                     }
                 }
+                stage('arm') {
+                    agent { label 'agent3' }
+                    steps {
+                        timeout(time: 10, unit: 'HOURS') {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                dir("implementations/${STAGE_NAME}/head") {
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head-arm"
+                                }
+                                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                    sh "docker push schemers/${STAGE_NAME}:head-arm"
+                                    sh "docker logout"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         stage('gambit') {
+            parallel {
+                stage('x86_64') {
+                    agent { label 'agent1' }
                     steps {
                         timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
-                                    sh "docker build . --platform linux/amd64,linux/arm64 --tag=schemers/${STAGE_NAME}:head"
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                                 }
                                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                     sh "docker push schemers/${STAGE_NAME}:head"
@@ -92,13 +176,33 @@ pipeline {
                         }
                     }
                 }
+                stage('arm') {
+                    agent { label 'agent3' }
+                    steps {
+                        timeout(time: 10, unit: 'HOURS') {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                dir("implementations/${STAGE_NAME}/head") {
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head-arm"
+                                }
+                                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                    sh "docker push schemers/${STAGE_NAME}:head-arm"
+                                    sh "docker logout"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         stage('guile') {
+            parallel {
+                stage('x86_64') {
+                    agent { label 'agent1' }
                     steps {
                         timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
-                                    sh "docker build . --platform linux/amd64,linux/arm64 --tag=schemers/${STAGE_NAME}:head"
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                                 }
                                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                     sh "docker push schemers/${STAGE_NAME}:head"
@@ -107,13 +211,33 @@ pipeline {
                         }
                     }
                 }
+                stage('arm') {
+                    agent { label 'agent3' }
+                    steps {
+                        timeout(time: 10, unit: 'HOURS') {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                dir("implementations/${STAGE_NAME}/head") {
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head-arm"
+                                }
+                                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                    sh "docker push schemers/${STAGE_NAME}:head-arm"
+                                    sh "docker logout"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         stage('racket') {
+            parallel {
+                stage('x86_64') {
+                    agent { label 'agent1' }
                     steps {
                         timeout(time: 10, unit: 'HOURS') {
                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 dir("implementations/${STAGE_NAME}/head") {
-                                    sh "docker build . --platform linux/amd64,linux/arm64 --tag=schemers/${STAGE_NAME}:head"
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head"
                                 }
                                 sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                     sh "docker push schemers/${STAGE_NAME}:head"
@@ -122,11 +246,46 @@ pipeline {
                         }
                     }
                 }
+                stage('arm') {
+                    agent { label 'agent3' }
+                    steps {
+                        timeout(time: 10, unit: 'HOURS') {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                dir("implementations/${STAGE_NAME}/head") {
+                                    sh "docker build . --tag=schemers/${STAGE_NAME}:head-arm"
+                                }
+                                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
+                                    sh "docker push schemers/${STAGE_NAME}:head-arm"
+                                    sh "docker logout"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        stage('Docker logout') {
+        stage('Docker logout x86') {
+            agent {
+                label 'agent1'
+            }
             steps {
                 sh "docker logout"
             }
+        }
+
+        stage('Docker logout arm') {
+            agent {
+                label 'agent3'
+            }
+            steps {
+                sh "docker logout"
+            }
+        }
+    }
+
+    post {
+        always {
+            sh "docker logout"
         }
     }
 }
