@@ -28,10 +28,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       curl \
       default-jdk \
  && rm -rf /var/lib/apt/lists/*
-#RUN curl -s "https://get.sdkman.io" | bash
-#RUN bash -c 'source "/root/.sdkman/bin/sdkman-init.sh" && sdk install java 8.0.462-tem'
-#ENV PATH=${HOME}/.sdkman/candidates/java/current/bin:${PATH}
-#ENV JAVA_HOME=${HOME}/.sdkman/candidates/java/current
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s sisc /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
