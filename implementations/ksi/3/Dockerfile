@@ -7,6 +7,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libgmp-dev \
       wget \
       ca-certificates \
+      automake \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -14,6 +15,7 @@ RUN wget -O ksi.tar.gz https://sourceforge.net/projects/ksi/files/ksi/ksi-3.9.0/
 RUN sha256sum ksi.tar.gz && sha256sum -c checksum
 RUN mkdir ksi && tar -C ksi --strip-components 1 -xf ksi.tar.gz
 WORKDIR /build/ksi
+RUN cp /usr/share/automake*/config.guess .
 RUN ./configure
 RUN make
 RUN make install
