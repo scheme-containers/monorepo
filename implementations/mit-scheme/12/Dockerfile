@@ -6,7 +6,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses-dev \
       m4 \
       make \
-      texinfo mit-scheme \
+      texinfo \
       ca-certificates \
       wget \
  && rm -rf /var/lib/apt/lists/*

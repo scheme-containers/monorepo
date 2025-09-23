@@ -44,9 +44,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     libsqlite3-dev \
     libssl-dev \
     ca-certificates \
-    wget
-RUN wget -O jdk-8.deb https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u442-b06/openlogic-openjdk-8u442-b06-linux-x64-deb.deb
-RUN apt-get install -y ./jdk-8.deb
+    wget \
+    default-jdk
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s bigloo /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
