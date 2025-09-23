@@ -23,13 +23,14 @@ RUN wget -O vs.tar.xz https://github.com/marcomaggi/vicare/archive/refs/tags/v0.
 RUN mkdir vs && tar -C vs --strip-components 1 -xaf vs.tar.xz
 WORKDIR /build/vs
 RUN sh autogen.sh
+RUN cp /usr/share/automake*/config.guess .
 RUN VERSION=v0.4.1-devel3 ./configure \
 	--prefix=/usr/local \
 	--disable-posix \
 	--disable-glibc \
 	--disable-linux \
 	--enable-maintainer-mode
-RUN make CFLAGS=-std=gnu99
+RUN make
 RUN make install
 
 FROM debian:trixie-slim
