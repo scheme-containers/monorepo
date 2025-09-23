@@ -17,6 +17,7 @@ RUN mkdir mit-scheme-prebuilt && tar -C mit-scheme-prebuilt --strip-components 1
 WORKDIR /build/mit-scheme-prebuilt/src
 RUN ./configure
 RUN make install
+WORKDIR /build
 COPY checksum checksum
 RUN wget -O mit-scheme.tar.gz https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/12.1/mit-scheme-12.1.tar.gz
 RUN sha256sum mit-scheme.tar.gz && sha256sum -c checksum
