@@ -86,9 +86,7 @@ pipeline {
                         }
                     }
                 }
-            }
 
-            parallel {
                 stage('x86_64') {
                     agent {
                         label 'agent1'
