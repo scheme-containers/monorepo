@@ -25,7 +25,7 @@ pipeline {
 
         stage('Build and deploy') {
             parallel {
-                stage('x86_64') {
+                stage('Debian head x86_64') {
                     agent {
                         dockerfile {
                             label 'agent1'
@@ -49,7 +49,7 @@ pipeline {
                         }
                     }
                 }
-                stage('arm deploy Debian head') {
+                stage('Debian head arm') {
                     agent {
                         dockerfile {
                             label 'agent1'
