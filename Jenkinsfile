@@ -33,14 +33,16 @@ pipeline {
                             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                         }
                     }
-                    script {
-                        params.SCHEMES.each { SCHEME ->
-                            stage("${SCHEME} build") {
-                                timeout(time: 6, unit: 'HOURS') {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head build"
-                                            sh "docker logout"
+                    steps {
+                        script {
+                            params.SCHEMES.each { SCHEME ->
+                                stage("${SCHEME} build") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                                sh "make SCHEME=${SCHEME} VERSION=head build"
+                                                sh "docker logout"
+                                        }
                                     }
                                 }
                             }
@@ -55,14 +57,16 @@ pipeline {
                             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                         }
                     }
-                    script {
-                        params.SCHEMES.each { SCHEME ->
-                            stage("${SCHEME} build") {
-                                timeout(time: 6, unit: 'HOURS') {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head build"
-                                            sh "docker logout"
+                    steps {
+                        script {
+                            params.SCHEMES.each { SCHEME ->
+                                stage("${SCHEME} build") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                                sh "make SCHEME=${SCHEME} VERSION=head build"
+                                                sh "docker logout"
+                                        }
                                     }
                                 }
                             }
