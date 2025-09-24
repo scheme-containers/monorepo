@@ -1,0 +1,20 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add git wget gcc make musl-dev
+WORKDIR /build
+RUN wget https://code.call-cc.org/dev-snapshots/2024/12/09/chicken-6.0.0pre1.tar.gz
+RUN tar -xf chicken-6.0.0pre1.tar.gz
+WORKDIR /build/chicken-6.0.0pre1
+RUN ./configure --prefix=/usr/local-other && make && make install
+WORKDIR /build
+RUN git clone https://code.call-cc.org/git/chicken-core.git chicken
+WORKDIR /build/chicken
+RUN ./configure --prefix=/usr/local
+RUN make CHICKEN=/usr/local-other/bin/chicken
+RUN make install
+
+FROM alpine
+RUN apk add gcc
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -sf /usr/local/bin/csi /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

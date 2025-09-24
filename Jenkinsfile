@@ -9,12 +9,11 @@ pipeline {
 
     options {
         disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+            buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
     parameters {
-        string(name: 'DEPLOY_SCHEME', defaultValue: 'none', description: 'Deploy this scheme with tag latest on x86 and arm')
-        string(name: 'DEPLOY_VERSION', defaultValue: 'none', description: 'Deploy this version, for example guile/3, 3 would the version and would be deployed as guile:latest and guile:3')
+        string(name: 'SCHEMES', defaultValue: 'chibi tr7', description: 'Build and deploy theses Schemes')
     }
 
     environment {
@@ -24,156 +23,46 @@ pipeline {
 
     stages {
 
-        stage('Deploy latest') {
+        stage('Build and deploy') {
             parallel {
-                stage('x86_64 deploy latest') {
+                stage('x86_64') {
                     agent {
-                        label 'agent1'
-                    }
-                    when {
-                        expression {
-                            return "${params.DEPLOY_SCHEME}" != "none" && "${params.DEPLOY_VERSION}" != "none"
+                        dockerfile {
+                            label 'agent1'
+                            filename 'Dockerfile.jenkins'
+                            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                         }
                     }
-                    steps {
-                        sh "docker build ${params.DEPLOY_SCHEME}/${params.DEPLOY_VERSION} --tag=schemers/${params.DEPLOY_SCHEME}:latest"
-                        sh "docker build ${params.DEPLOY_SCHEME}/${params.DEPLOY_VERSION} --tag=schemers/${params.DEPLOY_SCHEME}:${params.DEPLOY_VERSION}"
-                    }
-                }
-                stage('arm deploy latest') {
-                    agent {
-                        label 'agent3'
-                    }
-                }
-            }
-
-        stage('Heads') {
-            parallel {
-                stage('x86_64 fast') {
-                    agent {
-                        label 'agent1'
-                    }
-                    steps {
-                        script {
-                            def schemes = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
-                            schemes.each { SCHEME ->
-                                stage("${SCHEME} build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker build . --tag=schemers/${SCHEME}:head"
-                                            }
-                                        }
-                                    }
-                                }
-                                stage("${SCHEME} push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                                sh "docker push schemers/${SCHEME}:head"
-                                                sh "docker logout"
-                                            }
-                                        }
+                    script {
+                        params.SCHEMES.each { SCHEME ->
+                            stage("${SCHEME} build") {
+                                timeout(time: 6, unit: 'HOURS') {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                            sh "make SCHEME=${SCHEME} VERSION=head build"
+                                            sh "docker logout"
                                     }
                                 }
                             }
                         }
                     }
                 }
-
-                stage('arm fast') {
+                stage('arm deploy Debian head') {
                     agent {
-                        label 'agent3'
-                    }
-                    steps {
-                        script {
-                            def schemes = "biwascheme chezscheme chibi chicken foment gauche ironscheme kawa lips loko meevax mit-scheme mosh sagittarius skint stak stklos tr7 ypsilon".split()
-                            schemes.each { SCHEME ->
-                                stage("${SCHEME} build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker build . --tag=schemers/${SCHEME}:head-arm"
-                                            }
-                                        }
-                                    }
-                                }
-                                stage("${SCHEME} push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                                sh "docker push schemers/${SCHEME}:head-arm"
-                                                sh "docker logout"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                        dockerfile {
+                            label 'agent1'
+                            filename 'Dockerfile.jenkins'
+                            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                         }
                     }
-                }
-
-                stage('x86_64 slow') {
-                    agent {
-                        label 'agent1'
-                    }
-                    steps {
-                        script {
-                            def schemes = "bigloo cyclone gambit guile racket".split()
-                            schemes.each { SCHEME ->
-                                stage("${SCHEME} build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker build . --tag=schemers/${SCHEME}:head"
-                                            }
-                                        }
-                                    }
-                                }
-                                stage("${SCHEME} push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                                sh "docker push schemers/${SCHEME}:head"
-                                                sh "docker logout"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                stage('arm slow') {
-                    agent {
-                        label 'agent3'
-                    }
-                    steps {
-                        script {
-                            def schemes = "bigloo cyclone gambit guile racket".split()
-                            schemes.each { SCHEME ->
-                                stage("${SCHEME} build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker build . --tag=schemers/${SCHEME}:head-arm"
-                                            }
-                                        }
-                                    }
-                                }
-                                stage("${SCHEME} push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            dir("implementations/${SCHEME}/head") {
-                                                sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                                sh "docker push schemers/${SCHEME}:head-arm"
-                                                sh "docker logout"
-                                            }
-                                        }
+                    script {
+                        params.SCHEMES.each { SCHEME ->
+                            stage("${SCHEME} build") {
+                                timeout(time: 6, unit: 'HOURS') {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                            sh "make SCHEME=${SCHEME} VERSION=head build"
+                                            sh "docker logout"
                                     }
                                 }
                             }
@@ -181,30 +70,6 @@ pipeline {
                     }
                 }
             }
-        }
-
-        stage('Docker logout x86') {
-            agent {
-                label 'agent1'
-            }
-            steps {
-                sh "docker logout"
-            }
-        }
-
-        stage('Docker logout arm') {
-            agent {
-                label 'agent3'
-            }
-            steps {
-                sh "docker logout"
-            }
-        }
-    }
-
-    post {
-        always {
-            sh "docker logout"
         }
     }
 }

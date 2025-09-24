@@ -16,7 +16,9 @@ RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O mit-scheme-prebuilt.ta
 RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O mit-scheme-prebuilt.tar.gz https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/12.1/mit-scheme-12.1-x86-64.tar.gz; fi
 RUN mkdir mit-scheme-prebuilt && tar -C mit-scheme-prebuilt --strip-components 1 -xf mit-scheme-prebuilt.tar.gz
 WORKDIR /build/mit-scheme-prebuilt/src
+RUN cp /usr/share/automake*/config.guess .
 RUN ./configure
+RUN make
 RUN make install
 WORKDIR /build
 COPY checksum checksum

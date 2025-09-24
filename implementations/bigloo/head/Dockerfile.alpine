@@ -1,0 +1,19 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc make musl-dev autoconf automake libtool patch zip sqlite git \
+    gmp-dev libunistring-dev pcre2-dev sqlite-dev openssl-dev openjdk21 wget
+WORKDIR /build
+RUN git clone https://github.com/manuel-serrano/bigloo.git --depth=1
+WORKDIR /build/bigloo
+RUN ./configure
+RUN make
+RUN make compile-bee
+RUN make install-sans-docs
+RUN make fulltest
+
+FROM alpine
+RUN apk add gcc sqlite musl-dev gmp-dev libunistring-dev pcre2-dev \
+    sqlite-dev openssl-dev wget openjdk25
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s bigloo /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
