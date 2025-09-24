@@ -35,7 +35,7 @@ pipeline {
                     }
                     steps {
                         script {
-                            params.SCHEMES.each { SCHEME ->
+                            params.SCHEMES.split().each { SCHEME ->
 
                                 stage("${SCHEME} Debian") {
                                     timeout(time: 6, unit: 'HOURS') {
@@ -71,7 +71,7 @@ pipeline {
                     }
                     steps {
                         script {
-                            params.SCHEMES.each { SCHEME ->
+                            params.SCHEMES.split().each { SCHEME ->
 
                                 stage("${SCHEME} Debian") {
                                     timeout(time: 6, unit: 'HOURS') {
