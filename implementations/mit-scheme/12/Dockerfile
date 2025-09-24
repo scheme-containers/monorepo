@@ -23,6 +23,7 @@ RUN wget -O mit-scheme.tar.gz https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/12.1
 RUN sha256sum mit-scheme.tar.gz && sha256sum -c checksum
 RUN mkdir mit-scheme && tar -C mit-scheme --strip-components 1 -xf mit-scheme.tar.gz
 WORKDIR /build/mit-scheme/src
+RUN cp /usr/share/automake*/config.guess .
 RUN ./configure
 RUN make
 RUN make install
