@@ -25,7 +25,7 @@ pipeline {
 
         stage('Build and deploy') {
             parallel {
-                stage('Debian head x86_64') {
+                stage('head x86_64') {
                     agent {
                         dockerfile {
                             label 'agent1'
@@ -36,7 +36,8 @@ pipeline {
                     steps {
                         script {
                             params.SCHEMES.each { SCHEME ->
-                                stage("${SCHEME} build") {
+
+                                stage("${SCHEME} Debian") {
                                     timeout(time: 6, unit: 'HOURS') {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
@@ -45,11 +46,22 @@ pipeline {
                                         }
                                     }
                                 }
+
+                                stage("${SCHEME} Alpine") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine build"
+                                            sh "docker logout"
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }
                 }
-                stage('Debian head arm') {
+                stage('head arm') {
                     agent {
                         dockerfile {
                             label 'agent1'
@@ -60,7 +72,8 @@ pipeline {
                     steps {
                         script {
                             params.SCHEMES.each { SCHEME ->
-                                stage("${SCHEME} build") {
+
+                                stage("${SCHEME} Debian") {
                                     timeout(time: 6, unit: 'HOURS') {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
@@ -69,6 +82,17 @@ pipeline {
                                         }
                                     }
                                 }
+
+                                stage("${SCHEME} Alpine") {
+                                    timeout(time: 6, unit: 'HOURS') {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine build"
+                                            sh "docker logout"
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }
