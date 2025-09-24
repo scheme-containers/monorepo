@@ -1,10 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM schemers/cyclone AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ca-certificates \
       git \
       wget \
+      libck-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 #RUN git clone https://github.com/justinethier/cyclone.git --depth=1

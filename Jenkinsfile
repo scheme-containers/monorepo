@@ -12,12 +12,40 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'DEPLOY_SCHEME', defaultValue: 'none', description: 'Deploy this scheme with tag latest on x86 and arm')
+        string(name: 'DEPLOY_VERSION', defaultValue: 'none', description: 'Deploy this version, for example guile/3, 3 would the version and would be deployed as guile:latest and guile:3')
+    }
+
     environment {
         DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
         DOCKER_HUB_TOKEN = credentials('DOCKER_HUB_TOKEN')
     }
 
     stages {
+
+        stage('Deploy latest') {
+            parallel {
+                stage('x86_64 deploy latest') {
+                    agent {
+                        label 'agent1'
+                    }
+                    when {
+                        expression {
+                            return "${params.DEPLOY_SCHEME}" != "none" && "${params.DEPLOY_VERSION}" != "none"
+                        }
+                    }
+                    steps {
+                        sh "docker build ${params.DEPLOY_SCHEME}/${params.DEPLOY_VERSION} --tag=schemers/${params.DEPLOY_SCHEME}:latest"
+                        sh "docker build ${params.DEPLOY_SCHEME}/${params.DEPLOY_VERSION} --tag=schemers/${params.DEPLOY_SCHEME}:${params.DEPLOY_VERSION}"
+                    }
+                }
+                stage('arm deploy latest') {
+                    agent {
+                        label 'agent3'
+                    }
+                }
+            }
 
         stage('Heads') {
             parallel {
