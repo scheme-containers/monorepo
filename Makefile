@@ -2,7 +2,6 @@ SCHEME=chibi
 VERSION=head
 VERSION_TAG=head
 LINUX=
-ACRH=$(shell uname --machine)
 DOCKERFILE=Dockerfile
 
 ifeq "${VERSION}" "latest"
