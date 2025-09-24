@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SCHEMES', defaultValue: 'chibi tr7', description: 'Build and deploy theses Schemes')
+        string(name: 'SCHEMES', defaultValue: 'biwascheme chezscheme chibi chicken cyclone gauche guile kawa lips loko meevax mit-scheme racket sagittarius scm stak stklos tr7', description: 'Build and deploy theses Schemes')
     }
 
     environment {
