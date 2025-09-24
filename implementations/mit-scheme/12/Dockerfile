@@ -9,6 +9,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       texinfo \
       ca-certificates \
       wget \
+      automake \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O mit-scheme-prebuilt.tar.gz https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/12.1/mit-scheme-12.1-aarch64le.tar.gz; fi
