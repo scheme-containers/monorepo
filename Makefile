@@ -11,7 +11,7 @@ VERSION_TAG=head
 PLATFORM=${OS}/amd64
 
 ifeq "${VERSION}" "latest"
-VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-wine" | sort | tail -n 1)
+VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-wine" -not -name "*-mono" | sort | tail -n 1)
 else
 VERSION_PATH=implementations/${SCHEME}/${VERSION}
 endif
