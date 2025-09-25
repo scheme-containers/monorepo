@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add git clang
+RUN apk add git musl-dev clang-dev llvm-dev lld-dev make
 WORKDIR /build
 RUN git clone https://github.com/JeffBezanson/femtolisp.git --depth 1
 WORKDIR /build/femtolisp
