@@ -9,7 +9,7 @@ RUN mkdir /usr/local/lib/larceny
 RUN tar -C /usr/local/lib/larceny --strip-components 1 -xf larceny.tar.gz
 
 FROM alpine
-RUN apk add musl-dev
+RUN apk add gcompat
 COPY --from=build /usr/local/lib/larceny/ /usr/local/lib/larceny/
 COPY scheme-banner scheme-script /usr/local/bin/
 RUN ln -s ../lib/larceny/larceny /usr/local/bin/larceny
