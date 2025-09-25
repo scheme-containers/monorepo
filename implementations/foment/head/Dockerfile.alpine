@@ -1,0 +1,12 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add git gcc make
+WORKDIR /build
+RUN git clone https://github.com/leftmike/foment.git --depth=1
+WORKDIR /build/foment/unix
+RUN make
+
+FROM alpine
+COPY --from=build /build/foment/unix/release/foment /usr/local/bin/
+RUN ln -s foment /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

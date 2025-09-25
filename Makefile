@@ -1,8 +1,14 @@
+# User arguments begin
 SCHEME=chibi
-VERSION=head
-VERSION_TAG=head
-LINUX=
+VERSION=head             # head, N or latest
+LINUX=                   # empty or alpine
+ARCH=x86_64
+OS=linux
+# User arguments end
+
 DOCKERFILE=Dockerfile
+VERSION_TAG=head
+PLATFORM=${OS}/amd64
 
 ifeq "${VERSION}" "latest"
 VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" | sort | tail -n 1)
@@ -13,17 +19,24 @@ endif
 ifeq "${LINUX}" "alpine"
 DOCKERFILE=Dockerfile.alpine
 LINUX_REAL=alpine-
-else
+endif
+
+ifeq "${LINUX}" "debian"
+DOCKERFILE=Dockerfile
 LINUX_REAL=
 endif
 
 ifeq "${ARCH}" "aarch64"
 TAG=${LINUX_REAL}${VERSION}-arm
-else
-TAG=${LINUX_REAL}${VERSION}
+PLATFORM=${OS}/arm64
 endif
 
-BUILD_CMD=docker build . -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
+ifeq "${ARCH}" "x86_64"
+TAG=${LINUX_REAL}${VERSION}
+PLATFORM=${OS}/amd64
+endif
+
+BUILD_CMD=docker build . --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
 PUSH_CMD=docker push schemers/${SCHEME}:${TAG}
 
 debug:
@@ -32,8 +45,12 @@ debug:
 	@echo "PUSH_CMD : ${PUSH_CMD}"
 
 build:
+	@echo "DIR      : ${VERSION_PATH}"
+	@echo "BUILD_CMD: ${BUILD_CMD}"
 	cd ${VERSION_PATH} && ${BUILD_CMD}
 
 push:
+	@echo "DIR      : ${VERSION_PATH}"
+	@echo "PUSH_CMD : ${PUSH_CMD}"
 	cd ${VERSION_PATH} && ${PUSH_CMD}
 

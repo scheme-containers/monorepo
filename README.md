@@ -28,3 +28,29 @@ Or an alternative flavor:
 Or both at once:
 
     docker run -it schemers/ironscheme:1-mono
+
+
+## Building image
+
+Give arguments and run without command to see what will be run.  See the
+Makefile for all arguemtns. When you are satisfied with commands run "build"
+and then "push" if you want to push the image.
+
+Examples:
+
+    make SCHEME=chibi VERSION=latest LINUX=alpine
+    > DIR      : implementations/chibi/0
+    > BUILD_CMD: docker build . -f Dockerfile.alpine --tag=schemers/chibi:alpine-latest
+    > PUSH_CMD : docker push schemers/chibi:alpine-latest
+
+    make SCHEME=chibi VERSION=latest
+    > DIR      : implementations/chibi/0
+    > BUILD_CMD: docker build . -f Dockerfile --tag=schemers/chibi:latest
+    > PUSH_CMD : docker push schemers/chibi:latest
+
+    make SCHEME=chibi VERSION=head
+    > DIR      : implementations/chibi/head
+    > BUILD_CMD: docker build . -f Dockerfile --tag=schemers/chibi:head
+    > PUSH_CMD : docker push schemers/chibi:head
+
+
