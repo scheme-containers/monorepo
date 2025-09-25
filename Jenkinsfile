@@ -49,7 +49,7 @@ pipeline {
                                     timeout(time: 6, unit: 'HOURS') {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head push | docker logout"
+                                            sh "make SCHEME=${SCHEME} VERSION=head push"
                                             sh "docker logout"
                                         }
                                     }
@@ -67,7 +67,7 @@ pipeline {
                                     timeout(time: 6, unit: 'HOURS') {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine push | docker logout"
+                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine push"
                                             sh "docker logout"
                                         }
                                     }
