@@ -1,0 +1,17 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make ncurses-dev wget
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O s9fes.tgz https://www.t3x.org/s9fes/s9fes-20181205.tgz
+RUN sha256sum s9fes.tgz && sha256sum -c checksum
+RUN mkdir s9fes && tar -C s9fes --strip-components 1 -xf s9fes.tgz
+WORKDIR /build/s9fes
+RUN make PREFIX=/usr/local
+RUN make PREFIX=/usr/local install
+
+FROM alpine
+RUn apk add ncurses
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s s9 /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
