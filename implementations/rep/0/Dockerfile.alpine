@@ -1,0 +1,23 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make pkgconf perl gdbm-tools autoconf autoconf-archive \
+    libtool automake autoconf m4 libffi-dev gdbm-dev gmp-dev texinfo wget \
+    gcompat readline-dev
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O librep.tar.gz https://github.com/SawfishWM/librep/archive/refs/tags/librep-0.92.7.tar.gz
+RUN sha256sum librep.tar.gz && sha256sum -c checksum
+RUN mkdir librep && tar -C librep --strip-components 1 -xf librep.tar.gz
+WORKDIR /build/librep
+RUN ./autogen.sh --with-value-type="long long"
+RUN autoupdate
+RUN ./configure --with-value-type="long long" --prefix=/usr/local
+RUN make
+RUN make install
+
+FROM alpine
+RUN apk add libffi gdbm gmp
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s rep /usr/local/bin/scheme-banner
+RUN ldconfig
+CMD ["scheme-banner"]

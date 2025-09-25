@@ -7,6 +7,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       gdbmtool \
       autoconf \
       autoconf-archive \
+      libreadline-dev \
       libtool \
       automake \
       autoconf \
@@ -25,15 +26,17 @@ RUN sha256sum librep.tar.gz && sha256sum -c checksum
 RUN mkdir librep && tar -C librep --strip-components 1 -xf librep.tar.gz
 WORKDIR /build/librep
 RUN ./autogen.sh --with-value-type="long long"
+RUN autoupdate
 RUN ./configure --with-value-type="long long" --prefix=/usr/local
 RUN make
 RUN make install
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi8 \
-      libgdbm6 \
-      libgmp10 \
+    libreadline-dev \
+    libffi-dev \
+    libgdbm-dev \
+    libgmp-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s rep /usr/local/bin/scheme-banner
