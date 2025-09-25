@@ -1,0 +1,18 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+# We take the easy way out and just copy the JAR file. TODO: Build from source.
+FROM alpine AS build
+RUN apk add wget
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O schluessel.tar.gz https://raw.githubusercontent.com/lambdaconservatory/scheme-release-archive/master/schluessel/schluessel-0.4.4-bin.tar.gz
+RUN sha256sum schluessel.tar.gz && sha256sum -c checksum
+RUN mkdir schluessel && tar -C schluessel --strip-components 1 -xf schluessel.tar.gz
+WORKDIR /build/schluessel
+RUN mkdir /usr/local/share/schluessel
+RUN cp schluessel.jar /usr/local/share/schluessel/
+
+FROM alpine
+RUN apk add openjdk21
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-banner /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
