@@ -1,20 +1,7 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      gcc \
-      libc-dev \
-      libncurses-dev \
-      m4 \
-      make \
-      texinfo \
-      ca-certificates \
-      git \
-      automake \
-      texinfo \
-      libtool \
-      wget \
-      build-essential \
- && rm -rf /var/lib/apt/lists/*
+FROM alpine AS build
+RUN apk add gcc musl-dev ncurses-dev m4 make texinfo git automake texinfo \
+    libtool wget
 WORKDIR /build
 RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O mit-scheme-prebuilt.tar.gz https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/12.1/mit-scheme-12.1-aarch64le.tar.gz; fi
 RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O mit-scheme-prebuilt.tar.gz https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/12.1/mit-scheme-12.1-x86-64.tar.gz; fi
@@ -32,10 +19,8 @@ RUN ./configure
 RUN make
 RUN make install
 
-FROM debian:trixie-slim
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      libncurses6 \
- && rm -rf /var/lib/apt/lists/*
+FROM alpine
+RUN apk add ncurses
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s mit-scheme /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

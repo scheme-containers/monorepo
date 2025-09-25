@@ -1,0 +1,22 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add git
+WORKDIR /build
+RUN git clone https://git.savannah.gnu.org/git/guile.git guile --depth=1
+RUN apk add git file libtool autoconf automake gperf ncurses-dev \
+    readline-dev gmp-dev texinfo flex libunistring-dev gc-dev \
+    libffi-dev pkgconf gettext-dev gcc make
+WORKDIR /build/guile
+RUN ./autogen.sh
+RUN ./configure
+RUN make -j$(nproc)
+RUN make install
+
+FROM alpine
+RUN apk add libffi libunistring gc
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-script /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
+RUN ln -s /usr/local/bin/guile /usr/local/bin/scheme-banner
+RUN ldconfig || true
+CMD ["scheme-banner"]

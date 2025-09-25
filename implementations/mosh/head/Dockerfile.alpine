@@ -1,0 +1,19 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM schemers/mosh:alpine-latest AS build
+RUN apk add autoconf automake bison gcc make cpio git libffi-dev gmp-dev \
+    oniguruma-dev openssl-dev pkgconf re2c wget musl-dev g++
+# We install Gauche like this as compromise
+RUN wget https://github.com/shirok/Gauche/releases/download/release0_9_15/Gauche-0.9.15.tgz && tar -xf Gauche-0.9.15.tgz
+RUN cd Gauche-0.9.15 && ./configure && make && make install
+WORKDIR /build
+RUN git clone https://github.com/higepon/mosh.git --depth=1
+WORKDIR /build/mosh
+RUN ./gen-git-build.sh
+RUN ./configure
+RUN make
+RUN make install
+
+FROM alpine
+RUN apk add openssl libffi gmp oniguruma libstdc++
+COPY --from=build /usr/local/ /usr/local/
+CMD ["scheme-banner"]

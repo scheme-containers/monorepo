@@ -11,7 +11,7 @@ VERSION_TAG=head
 PLATFORM=${OS}/amd64
 
 ifeq "${VERSION}" "latest"
-VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" | sort | tail -n 1)
+VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-wine" | sort | tail -n 1)
 else
 VERSION_PATH=implementations/${SCHEME}/${VERSION}
 endif
@@ -35,6 +35,12 @@ ifeq "${ARCH}" "x86_64"
 TAG=${LINUX_REAL}${VERSION}
 PLATFORM=${OS}/amd64
 endif
+
+ifeq "${ARCH}" "x86"
+TAG=${LINUX_REAL}${VERSION}
+PLATFORM=${OS}/386
+endif
+
 
 BUILD_CMD=docker build . --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
 PUSH_CMD=docker push schemers/${SCHEME}:${TAG}

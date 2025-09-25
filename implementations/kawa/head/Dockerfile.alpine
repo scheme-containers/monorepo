@@ -1,0 +1,18 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine:edge AS build
+RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing openjdk25
+RUN apk add automake autoconf texinfo git gcc musl-dev g++ make
+WORKDIR /build
+RUN git clone https://gitlab.com/kashell/Kawa.git kawa --depth 1
+WORKDIR kawa
+RUN ./autogen.sh
+RUN ./configure
+RUN make
+RUN make install
+
+FROM alpine:edge
+RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing openjdk25
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-banner /usr/local/bin
+COPY scheme-r7rs /usr/local/bin
+CMD ["scheme-banner"]
