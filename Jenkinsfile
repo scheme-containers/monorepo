@@ -14,6 +14,8 @@ pipeline {
 
     parameters {
         string(name: 'SCHEMES', defaultValue: 'biwascheme chezscheme chibi chicken cyclone gauche guile kawa lips loko meevax mit-scheme racket sagittarius scm stak stklos tr7', description: 'Build and deploy theses Schemes')
+        string(name: 'LINUXES', defaultValue: 'debian alpine', description: 'Build and deploy images on these linuxes')
+        string(name: 'VERSIONS', defaultValue: 'head', description: 'Build and deploy these versions')
     }
 
     environment {
@@ -25,7 +27,7 @@ pipeline {
 
         stage('Build and deploy') {
             parallel {
-                stage('head x86_64') {
+                stage('x86_64') {
                     agent {
                         dockerfile {
                             label 'agent1'
@@ -36,48 +38,32 @@ pipeline {
                     steps {
                         script {
                             params.SCHEMES.split().each { SCHEME ->
+                                params.LINUXES.split().each { LINUX ->
+                                    params.VERSIONS.split().each { VERSION ->
+                                        stage("${SCHEME} ${LINUX} ${VERSION} build") {
+                                            timeout(time: 6, unit: 'HOURS') {
+                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 build"
+                                                }
+                                            }
+                                        }
 
-                                stage("${SCHEME} Debian build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "make SCHEME=${SCHEME} VERSION=head build"
+                                        stage("${SCHEME} ${LINUX} ${VERSION} push") {
+                                            timeout(time: 6, unit: 'HOURS') {
+                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 push"
+                                                    sh "docker logout"
+                                                }
+                                            }
                                         }
                                     }
                                 }
-
-                                stage("${SCHEME} Debian push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head push"
-                                            sh "docker logout"
-                                        }
-                                    }
-                                }
-
-                                stage("${SCHEME} Alpine build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine build"
-                                        }
-                                    }
-                                }
-
-                                stage("${SCHEME} Alpine push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine push"
-                                            sh "docker logout"
-                                        }
-                                    }
-                                }
-
                             }
                         }
                     }
                 }
-                stage('head arm') {
+                stage('arm') {
                     agent {
                         dockerfile {
                             label 'agent1'
@@ -88,43 +74,27 @@ pipeline {
                     steps {
                         script {
                             params.SCHEMES.split().each { SCHEME ->
+                                params.LINUXES.split().each { LINUX ->
+                                    params.VERSIONS.split().each { VERSION ->
+                                        stage("${SCHEME} ${LINUX} ${VERSION} build") {
+                                            timeout(time: 6, unit: 'HOURS') {
+                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 build"
+                                                }
+                                            }
+                                        }
 
-                                stage("${SCHEME} Debian build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "make SCHEME=${SCHEME} VERSION=head ARCH=aarch64 build"
+                                        stage("${SCHEME} ${LINUX} ${VERSION} push") {
+                                            timeout(time: 6, unit: 'HOURS') {
+                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
+                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 push"
+                                                    sh "docker logout"
+                                                }
+                                            }
                                         }
                                     }
                                 }
-
-                                stage("${SCHEME} Debian push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head ARCH=aarch64 push"
-                                            sh "docker logout"
-                                        }
-                                    }
-                                }
-
-                                stage("${SCHEME} Alpine build") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine ARCH=aarch64 build"
-                                        }
-                                    }
-                                }
-
-                                stage("${SCHEME} Alpine push") {
-                                    timeout(time: 6, unit: 'HOURS') {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
-                                            sh "make SCHEME=${SCHEME} VERSION=head ARCH=aarch64 push"
-                                            sh "docker logout"
-                                        }
-                                    }
-                                }
-
                             }
                         }
                     }
