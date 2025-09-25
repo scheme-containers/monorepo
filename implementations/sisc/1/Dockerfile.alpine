@@ -1,0 +1,19 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add zip unzip gcc musl-dev make wget git curl bash openjdk8
+RUN curl -s "https://get.sdkman.io" | bash
+RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && sdk install ant 1.9.10"
+WORKDIR /build
+RUN git clone https://github.com/lambdaconservatory/scheme-release-archive.git --depth=1 && cp scheme-release-archive/sisc/sisc-1.16.6.jar sisc.jar
+COPY checksum checksum
+RUN sha256sum sisc.jar && sha256sum -c checksum
+RUN unzip sisc.jar "sisc/*"
+WORKDIR /build/sisc
+RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && ant"
+RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && ant install"
+
+FROM alpine
+RUN apk add openjdk21
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s sisc /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
