@@ -110,7 +110,7 @@ pipeline {
                                 stage("${SCHEME} Alpine build") {
                                     timeout(time: 6, unit: 'HOURS') {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine ARCH=aarch64 build push"
+                                            sh "make SCHEME=${SCHEME} VERSION=head LINUX=alpine ARCH=aarch64 build"
                                         }
                                     }
                                 }
