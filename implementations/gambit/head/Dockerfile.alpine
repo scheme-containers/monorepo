@@ -4,13 +4,7 @@
 # failure for unknown reasons. That's why we use a full clone.
 
 FROM alpine AS build
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential \
-      ghostscript \
-      texinfo \
-      ca-certificates \
-      git \
- && rm -rf /var/lib/apt/lists/*
+RUN apk add gcc make ghostscript texinfo git musl-dev
 WORKDIR /build
 RUN git clone https://github.com/gambit/gambit.git
 WORKDIR /build/gambit
@@ -24,11 +18,7 @@ RUN make modules
 RUN make check
 RUN make install
 
-FROM debian:trixie-slim
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      gcc \
-      libc-dev \
-      libmbedtls21 \
- && rm -rf /var/lib/apt/lists/*
+FROM alpine debian:trixie-slim
+RUN apk add gcc musl-dev mbedtls
 COPY --from=build /usr/local/ /usr/local/
 CMD ["scheme-banner"]
