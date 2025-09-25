@@ -9,12 +9,10 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/JeffBezanson/femtolisp.git --depth 1
 WORKDIR /build/femtolisp
-RUN make CC=clang
-#RUN ./bootstrap.sh
-#RUN mkdir -p /usr/local/share/flisp/
-#RUN cp -p flisp.boot /usr/local/share/flisp/flisp.boot
-#RUN make CFLAGS='-D INITFILE=\"/usr/local/share/flisp/flisp.boot\" -std=gnu89'
-#RUN cp -p flisp /usr/local/bin/
+RUN make CC=clang CFLAGS=-std=gnu89
+RUN mkdir -p /usr/local/bin
+RUN cp -p flisp.boot /usr/local/bin/flisp.boot
+RUN cp -p flisp /usr/local/bin/
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/

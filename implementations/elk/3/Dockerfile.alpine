@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add gcc musl-dev make wget
+RUN apk add gcc musl-dev make wget automake
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O elk.tar.gz http://sam.zoy.org/elk/elk-3.99.8.tar.gz

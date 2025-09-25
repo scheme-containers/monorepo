@@ -1,12 +1,12 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add gcc musl-dev make git
+RUN apk add git clang
 WORKDIR /build
 RUN git clone https://github.com/JeffBezanson/femtolisp.git --depth 1
 WORKDIR /build/femtolisp
-RUN mkdir -p /usr/local/share/flisp/
-RUN cp -p flisp.boot /usr/local/share/flisp/flisp.boot
-RUN make CFLAGS='-D INITFILE=\"/usr/local/share/flisp/flisp.boot\" -std=gnu89'
+RUN make CC=clang CFLAGS=-std=gnu89
+RUN mkdir -p /usr/local/bin
+RUN cp -p flisp.boot /usr/local/bin/flisp.boot
 RUN cp -p flisp /usr/local/bin/
 
 FROM alpine

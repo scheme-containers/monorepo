@@ -4,6 +4,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       wget \
       ca-certificates \
+      automake \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
