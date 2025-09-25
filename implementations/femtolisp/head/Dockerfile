@@ -4,14 +4,17 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ca-certificates \
       git \
+      clang \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/JeffBezanson/femtolisp.git --depth 1
 WORKDIR /build/femtolisp
-RUN mkdir -p /usr/local/share/flisp/
-RUN cp -p flisp.boot /usr/local/share/flisp/flisp.boot
-RUN make CFLAGS='-D INITFILE=\"/usr/local/share/flisp/flisp.boot\" -std=gnu89'
-RUN cp -p flisp /usr/local/bin/
+RUN make CC=clang
+#RUN ./bootstrap.sh
+#RUN mkdir -p /usr/local/share/flisp/
+#RUN cp -p flisp.boot /usr/local/share/flisp/flisp.boot
+#RUN make CFLAGS='-D INITFILE=\"/usr/local/share/flisp/flisp.boot\" -std=gnu89'
+#RUN cp -p flisp /usr/local/bin/
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
