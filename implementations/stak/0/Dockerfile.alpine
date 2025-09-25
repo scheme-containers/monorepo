@@ -1,0 +1,15 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM rust:alpine AS build
+RUN apk add musl-dev
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O stak.tar.gz https://github.com/raviqqe/stak/archive/refs/tags/v0.10.39.tar.gz
+RUN sha256sum stak.tar.gz && sha256sum -c checksum
+RUN mkdir stak && tar -C stak --strip-components 1 -xf stak.tar.gz
+WORKDIR /build/stak
+RUN cargo install stak --root /usr/local
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-banner /usr/local/bin/
+CMD scheme-banner

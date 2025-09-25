@@ -1,0 +1,17 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make wget
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O tinyscheme.tar.gz https://sourceforge.net/projects/tinyscheme/files/tinyscheme/tinyscheme-1.41/tinyscheme-1.41.tar.gz/download
+RUN sha256sum tinyscheme.tar.gz && sha256sum -c checksum
+RUN mkdir tinyscheme && tar -C tinyscheme --strip-components 1 -xf tinyscheme.tar.gz
+WORKDIR /build/tinyscheme
+RUN make
+
+FROM alpine
+RUN apk add ncurses
+COPY --from=build /build/tinyscheme/init.scm /build/tinyscheme/scheme \
+  /usr/local/tinyscheme/
+COPY scheme-banner /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

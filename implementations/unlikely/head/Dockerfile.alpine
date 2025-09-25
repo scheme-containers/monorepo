@@ -1,0 +1,16 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make git g++
+WORKDIR /build/unlikely
+RUN git init \
+ && git remote add origin https://github.com/marijnh/uscheme.git \
+ && git fetch origin 7fce0b6e7875337da9a6a2300d8074f01e4b68d2 --depth 1 --tags \
+ && git reset --hard FETCH_HEAD
+RUN make
+RUN make install
+
+FROM alpine
+RUN apk add libstdc++
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s uscheme /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

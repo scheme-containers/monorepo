@@ -1,0 +1,18 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make gcompat
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O sxm.tar.gz https://malgil.com/sxm/sxm-1.1.tar.gz
+RUN sha256sum sxm.tar.gz && sha256sum -c checksum
+RUN mkdir sxm && tar -C sxm --strip-components 1 -xf sxm.tar.gz
+RUN mkdir /usr/local/man
+WORKDIR /build/sxm
+RUN make
+#RUN make test  # Causes a segfault.
+RUN make install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s sxi /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
