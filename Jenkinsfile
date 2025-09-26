@@ -4,7 +4,7 @@ pipeline {
     }
 
     triggers {
-        cron('0 1 * * 1,3,5')
+        cron('0 1 * * 1')
     }
 
     options {
