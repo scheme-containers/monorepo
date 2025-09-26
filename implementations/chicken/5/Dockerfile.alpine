@@ -1,0 +1,19 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add git wget gcc make musl-dev
+WORKDIR /build
+COPY checksum checksum
+ADD https://code.call-cc.org/releases/5.4.0/chicken-5.4.0.tar.gz chicken.tar.gz
+RUN sha256sum chicken.tar.gz && sha256sum -c checksum
+RUN mkdir chicken && tar -C chicken --strip-components 1 -xf chicken.tar.gz
+WORKDIR /build/chicken
+RUN make
+RUN make install
+
+FROM alpine
+RUN apk add gcc
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-r7rs /usr/local/bin/
+RUN chicken-install r7rs
+RUN ln -s csi /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
