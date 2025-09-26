@@ -3,10 +3,6 @@ pipeline {
         label 'linux-x86_64'
     }
 
-    triggers {
-        cron('0 1 * * *')
-    }
-
     options {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
