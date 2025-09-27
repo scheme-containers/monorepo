@@ -1,0 +1,19 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add automake autoconf texinfo git gcc musl-dev g++ make openjdk11
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O kawa.tar.gz https://ftp.gnu.org/pub/gnu/kawa/kawa-3.1.1.tar.gz
+RUN sha256sum kawa.tar.gz && sha256sum -c checksum
+RUN mkdir kawa && tar -C kawa --strip-components 1 -xf kawa.tar.gz
+WORKDIR /build/kawa
+RUN ./configure
+RUN make
+RUN make install
+
+FROM alpine:edge
+RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing openjdk25
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-banner /usr/local/bin
+COPY scheme-r7rs /usr/local/bin
+CMD ["scheme-banner"]

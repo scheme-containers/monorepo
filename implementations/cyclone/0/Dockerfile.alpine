@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add git wget gcc ck-dev make
+RUN apk add git wget gcc ck-dev make musl-dev
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O cyclone-bootstrap.tar.gz https://github.com/justinethier/cyclone-bootstrap/archive/refs/tags/v0.36.0.tar.gz

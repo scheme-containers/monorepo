@@ -11,7 +11,7 @@ RUN make
 RUN make install
 
 FROM alpine
-RUN apk add gcc
+RUN apk add gcc musl-dev
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-r7rs /usr/local/bin/
 RUN chicken-install r7rs

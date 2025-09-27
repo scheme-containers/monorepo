@@ -1,0 +1,25 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add git
+RUN apk add git file musl-dev libtool autoconf automake gperf ncurses-dev \
+    readline-dev gmp-dev texinfo flex libunistring-dev gc-dev \
+    libffi-dev pkgconf gettext-dev gcc make
+
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O guile.tar.gz https://ftp.gnu.org/gnu/guile/guile-3.0.10.tar.gz
+RUN sha256sum guile.tar.gz && sha256sum -c checksum
+RUN mkdir guile && tar -C guile --strip-components 1 -xzf guile.tar.gz
+WORKDIR /build/guile
+RUN ./configure
+RUN make -j$(nproc)
+RUN make install
+
+FROM alpine
+RUN apk add libffi libunistring gc
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-script /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
+RUN ln -s /usr/local/bin/guile /usr/local/bin/scheme-banner
+RUN ldconfig || true
+CMD ["scheme-banner"]

@@ -1,25 +1,19 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:bullseye-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential \
-      cmake \
-      wget \
-      ca-certificates \
-      cpio \
-      git \
-      libcurl4-openssl-dev \
-      libonig-dev \
-      libffi-dev \
-      libgmp-dev \
- && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /opt
-RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/clang+llvm-11.1.0-aarch64-linux-gnu.tar.xz; fi
-RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/clang+llvm-11.1.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz; fi
-RUN mkdir llvm && tar -C llvm --no-same-owner --strip-components 1 -xf llvm.tar.xz
-RUN cp -r /opt/llvm/bin/* /usr/bin/
-RUN cp -r /opt/llvm/lib/* /usr/lib/
-RUN cp -r /opt/llvm/include/* /usr/include/
+    build-essential \
+    cmake \
+    ca-certificates \
+    cpio \
+    git \
+    libffi-dev \
+    libgmp-dev \
+    llvm \
+    clang \
+    llvm-dev \
+    lld \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 COPY checksum checksum
