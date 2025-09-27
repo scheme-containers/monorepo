@@ -11,6 +11,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libonig-dev \
       libffi-dev \
       libgmp-dev \
+      libtinfo6 \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
