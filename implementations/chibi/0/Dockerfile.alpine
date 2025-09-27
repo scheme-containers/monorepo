@@ -1,9 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
 RUN apk add git make gcc musl-dev
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      build-essential \
- && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
 ADD https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.11.tar.gz chibi.tgz

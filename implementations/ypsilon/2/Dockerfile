@@ -21,8 +21,11 @@ RUN cp -r /opt/llvm/bin/* /usr/bin/
 RUN cp -r /opt/llvm/lib/* /usr/lib/
 RUN cp -r /opt/llvm/include/* /usr/include/
 
-WORKDIR /build/
-RUN git clone https://github.com/fujita-y/ypsilon.git --depth 1
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O ypsilon.tar.gz https://github.com/fujita-y/ypsilon/archive/refs/tags/v2.0.8.tar.gz
+RUN sha256sum ypsilon.tar.gz && sha256sum -c checksum
+RUN mkdir ypsilon && tar -C ypsilon --strip-components 1 -xf ypsilon.tar.gz
 
 WORKDIR /build/ypsilon
 RUN cmake -DCMAKE_BUILD_TYPE=Release .
