@@ -17,5 +17,4 @@ FROM alpine
 RUN apk add libffi gc openssl
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner scheme-r7rs scheme-script /usr/local/bin/
-RUN ldconfig
 CMD scheme-banner
