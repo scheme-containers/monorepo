@@ -14,8 +14,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
-RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/clang+llvm-11.1.0-aarch64-linux-gnu.tar.xz; fi
-RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-11.1.0/clang+llvm-11.1.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz; fi
+RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.1/clang+llvm-13.0.1-aarch64-linux-gnu.tar.xz; fi
+RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.1/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz; fi
 RUN mkdir llvm && tar -C llvm --no-same-owner --strip-components 1 -xf llvm.tar.xz
 RUN cp -r /opt/llvm/bin/* /usr/bin/
 RUN cp -r /opt/llvm/lib/* /usr/lib/
