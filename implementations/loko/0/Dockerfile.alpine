@@ -1,0 +1,17 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add wget make
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O loko.tar.gz https://scheme.fail/releases/loko-0.12.2.tar.gz
+RUN sha256sum loko.tar.gz && sha256sum -c checksum
+RUN mkdir loko && tar -C loko --strip-components 1 -xf loko.tar.gz
+WORKDIR /build/loko
+RUN make
+RUN make install
+
+FROM alpine
+COPY --from=build /usr/local /usr/local
+RUN ln -s loko /usr/local/bin/scheme-banner \
+ && ln -s loko /usr/local/bin/scheme-script
+CMD ["scheme-banner"]

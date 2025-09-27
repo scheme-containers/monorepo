@@ -41,20 +41,6 @@ TAG=${LINUX_REAL}${VERSION}
 PLATFORM=${OS}/386
 endif
 
-ifeq "${ARCH}" "x86_64"
-
-ifeq "${SCHEME}" "oaklisp"
-PLATFORM=${OS}/386
-endif
-
-ifeq "${SCHEME}" "larceny"
-ifeq "${LINUX}" "alpine"
-PLATFORM=${OS}/386
-endif
-endif
-
-endif
-
 BUILD_CMD=docker build . --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
 PUSH_CMD=docker push schemers/${SCHEME}:${TAG}
 

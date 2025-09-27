@@ -10,7 +10,7 @@ RUN make all
 RUN make install
 
 FROM alpine
+RUN apk add gmp libstdc++
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/
-RUN ldconfig
 CMD ["scheme-banner"]

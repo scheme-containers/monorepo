@@ -1,10 +1,8 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add git
 RUN apk add git file musl-dev libtool autoconf automake gperf ncurses-dev \
     readline-dev gmp-dev texinfo flex libunistring-dev gc-dev \
     libffi-dev pkgconf gettext-dev gcc make
-
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O guile.tar.gz https://ftp.gnu.org/gnu/guile/guile-3.0.10.tar.gz

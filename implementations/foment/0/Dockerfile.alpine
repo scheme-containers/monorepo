@@ -1,13 +1,22 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
-RUN apk add git gcc make g++ coreutils clang-dev llvm-dev lld-dev
-RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main/ libexecinfo-dev
+FROM debian:trixie-slim AS build
+RUN apt-get update && apt-get -y --no-install-recommends install \
+      build-essential \
+      git \
+      ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/leftmike/foment.git --depth=1
+COPY checksum checksum
+#ADD https://github.com/leftmike/foment/archive/v0.4.1.tar.gz foment.tar.gz
+#RUN sha256sum foment.tar.gz && sha256sum -c checksum
+#RUN mkdir foment && tar -C foment --strip-components 1 -xf foment.tar.gz
+# Use the git head as the latest release is not in good shape but head is
+RUN git clone https://github.com/leftmike/foment.git
 WORKDIR /build/foment/unix
-RUN make CC=clang CXX=clang++ LD=lld
+RUN make
 
 FROM alpine
+RUN apk add gcompat libstdc++
 COPY --from=build /build/foment/unix/release/foment /usr/local/bin/
 RUN ln -s foment /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
