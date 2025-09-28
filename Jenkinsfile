@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SCHEMES', defaultValue: 'biwascheme chezscheme chibi chicken cyclone gauche guile kawa lips loko meevax mit-scheme racket sagittarius scm stak stklos tr7', description: 'Build and deploy theses Schemes')
+        string(name: 'SCHEMES', defaultValue: 'biwascheme chibi chicken cyclone gauche kawa lips loko meevax mit-scheme sagittarius scm stak stklos tr7', description: 'Build and deploy theses Schemes')
         string(name: 'LINUXES', defaultValue: 'debian alpine', description: 'Build and deploy images on these linuxes')
         string(name: 'VERSIONS', defaultValue: 'head', description: 'Build and deploy these versions')
     }
