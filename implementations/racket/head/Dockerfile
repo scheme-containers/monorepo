@@ -3,17 +3,16 @@ FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
-    libedit-dev \
-    libcairo2-dev \
-    libjpeg-dev \
-    libpango1.0-dev \
-    libfontconfig-dev \
     git \
+    libffi-dev \
+    chezscheme \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/racket/racket.git --depth=1
-WORKDIR /build/racket
-RUN make unix-style PREFIX=/usr/local
+WORKDIR /build/racket/racket/src
+RUN ./configure --prefix=/usr/local --enable-scheme=chezscheme
+RUN make PREFIX=/usr/local -j8 cs
+RUN make PREFIX=/usr/local -j8 install-cs
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \

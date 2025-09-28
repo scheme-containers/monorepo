@@ -4,7 +4,7 @@ RUN apk add gcc make musl-dev libedit-dev cairo-dev jpeg-dev pango-dev \
     fontconfig-dev git
 WORKDIR /build
 RUN git clone https://github.com/racket/racket.git --depth=1
-WORKDIR /build/racket
+WORKDIR /build/racket/racket/src
 RUN make unix-style PREFIX=/usr/local
 
 FROM alpine

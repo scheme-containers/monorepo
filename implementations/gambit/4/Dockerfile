@@ -13,10 +13,9 @@ RUN wget -O gambit.tgz https://github.com/gambit/gambit/archive/refs/tags/v4.9.7
 RUN sha256sum gambit.tgz && sha256sum -c checksum
 RUN mkdir gambit && tar -C gambit --strip-components 1 -xf gambit.tgz
 WORKDIR /build/gambit
-RUN ./configure --prefix=/usr/local --enable-single-host
-RUN make
-RUN make check
-RUN make install
+RUN ./configure --prefix=/usr/local
+RUN make -j16
+RUN make -j16 install
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
