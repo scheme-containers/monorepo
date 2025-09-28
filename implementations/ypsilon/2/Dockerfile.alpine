@@ -1,7 +1,7 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
 RUN apk add libffi-dev gmp-dev gcompat libstdc++ cmake wget curl-dev \
-    oniguruma-dev
+    oniguruma-dev git
 WORKDIR /opt
 RUN wget -O llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.5/clang+llvm-15.0.5-x86_64-linux-gnu-ubuntu-18.04.tar.xz
 RUN mkdir llvm && tar -C llvm --strip-components 1 -xf llvm.tar.xz
@@ -17,6 +17,7 @@ RUN cmake --install .
 
 FROM alpine
 RUN apk add libffi gmp gcompat libstdc++
+COPY --from=build /opt/llvm/lib/* /usr/lib/
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin
 RUN ln -s ypsilon /usr/local/bin/scheme-banner
