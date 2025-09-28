@@ -14,5 +14,4 @@ FROM alpine
 RUN apk add libffi gc gmp pcre2 readline
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/scheme-banner
-RUN ldconfig
 CMD ["scheme-banner"]

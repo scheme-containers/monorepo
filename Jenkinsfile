@@ -41,10 +41,8 @@ pipeline {
                                 params.LINUXES.split().each { LINUX ->
                                     params.VERSIONS.split().each { VERSION ->
                                         stage("${SCHEME} ${LINUX} ${VERSION} build") {
-                                            timeout(time: 6, unit: 'HOURS') {
-                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 build"
-                                                }
+                                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 build"
                                             }
                                         }
 

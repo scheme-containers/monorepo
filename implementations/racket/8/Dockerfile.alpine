@@ -3,9 +3,14 @@ FROM alpine AS build
 RUN apk add gcc make musl-dev libedit-dev cairo-dev jpeg-dev pango-dev \
     fontconfig-dev git
 WORKDIR /build
-RUN git clone https://github.com/racket/racket.git --depth=1
-WORKDIR /build/racket
-RUN make unix-style PREFIX=/usr/local
+COPY checksum checksum
+RUN wget -O racket.tgz https://download.racket-lang.org/releases/8.18/installers/racket-8.18-src.tgz
+RUN sha256sum racket.tgz && sha256sum -c checksum
+RUN mkdir racket && tar -C racket --strip-components 1 -xf racket.tgz
+WORKDIR /build/racket/src
+RUN ./configure --prefix=/usr/local
+RUN make
+RUN make install
 
 FROM alpine
 RUN apk add libedit fontconfig cairo pango
