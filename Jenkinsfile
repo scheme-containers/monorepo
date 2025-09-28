@@ -40,13 +40,13 @@ pipeline {
                             params.SCHEMES.split().each { SCHEME ->
                                 params.LINUXES.split().each { LINUX ->
                                     params.VERSIONS.split().each { VERSION ->
-                                        stage("${SCHEME} ${LINUX} ${VERSION} build") {
+                                        stage("${SCHEME} ${LINUX} ${VERSION} x86_64 build") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                 sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 build"
                                             }
                                         }
 
-                                        stage("${SCHEME} ${LINUX} ${VERSION} push") {
+                                        stage("${SCHEME} ${LINUX} ${VERSION} x86_64 push") {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
@@ -74,7 +74,7 @@ pipeline {
                             params.SCHEMES.split().each { SCHEME ->
                                 params.LINUXES.split().each { LINUX ->
                                     params.VERSIONS.split().each { VERSION ->
-                                        stage("${SCHEME} ${LINUX} ${VERSION} build") {
+                                        stage("${SCHEME} ${LINUX} ${VERSION} arm build") {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 build"
@@ -82,7 +82,7 @@ pipeline {
                                             }
                                         }
 
-                                        stage("${SCHEME} ${LINUX} ${VERSION} push") {
+                                        stage("${SCHEME} ${LINUX} ${VERSION} arm push") {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}"
