@@ -12,6 +12,7 @@ RUN make build
 RUN make install
 
 FROM alpine
+RUN apk add ncurses
 COPY --from=build /usr/local /usr/local
 COPY scheme-banner /usr/local/bin/
 RUN ln -s scheme /usr/bin/scheme-script \
