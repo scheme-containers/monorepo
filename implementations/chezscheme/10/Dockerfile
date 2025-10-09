@@ -26,6 +26,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \
  && rm -rf /var/lib/apt/lists/*
 COPY scheme-banner /usr/local/bin/
+COPY chezscheme /usr/local/bin/
 RUN ln -s scheme /usr/bin/scheme-script \
  && ln -s scheme /usr/bin/petite
 CMD ["scheme-banner"]
