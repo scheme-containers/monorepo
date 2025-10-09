@@ -3,6 +3,7 @@ FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
+    lib32z1-dev \
     wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
@@ -13,9 +14,12 @@ RUN tar -C /usr/local/lib/larceny --strip-components 1 -xf larceny-prebuilt.tar.
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libc6-i386 \
+    lib32z1 \
+    libc6-i386 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/lib/larceny/ /usr/local/lib/larceny/
-COPY scheme-banner scheme-script /usr/local/bin/
+COPY scheme-banner /usr/local/bin/
 RUN ln -s ../lib/larceny/larceny /usr/local/bin/larceny
+RUN ln -s ../lib/larceny/compile-larceny /usr/local/bin/compile-larceny
+RUN ln -s ../lib/larceny/scheme-script /usr/local/bin/scheme-script
 CMD ["scheme-banner"]

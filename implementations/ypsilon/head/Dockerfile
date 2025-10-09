@@ -24,11 +24,14 @@ RUN cmake --install .
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi8 \
       libgmp10 \
-      libllvm19 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
+COPY --from=build /usr/lib/x86_64-linux-gnu/libLLVM-11.so.1 /usr/local/lib/
+COPY --from=build /usr/lib/x86_64-linux-gnu/libffi.so.7 /usr/local/lib/
+COPY --from=build /usr/lib/x86_64-linux-gnu/libedit.so.2 /usr/local/lib/
+COPY --from=build /usr/lib/x86_64-linux-gnu/libz3.so.4 /usr/local/lib/
 COPY scheme-script /usr/local/bin
 RUN ln -s ypsilon /usr/local/bin/scheme-banner
+RUN ldconfig
 CMD ["scheme-banner"]
