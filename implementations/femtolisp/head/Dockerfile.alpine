@@ -1,0 +1,15 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add git musl-dev clang-dev llvm-dev lld-dev make
+WORKDIR /build
+RUN git clone https://github.com/JeffBezanson/femtolisp.git --depth 1
+WORKDIR /build/femtolisp
+RUN make CC=clang CFLAGS=-std=gnu89
+RUN mkdir -p /usr/local/bin
+RUN cp -p flisp.boot /usr/local/bin/flisp.boot
+RUN cp -p flisp /usr/local/bin/
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s flisp /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

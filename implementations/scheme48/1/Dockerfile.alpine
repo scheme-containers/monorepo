@@ -1,0 +1,19 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make wget automake
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O scheme48.tgz http://www.s48.org/1.9.2/scheme48-1.9.2.tgz
+RUN sha256sum scheme48.tgz && sha256sum -c checksum
+RUN mkdir scheme48 && tar -C scheme48 --strip-components 1 -xf scheme48.tgz
+WORKDIR /build/scheme48
+RUN cp /usr/share/automake*/config.guess .
+RUN ./configure CFLAGS=-std=c89
+RUN make CFLAGS=-std=c89
+#RUN make test  # Works, but takes quite a while.
+RUN make install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s scheme48 /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

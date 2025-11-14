@@ -12,7 +12,7 @@ RUN git init \
  && git remote add origin https://github.com/lambdaconservatory/ikarus.git \
  && git fetch origin 1f2b250ed9e8cb1c2466c939a9a305461db71739 --depth 1 --tags \
  && git reset --hard FETCH_HEAD
-RUN ./configure
+RUN ./configure --enable-libffi
 RUN make
 RUN make install
 

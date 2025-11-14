@@ -1,0 +1,16 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc make musl-dev wget xxd
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O ol.tar.gz https://github.com/yuriy-chumak/ol/archive/refs/tags/2.6.tar.gz
+RUN sha256sum ol.tar.gz && sha256sum -c checksum
+RUN mkdir ol && tar -C ol --strip-components 1 -xf ol.tar.gz
+WORKDIR /build/ol
+RUN make PREFIX=/usr/local
+RUN make PREFIX=/usr/local install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s ol /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

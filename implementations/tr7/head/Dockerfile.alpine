@@ -1,0 +1,15 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc git make musl-dev
+WORKDIR /build
+RUN git clone https://gitlab.com/jobol/tr7.git --depth=1
+WORKDIR /build/tr7
+RUN make
+RUN cp tr7i /usr/local/bin/
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-banner /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
+ENV TR7_LIB_PATH=/build/tr7/tr7libs
+CMD ["scheme-banner"]

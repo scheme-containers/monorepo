@@ -6,7 +6,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       automake \
       libtool \
       gcc-multilib \
-      lib32gcc-14-dev \
       wget \
       ca-certificates \
  && rm -rf /var/lib/apt/lists/*
@@ -22,9 +21,6 @@ RUN make
 RUN make install
 
 FROM debian:trixie-slim
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      lib32gcc-s1 \
- && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s oaklisp /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

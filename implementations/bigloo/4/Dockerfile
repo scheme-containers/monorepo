@@ -18,13 +18,9 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     default-jdk \
     wget \
   && rm -rf /var/lib/apt/lists/*
-#RUN wget -O jdk-11.deb https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.28+6/openlogic-openjdk-11.0.28+6-linux-x64-deb.deb
-#RUN apt-get install -y ./jdk-11.deb
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O bigloo.tar.gz https://www-sop.inria.fr/mimosa/fp/Bigloo/download/bigloo-latest.tar.gz
-#RUN wget -O bigloo.tar.gz https://www-sop.inria.fr/mimosa/fp/Bigloo/download/bigloo-4.6a.tar.gz
-#RUN sha256sum bigloo.tar.gz && sha256sum -c checksum
 RUN mkdir bigloo && tar -C bigloo --strip-components 1 -xf bigloo.tar.gz
 WORKDIR /build/bigloo
 RUN ./configure
@@ -44,9 +40,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     libsqlite3-dev \
     libssl-dev \
     ca-certificates \
-    wget
-RUN wget -O jdk-8.deb https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u442-b06/openlogic-openjdk-8u442-b06-linux-x64-deb.deb
-RUN apt-get install -y ./jdk-8.deb
+    wget \
+    default-jdk
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s bigloo /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

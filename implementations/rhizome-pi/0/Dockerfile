@@ -20,8 +20,7 @@ RUN cp config/unix/linux/rhiz_cnf.h include/rhiz_cnf.h \
  && true
 WORKDIR /build/rhizome/pi
 RUN make
-RUN mkdir /usr/local/lib/rhizome \
- && make install
+RUN mkdir /usr/local/lib/rhizome && make install
 
 FROM debian:trixie-slim
 RUN dpkg --add-architecture i386

@@ -6,6 +6,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     patch \
     wget \
     ca-certificates \
+    automake \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -15,6 +16,8 @@ RUN mkdir sizzle && tar -C sizzle --strip-components 1 -xf sizzle.tar.gz
 WORKDIR /build/sizzle
 COPY lvalue.patch lvalue.patch
 RUN patch -p 1 <lvalue.patch
+RUN cp /usr/share/automake*/config.guess .
+RUN ./configure
 RUN ./configure
 RUN make CFLAGS=-std=gnu89
 RUN make install

@@ -1,0 +1,17 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make wget gcompat
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O siod.tgz https://people.delphiforums.com/gjc/siod.tgz
+RUN sha256sum siod.tgz && sha256sum -c checksum
+RUN mkdir siod
+WORKDIR /build/siod
+RUN tar -xf ../siod.tgz
+RUN make CFLAGS=-std=gnu89 linux
+RUN make install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s siod /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

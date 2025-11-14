@@ -1,0 +1,17 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc musl-dev make autoconf automake texinfo git libffi-dev \
+    gc-dev gmp-dev pcre-dev
+WORKDIR /build
+RUN git clone https://github.com/egallesio/STklos.git stklos --depth 1 --tags
+WORKDIR /build/stklos
+RUN ./configure \
+  --without-provided-bignum --without-provided-gc --without-provided-regexp
+RUN make ACLOCAL=aclocal AUTOMAKE=automake
+RUN make install
+
+FROM alpine
+RUN apk add libffi gc gmp pcre2 readline
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-banner /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

@@ -1,0 +1,18 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add git wget gcc ck-dev make musl-dev
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O cyclone-bootstrap.tar.gz https://github.com/justinethier/cyclone-bootstrap/archive/refs/tags/v0.36.0.tar.gz
+RUN sha256sum cyclone-bootstrap.tar.gz && sha256sum -c checksum
+RUN mkdir cyclone && tar -C cyclone --strip-components 1 -xf cyclone-bootstrap.tar.gz
+WORKDIR cyclone
+RUN make
+RUN make install
+RUN make test
+
+FROM alpine
+RUN apk add ck
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s icyc /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

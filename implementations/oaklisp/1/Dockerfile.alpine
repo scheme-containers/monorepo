@@ -1,0 +1,18 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add gcc make musl-dev autoconf automake libtool wget
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O oaklisp.tar.gz https://github.com/barak/oaklisp/archive/upstream/1.3.7.tar.gz
+RUN sha256sum oaklisp.tar.gz && sha256sum -c checksum
+RUN mkdir oaklisp && tar -C oaklisp --strip-components 1 -xf oaklisp.tar.gz
+WORKDIR /build/oaklisp
+RUN autoreconf --install
+RUN ./configure --disable-docs
+RUN make
+RUN make install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s oaklisp /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

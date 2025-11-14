@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc \
       libc6-dev \
@@ -18,12 +18,13 @@ RUN ./configure --prefix=/usr/local
 RUN make PREFIX=/usr/local
 RUN make PREFIX=/usr/local install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local /usr/local
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libncurses6 \
  && rm -rf /var/lib/apt/lists/*
 COPY scheme-banner /usr/local/bin/
-RUN ln -s scheme /usr/bin/scheme-script \
- && ln -s scheme /usr/bin/petite
+COPY chezscheme /usr/local/bin/
+RUN ln -s scheme /usr/bin/chezscheme
+RUN ln -s scheme /usr/bin/petite
 CMD ["scheme-banner"]

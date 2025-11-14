@@ -1,0 +1,14 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine AS build
+RUN apk add musl-dev make git clang
+WORKDIR /build
+RUN git clone https://github.com/false-schemers/skint.git --depth=1
+WORKDIR /build/skint
+RUN make PREFIX=/usr/local CC=clang
+RUN make PREFIX=/usr/local install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s skint /usr/local/bin/scheme-banner \
+ && ln -s skint /usr/local/bin/scheme-r7rs
+CMD ["scheme-banner"]

@@ -1,0 +1,13 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM schemers/owl:alpine-latest AS build
+RUN apk add gcc musl-dev make git
+WORKDIR /build
+RUN git clone https://gitlab.com/owl-lisp/owl.git --depth 1 --tags
+WORKDIR /build/owl
+RUN make PREFIX=/usr/local
+RUN make PREFIX=/usr/local install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+COPY scheme-banner /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]

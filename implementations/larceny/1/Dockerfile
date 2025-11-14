@@ -6,7 +6,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O larceny.tar.gz http://www.larcenists.org/LarcenyReleases/larceny-1.3-bin-native-ia32-linux86.tar.gz
+RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O larceny.tar.gz https://larcenists.org/LarcenyReleases/larceny-1.3-bin-native-armv7l-linux.tar.gz; fi
+RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O larceny.tar.gz https://larcenists.org/LarcenyReleases/larceny-1.3-bin-native-ia32-linux86.tar.gz; fi
 RUN sha256sum larceny.tar.gz && sha256sum -c checksum
 RUN mkdir /usr/local/lib/larceny
 RUN tar -C /usr/local/lib/larceny --strip-components 1 -xf larceny.tar.gz
