@@ -2,7 +2,7 @@
 FROM alpine AS build
 RUN apk add git file libtool autoconf automake gperf ncurses-dev \
     readline-dev gmp-dev texinfo flex libunistring-dev gc-dev \
-    libffi-dev pkgconf gettext-dev gcc make gcompat
+    libffi-dev pkgconf gettext-dev gcc musl-dev make gcompat
 WORKDIR /build
 RUN git clone https://git.savannah.gnu.org/git/guile.git guile --depth=1
 WORKDIR /build/guile
