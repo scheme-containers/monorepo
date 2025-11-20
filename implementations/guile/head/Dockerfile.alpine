@@ -2,7 +2,7 @@
 FROM alpine AS build
 RUN apk add git file libtool autoconf automake gperf ncurses-dev \
     readline-dev gmp-dev texinfo flex libunistring-dev gc-dev \
-    libffi-dev pkgconf gettext-dev gcc make
+    libffi-dev pkgconf gettext-dev gcc make gcompat
 WORKDIR /build
 RUN git clone https://git.savannah.gnu.org/git/guile.git guile --depth=1
 WORKDIR /build/guile
@@ -12,7 +12,7 @@ RUN make -j$(nproc)
 RUN make install
 
 FROM alpine
-RUN apk add libffi libunistring gc
+RUN apk add libffi libunistring gc gcompat
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin/
 COPY scheme-r7rs /usr/local/bin/

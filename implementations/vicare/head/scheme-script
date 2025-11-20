@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+script="$1"
+shift
+exec vicare --r6rs-script "$script" -- "$@"

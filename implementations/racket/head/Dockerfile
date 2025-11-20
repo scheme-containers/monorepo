@@ -5,20 +5,22 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates \
     git \
     libffi-dev \
+    libfontconfig-dev \
     chezscheme \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/racket/racket.git --depth=1
-WORKDIR /build/racket
-RUN make unix-style PREFIX=/usr/local
-#RUN ./configure --prefix=/usr/local --enable-scheme=chezscheme
-#RUN make PREFIX=/usr/local -j8 cs
-#RUN make PREFIX=/usr/local -j8 install-cs
+WORKDIR /build/racket/src
+RUN ./configure --prefix=/usr/local \
+    --disable-wpo --disable-compress --disable-iconv \
+    --disable-curses --enable-cs-only --enable-scheme=chezscheme
+RUN make PREFIX=/usr/local -j16 cs
+RUN make PREFIX=/usr/local -j16 install-cs
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
     libedit-dev \
-    libfontconfig \
+    libfontconfig-dev \
     libcairo-5c0 \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
