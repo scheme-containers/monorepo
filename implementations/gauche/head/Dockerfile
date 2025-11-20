@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM schemers/gauche:latest AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       autoconf \
       automake \
@@ -15,8 +15,21 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       openssh-client \
       libmbedtls-dev \
       zlib1g-dev \
+      wget \
  && rm -rf /var/lib/apt/lists/*
+# Build Gauche to bootstrap head
 WORKDIR /build
+COPY checksum checksum
+RUN wget -O gauche.tgz https://github.com/shirok/Gauche/releases/download/release0_9_15/Gauche-0.9.15.tgz
+RUN sha256sum gauche.tgz && sha256sum -c checksum
+RUN mkdir gauche && tar -C gauche --strip-components 1 -xf gauche.tgz
+WORKDIR /build/gauche
+RUN ./configure
+RUN make
+RUN make install
+WORKDIR /build
+RUN rm -rf gauche
+# Head build
 RUN git clone https://github.com/shirok/Gauche.git gauche --depth 1 --tags
 WORKDIR /build/gauche
 RUN ./DIST gen
