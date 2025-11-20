@@ -15,10 +15,6 @@ RUN make
 RUN make install
 WORKDIR /build
 RUN git clone https://github.com/justinethier/cyclone.git --depth=1
-#RUN apt-get update && apt-get install -y plocate
-#RUN updatedb
-#RUN locate cyclone
-#RUN cyclone --help
 WORKDIR /build/cyclone
 RUN echo "Bootstrapping from Cyclone $(cyclone -vn)"
 #RUN git log -n 1
