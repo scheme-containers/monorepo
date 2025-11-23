@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eu
+script="$1"
+if head -n1 "$script" | grep -q -e '^#! ' -e '^#!/'; then
+  # Remove the shebang.
+  shift
+  exec plt-r6rs <(tail -n +2 "$script") "$@"
+else
+  exec plt-r6rs "$@"
+fi
