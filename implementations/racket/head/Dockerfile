@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/racket/racket.git --depth=1
-WORKDIR /build/racket/src
+WORKDIR /build/racket/racket/src
 RUN ./configure --prefix=/usr/local \
     --disable-wpo --disable-compress --disable-iconv \
     --disable-curses --enable-cs-only --enable-scheme=chezscheme
