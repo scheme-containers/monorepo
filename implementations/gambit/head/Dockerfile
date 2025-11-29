@@ -14,7 +14,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/gambit/gambit.git
 WORKDIR /build/gambit
-RUN ./configure --prefix=/usr/local --enable-trust-c-tco
+RUN ./configure --prefix=/usr/local --enable-single-host
 RUN ln -s /usr/local/bin/gsc gsc-boot
 RUN make -j4 || (rm -rf boot/ gsc-boot && make)
 RUN make -j4 modules
