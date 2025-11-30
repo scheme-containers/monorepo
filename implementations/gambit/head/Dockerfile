@@ -14,11 +14,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/gambit/gambit.git
 WORKDIR /build/gambit
-RUN ./configure --prefix=/usr/local --enable-single-host
+RUN ./configure --prefix=/usr/local --enable-single-host --enable-trust-c-tco
 RUN ln -s /usr/local/bin/gsc gsc-boot
-RUN make -j4 || (rm -rf boot/ gsc-boot && make)
-RUN make -j4 modules
-RUN make -j4 check
+RUN make -j8 || (rm -rf boot/ gsc-boot && make)
+RUN make -j8 modules
+RUN make -j8 check
 RUN make install
 
 FROM debian:trixie-slim
