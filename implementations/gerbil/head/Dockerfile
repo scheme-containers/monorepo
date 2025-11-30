@@ -2,7 +2,7 @@
 
 # NB: There is an official Gerbil Dockerfile at
 # <https://github.com/vyzo/gerbil/blob/master/Dockerfile>
-FROM debian:bookworm-slim AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     git \
     ca-certificates \
@@ -16,11 +16,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git
 WORKDIR /build/gerbil
-RUN ./configure --enable-single-host
-RUN make -j16
+RUN ./configure --enable-single-host --enable-trust-c-tco
+RUN make -j8
 RUN make install
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       ca-certificates gcc git libc-dev \
  && rm -rf /var/lib/apt/lists/*
