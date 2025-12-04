@@ -1,0 +1,15 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM rust:alpine AS build
+RUN apk add make just libffi-dev clang rsync git musl-dev gcompat
+WORKDIR /build
+RUN git clone https://github.com/playX18/capyscheme.git --depth=1
+WORKDIR /build/capyscheme
+RUN just install-prefix=/usr/other install-portable
+
+FROM alpine
+COPY --from=build /usr/other/ /usr/local/
+RUN apk add lld
+ENV PATH=/usr/local/capy/0.1.0:${PATH}
+RUN capy --help # Precompile the cache
+COPY scheme-banner /usr/local/bin/
+CMD scheme-banner
