@@ -10,6 +10,12 @@ DOCKERFILE=Dockerfile
 VERSION_TAG=head
 PLATFORM=${OS}/amd64
 
+ifeq "${VERSION}" "head"
+DOCKER_NO_CACHE=--no-cache
+else
+DOCKER_NO_CACHE=
+endif
+
 ifeq "${VERSION}" "latest"
 VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-*" | sort -V | tail -n 1)
 else
@@ -41,7 +47,7 @@ TAG=${LINUX_REAL}${VERSION}
 PLATFORM=${OS}/386
 endif
 
-BUILD_CMD=docker build . --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
+BUILD_CMD=docker build . ${DOCKER_NO_CACHE} --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
 PUSH_CMD=docker push schemers/${SCHEME}:${TAG}
 
 debug:
