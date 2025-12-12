@@ -11,7 +11,10 @@ RUN git clone https://github.com/false-schemers/skint.git --depth=1
 WORKDIR /build/skint
 RUN ./configure --prefix=/usr/local
 RUN make CC=clang
+RUN make test
 RUN make install
+RUN make libtest
+RUN make libinstall
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
