@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SCHEMES', defaultValue: 'biwascheme chezscheme cabyscheme chibi chicken cyclone gauche gambit gerbil guile ironscheme kawa lips loko meevax mit-scheme racket sagittarius scm skint stak stklos tr7 vanity', description: 'Build and deploy theses Schemes')
+        string(name: 'SCHEMES', defaultValue: 'biwascheme chezscheme capyscheme chibi chicken cyclone gauche gambit gerbil guile ironscheme kawa lips loko meevax mit-scheme racket sagittarius scm skint stak stklos tr7 vanity', description: 'Build and deploy theses Schemes')
         string(name: 'LINUXES', defaultValue: 'debian alpine', description: 'Build and deploy images on these linuxes')
         string(name: 'VERSIONS', defaultValue: 'head', description: 'Build and deploy these versions')
     }
@@ -42,6 +42,7 @@ pipeline {
                                     params.VERSIONS.split().each { VERSION ->
                                         stage("${SCHEME} ${LINUX} ${VERSION} x86_64 build") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                sh "sleep 30"
                                                 sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 build"
                                             }
                                         }
@@ -77,6 +78,7 @@ pipeline {
                                         stage("${SCHEME} ${LINUX} ${VERSION} arm build") {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                    sh "sleep 30"
                                                     sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 build"
                                                 }
                                             }
