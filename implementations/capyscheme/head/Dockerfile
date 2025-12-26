@@ -1,25 +1,24 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    git \
-    ca-certificates \
-    wget \
-    xz-utils \
-    make \
-    libffi-dev \
-    build-essential \
-    clang \
-    rsync \
+  git \
+  ca-certificates \
+  wget \
+  xz-utils \
+  make \
+  libffi-dev \
+  build-essential \
+  clang \
+  rsync \
   && rm -rf /var/lib/apt/lists/*
 RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O rust.tar.xz https://static.rust-lang.org/dist/rust-nightly-aarch64-unknown-linux-gnu.tar.xz; fi
 RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O rust.tar.xz https://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.xz; fi
 RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust && bash install.sh
-RUN cargo install just --root /usr/local
 WORKDIR /build
 RUN git clone https://github.com/playX18/capyscheme.git --depth=1
 WORKDIR /build/capyscheme
-RUN make PREFIX=/usr/local build
-RUN make PREFIX=/usr/local install
+RUN make COMPILE_PSYNTAX=1 PREFIX=/usr/local build
+RUN make COMPILE_PSYNTAX=1 PREFIX=/usr/local install
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
