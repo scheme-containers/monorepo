@@ -4,7 +4,7 @@ pipeline {
     }
 
     triggers {
-        cron('0 1 * * 2')
+        cron('0 1 * * 2') //1am every tuesday
     }
 
     options {
