@@ -15,10 +15,11 @@ RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust &&
 WORKDIR /build
 RUN git clone https://codeberg.org/playXE/capy.git --depth=1
 WORKDIR /build/capy
-RUN make COMPILE_PSYNTAX=1 PREFIX=/usr/local build
-RUN make PREFIX=/usr/local install
+RUN make COMPILE_PSYNTAX=1 PREFIX=/usr/other build
+RUN make PREFIX=/usr/other install
+
 FROM debian:trixie-slim
-COPY --from=build /usr/local/ /usr/local/
-ENV PATH=/usr/local/capy/0.1.0:${PATH}
+COPY --from=build /usr/other/ /usr/other/
+ENV PATH=/usr/other/bin:${PATH}
 COPY scheme-banner /usr/local/bin/
 CMD scheme-banner
