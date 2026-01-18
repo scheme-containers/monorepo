@@ -11,9 +11,9 @@ VERSION_TAG=head
 PLATFORM=${OS}/amd64
 
 ifeq "${VERSION}" "head"
-DOCKER_NO_CACHE=--no-cache
+DOCKER_ARGS=--no-cache
 else
-DOCKER_NO_CACHE=
+DOCKER_ARGS=
 endif
 
 ifeq "${VERSION}" "latest"
@@ -47,7 +47,7 @@ TAG=${LINUX_REAL}${VERSION}
 PLATFORM=${OS}/386
 endif
 
-BUILD_CMD=docker build . ${DOCKER_NO_CACHE} --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
+BUILD_CMD=docker build . ${DOCKER_ARGS} --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
 PUSH_CMD=docker push schemers/${SCHEME}:${TAG}
 
 debug:
