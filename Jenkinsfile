@@ -1,10 +1,10 @@
 pipeline {
     agent {
-        label 'agent1'
+        label 'docker-x86_64'
     }
 
     triggers {
-        cron('0 1 * * 2') //1am every tuesday
+        cron('@weekly')
     }
 
     options {
@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SCHEMES', defaultValue: 'biwascheme chezscheme capyscheme chibi chicken cyclone gauche guile ironscheme kawa lips loko meevax mit-scheme racket sagittarius scm skint stak stklos tr7 vanity', description: 'Build and deploy theses Schemes')
+        string(name: 'SCHEMES', defaultValue: 'biwascheme capyscheme chibi cyclone gauche guile lips meevax skint stak stklos tr7', description: 'Build and deploy theses Schemes')
         string(name: 'LINUXES', defaultValue: 'debian alpine', description: 'Build and deploy images on these linuxes')
         string(name: 'VERSIONS', defaultValue: 'head', description: 'Build and deploy these versions')
     }
@@ -30,7 +30,7 @@ pipeline {
                 stage('x86_64') {
                     agent {
                         dockerfile {
-                            label 'agent1'
+                            label 'docker-x86_64'
                             filename 'Dockerfile.jenkins'
                             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                         }
@@ -65,7 +65,7 @@ pipeline {
                 stage('arm') {
                     agent {
                         dockerfile {
-                            label 'agent3'
+                            label 'docker-arm'
                             filename 'Dockerfile.jenkins'
                             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                         }
