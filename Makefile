@@ -67,7 +67,6 @@ push:
 	cd ${VERSION_PATH} && ${PUSH_CMD}
 
 clean-image:
-	@echo "DIR      : ${VERSION_PATH}"
-	@echo "PUSH_CMD : ${PUSH_CMD}"
+	@echo "CLEAN_CMD : ${CLEAN_CMD}"
 	${IMAGE_CLEAN_CMD}
 
