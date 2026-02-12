@@ -52,8 +52,8 @@ pipeline {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_TOKEN}'
                                                     sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 push"
-                                                    sh "docker image rm schemers/${SCHEME}:head"
                                                     sh "docker logout"
+                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 clean-image"
                                                 }
                                             }
                                         }

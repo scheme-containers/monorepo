@@ -49,6 +49,7 @@ endif
 
 BUILD_CMD=docker build . ${DOCKER_ARGS} --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
 PUSH_CMD=docker push schemers/${SCHEME}:${TAG}
+IMAGE_CLEAN_CMD=docker image rm schemers/${SCHEME}:${TAG}
 
 debug:
 	@echo "DIR      : ${VERSION_PATH}"
@@ -64,4 +65,8 @@ push:
 	@echo "DIR      : ${VERSION_PATH}"
 	@echo "PUSH_CMD : ${PUSH_CMD}"
 	cd ${VERSION_PATH} && ${PUSH_CMD}
+
+clean-image:
+	@echo "CLEAN_CMD : ${CLEAN_CMD}"
+	${IMAGE_CLEAN_CMD}
 
