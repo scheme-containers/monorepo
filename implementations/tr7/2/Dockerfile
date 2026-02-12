@@ -7,7 +7,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O tr7.tar.gz https://gitlab.com/jobol/tr7/-/archive/v2.0.14/tr7-v2.0.14.tar.gz
+RUN wget -O tr7.tar.gz https://gitlab.com/jobol/tr7/-/archive/v2.0.16/tr7-v2.0.16.tar.gz
 RUN sha256sum tr7.tar.gz && sha256sum -c checksum
 RUN mkdir tr7 && tar -C tr7 --strip-components 1 -xf tr7.tar.gz
 WORKDIR /build/tr7
