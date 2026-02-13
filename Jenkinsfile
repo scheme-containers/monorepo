@@ -43,7 +43,7 @@ pipeline {
                                         stage("${SCHEME} ${LINUX} ${VERSION} x86_64 build") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                 sh "sleep 30"
-                                                sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 build"
+                                                sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 DOCKER_ARGS=--no-cache build"
                                             }
                                         }
 
@@ -80,7 +80,7 @@ pipeline {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     sh "sleep 30"
-                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 build"
+                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 DOCKER_ARGS=--no-cache build"
                                                 }
                                             }
                                         }
