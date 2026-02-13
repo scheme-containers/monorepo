@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SCHEMES', defaultValue: 'biwascheme capyscheme chibi cyclone gauche guile lips meevax scheme-rs skint stak stklos tr7', description: 'Build and deploy theses Schemes')
+        string(name: 'SCHEMES', defaultValue: 'biwascheme capyscheme chibi cyclone gauche guile lips meevax scheme-rs skint stak steel stklos tr7', description: 'Build and deploy theses Schemes')
         string(name: 'LINUXES', defaultValue: 'debian alpine', description: 'Build and deploy images on these linuxes')
         string(name: 'VERSIONS', defaultValue: 'head', description: 'Build and deploy these versions')
     }
@@ -43,7 +43,7 @@ pipeline {
                                         stage("${SCHEME} ${LINUX} ${VERSION} x86_64 build") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                 sh "sleep 30"
-                                                sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 build"
+                                                sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=x86_64 DOCKER_ARGS=--no-cache build"
                                             }
                                         }
 
@@ -80,7 +80,7 @@ pipeline {
                                             timeout(time: 6, unit: 'HOURS') {
                                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                     sh "sleep 30"
-                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 build"
+                                                    sh "make SCHEME=${SCHEME} VERSION=${VERSION} LINUX=${LINUX} ARCH=aarch64 DOCKER_ARGS=--no-cache build"
                                                 }
                                             }
                                         }

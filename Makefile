@@ -9,12 +9,7 @@ OS=linux
 DOCKERFILE=Dockerfile
 VERSION_TAG=head
 PLATFORM=${OS}/amd64
-
-ifeq "${VERSION}" "head"
-DOCKER_ARGS=--no-cache
-else
 DOCKER_ARGS=
-endif
 
 ifeq "${VERSION}" "latest"
 VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-*" | sort -V | tail -n 1)
