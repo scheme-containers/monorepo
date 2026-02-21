@@ -15,6 +15,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       openssh-client \
       libmbedtls-dev \
       zlib1g-dev \
+      libffi-dev \
       wget \
  && rm -rf /var/lib/apt/lists/*
 # Build Gauche to bootstrap head
@@ -43,6 +44,7 @@ FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
       libmbedtls21 \
       ca-certificates \
+      libffi-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/

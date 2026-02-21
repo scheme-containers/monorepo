@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM schemers/mosh AS build
+FROM debian:trixie AS build
 # We install Gauche like this as compromise
 RUN apt-get update && apt-get -y --no-install-recommends install \
       wget \
@@ -22,6 +22,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 RUN wget https://github.com/shirok/Gauche/releases/download/release0_9_15/Gauche-0.9.15.tgz && tar -xf Gauche-0.9.15.tgz
 RUN cd Gauche-0.9.15 && ./configure && make && make install
+RUN wget https://github.com/higepon/mosh/releases/download/mosh-0.2.9-rc1/mosh-0.2.9-rc1.tar.gz && tar -xf mosh-0.2.9-rc1.tar.gz
+RUN cd mosh-0.2.9-rc1 && ./configure && make && make install
 WORKDIR /build
 RUN git clone https://github.com/higepon/mosh.git --depth=1
 WORKDIR /build/mosh
