@@ -13,6 +13,6 @@ RUN make
 RUN make install
 
 FROM debian:trixie-slim
-COPY --from=build /usr/local/bin /usr/local/bin/
+COPY --from=build /usr/local /usr/local
 RUN ln -s foment /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
