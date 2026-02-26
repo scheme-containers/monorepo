@@ -4,6 +4,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       git \
       ca-certificates \
+      sudo \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
@@ -14,8 +15,9 @@ COPY checksum checksum
 RUN git clone https://github.com/leftmike/foment.git
 WORKDIR /build/foment/unix
 RUN make
+RUN make install
 
 FROM debian:trixie-slim
-COPY --from=build /build/foment/unix/release/foment /usr/local/bin/
+COPY --from=build /usr/local /usr/local
 RUN ln -s foment /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
