@@ -2,25 +2,23 @@
 FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
-      autoconf \
-      automake \
       file \
       texinfo \
-      git \
-      ca-certificates \
       libffi-dev \
       libgc-dev \
       libgmp-dev \
-      bash-completion \
+      wget \
+      ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/egallesio/STklos.git stklos --depth 1 --tags
+COPY checksum checksum
+RUN wget -O stklos.tar.gz https://github.com/egallesio/STklos/archive/refs/tags/version-26.0.tar.gz
+RUN sha256sum stklos.tar.gz && sha256sum -c checksum
+RUN mkdir stklos && tar -C stklos --strip-components 1 -xf stklos.tar.gz
 WORKDIR /build/stklos
-RUn autoreconf
 RUN ./configure --without-provided-bignum --without-provided-gc --prefix=/usr/local
 RUN make
 RUN make install
-RUN make tests
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
@@ -32,4 +30,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/scheme-banner
+COPY scheme-r7rs /usr/local/bin/scheme-r7rs
+#RUN ln -s libreadline.so.7.0 /lib/x86_64-linux-gnu/libreadline.so
 CMD ["scheme-banner"]
