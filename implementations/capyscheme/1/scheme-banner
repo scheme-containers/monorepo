@@ -1,0 +1,3 @@
+#!/bin/sh
+capy --help | head -n1
+exec capy
