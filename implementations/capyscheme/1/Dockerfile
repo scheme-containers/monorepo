@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
-RUN apt-get update && apt-get -y --no-install-recommends install \
+RUN apt-get update && apt-get install -y \
   git \
   ca-certificates \
   wget \
@@ -22,7 +22,9 @@ RUN make COMPILE_PSYNTAX=1 PREFIX=/usr/other build
 RUN make PREFIX=/usr/other install
 
 FROM debian:trixie-slim
+RUN apt-get update && apt-get install -y binutils
 COPY --from=build /usr/other/ /usr/other/
-ENV PATH=/usr/other/bin:${PATH}
+RUN cp -r /usr/other/* /usr/local/
+RUN ldconfig
 COPY scheme-banner /usr/local/bin/
 CMD scheme-banner
