@@ -27,4 +27,5 @@ COPY --from=build /usr/other/ /usr/other/
 RUN cp -r /usr/other/* /usr/local/
 RUN ldconfig
 COPY scheme-banner /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
 CMD scheme-banner

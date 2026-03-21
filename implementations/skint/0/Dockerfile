@@ -21,6 +21,6 @@ RUN make libinstall
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
-RUN ln -s skint /usr/local/bin/scheme-banner \
- && ln -s skint /usr/local/bin/scheme-r7rs
+RUN ln -s skint /usr/local/bin/scheme-banner
+RUN ln -s skint /usr/local/bin/scheme-r7rs
 CMD ["scheme-banner"]

@@ -1,0 +1,3 @@
+#!/bin/bash
+set -eu
+exec larceny -r7rs -program "$@"

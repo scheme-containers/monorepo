@@ -32,7 +32,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libgmp10 llvm-19-runtime\
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-script /usr/local/bin
 RUN ln -s ypsilon /usr/local/bin/scheme-banner
 RUN ldconfig
+COPY scheme-script /usr/local/bin
+COPY scheme-r7rs /usr/local/bin
 CMD ["scheme-banner"]

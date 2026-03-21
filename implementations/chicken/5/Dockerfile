@@ -17,7 +17,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       gcc libc-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-r7rs /usr/local/bin/
 RUN chicken-install r7rs
+COPY scheme-r7rs /usr/local/bin/
 RUN ln -s csi /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

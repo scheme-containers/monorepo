@@ -1,2 +1,2 @@
 #!/bin/sh
-exec sagittarius -r 7 "$@"
+exec sagittarius -r7 "$@"
