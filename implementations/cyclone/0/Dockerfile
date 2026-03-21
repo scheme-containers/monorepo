@@ -23,4 +23,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s icyc /usr/local/bin/scheme-banner
+COPY scheme-r7rs /usr/local/bin/
 CMD ["scheme-banner"]

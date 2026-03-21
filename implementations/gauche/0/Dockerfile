@@ -26,5 +26,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner scheme-eval /usr/local/bin/
-RUN ln -s gosh /usr/bin/scheme-r7rs
+COPY scheme-r7rs scheme-eval /usr/local/bin/
 CMD ["scheme-banner"]

@@ -32,4 +32,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 COPY --from=build /usr/local /usr/local
 RUN raco pkg install --scope installation --auto --no-docs --jobs 8 --batch r6rs r7rs srfi
 RUN ln -sf /usr/local/bin/racket /usr/local/bin/scheme-banner
+COPY scheme-r7rs /usr/local/bin/
 CMD ["scheme-banner"]

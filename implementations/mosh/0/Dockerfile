@@ -35,6 +35,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libonig5 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-banner /usr/local/bin/
 RUN ln -s mosh /usr/local/bin/scheme-script
+COPY scheme-banner /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
 CMD ["scheme-banner"]

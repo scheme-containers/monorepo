@@ -22,6 +22,7 @@ RUN make CC=clang CXX=clang++ install
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
-COPY scheme-banner /usr/local/bin/
 RUN ldconfig
+COPY scheme-banner /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
 CMD ["scheme-banner"]

@@ -16,6 +16,7 @@ RUN make install
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local /usr/local
-RUN ln -s loko /usr/local/bin/scheme-banner \
- && ln -s loko /usr/local/bin/scheme-script
+RUN ln -s loko /usr/local/bin/scheme-banner
+RUN ln -s loko /usr/local/bin/scheme-script
+COPY scheme-r7rs /usr/local/bin/scheme-r7rs
 CMD ["scheme-banner"]

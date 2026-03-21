@@ -1,2 +1,2 @@
 #!/bin/bash
-exec guile --no-auto-compile --r7rs "$@"
+exec guile --r7rs "$@"
