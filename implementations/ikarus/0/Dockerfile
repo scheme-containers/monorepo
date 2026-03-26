@@ -1,32 +1,25 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
-RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    build-essential \
-    gcc-multilib \
-    g++-multilib \
-    ca-certificates \
-    git \
-    libffi-dev:i386 \
-    libgmp-dev:i386 \
-    wget \
-    ca-certificates \
+      build-essential \
+      ca-certificates \
+      git \
+      libffi-dev \
+      libgmp-dev \
  && rm -rf /var/lib/apt/lists/*
-WORKDIR /build
-COPY checksum checksum
-RUN wget -O ikarus.tar.gz https://files.scheme.org/ikarus-0.0.3.tar.gz
-RUN sha256sum ikarus.tar.gz && sha256sum -c checksum
-RUN mkdir ikarus && tar -C ikarus --strip-components 1 -xf ikarus.tar.gz
 WORKDIR /build/ikarus
-RUN ./configure --prefix=/usr/local --build=i686-pc-linux-gnu CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32
-RUN make PREFIX=/usr/local
-RUN make PREFIX=/usr/local install
+RUN git init \
+ && git remote add origin https://github.com/lambdaconservatory/ikarus.git \
+ && git fetch origin 1f2b250ed9e8cb1c2466c939a9a305461db71739 --depth 1 --tags \
+ && git reset --hard FETCH_HEAD
+RUN ./configure --enable-libffi
+RUN make
+RUN make install
 
 FROM debian:trixie-slim
-RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y --no-install-recommends install \
-      libffi8:i386 \
-      libgmp10:i386 \
+      libffi8 \
+      libgmp10 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s ikarus /usr/local/bin/scheme-banner

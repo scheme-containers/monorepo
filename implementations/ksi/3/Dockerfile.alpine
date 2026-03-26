@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
-RUN apk add gcc musl-dev make gc-dev gmp-dev wget automake autoconf libtool
+FROM alpine:3.23 AS build
+RUN apk add build-base gc-dev gmp-dev wget automake autoconf libtool
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O ksi.tar.gz https://sourceforge.net/projects/ksi/files/ksi/ksi-3.9.0/ksi-3.9.0.tar.gz/download
@@ -9,7 +9,7 @@ RUN mkdir ksi && tar -C ksi --strip-components 1 -xf ksi.tar.gz
 WORKDIR /build/ksi
 #RUN cp /usr/share/automake*/config.guess .
 RUN ./configure
-RUN make
+RUN make CFLAGS=-std=gnu89
 RUN make install
 
 FROM alpine

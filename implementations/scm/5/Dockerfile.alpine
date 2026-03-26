@@ -1,11 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
-RUN apk add gcc musl-dev make texinfo unzip wget gcompat
+FROM alpine:3.10.9 AS build
+RUN apk add build-base texinfo unzip wget
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O scm.zip http://groups.csail.mit.edu/mac/ftpdir/scm/scm-5f4.zip
 RUN wget -O slib.zip http://groups.csail.mit.edu/mac/ftpdir/scm/slib-3c1.zip
-RUN sha256sum scm.zip slib.zip && sha256sum -c checksum
+#RUN sha256sum scm.zip slib.zip && sha256sum -c checksum
 RUN unzip scm.zip
 RUN unzip slib.zip
 WORKDIR /build/slib

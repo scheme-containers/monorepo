@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
-RUN apk add gcc musl-dev make patch wget automake
+FROM alpine:3.23 AS build
+RUN apk add build-base patch wget automake autoconf musl-libintl
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O sizzle.tar.gz https://raw.githubusercontent.com/lambdaconservatory/scheme-release-archive/master/sizzle/sizzle-0.0.31.tar.gz
@@ -9,8 +9,6 @@ RUN mkdir sizzle && tar -C sizzle --strip-components 1 -xf sizzle.tar.gz
 WORKDIR /build/sizzle
 COPY lvalue.patch lvalue.patch
 RUN patch -p 1 <lvalue.patch
-#RUN cp /usr/share/automake*/config.guess .
-RUN ./configure
 RUN ./configure
 RUN make CFLAGS=-std=gnu89
 RUN make install

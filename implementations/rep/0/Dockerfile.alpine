@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
+FROM alpine:3.23 AS build
 RUN apk add gcc musl-dev make pkgconf perl gdbm-tools autoconf autoconf-archive \
     libtool automake autoconf m4 libffi-dev gdbm-dev gmp-dev texinfo wget \
     gcompat readline-dev
@@ -11,12 +11,12 @@ RUN mkdir librep && tar -C librep --strip-components 1 -xf librep.tar.gz
 WORKDIR /build/librep
 RUN ./autogen.sh --with-value-type="long long"
 RUN autoupdate
-RUN ./configure --with-value-type="long long" --prefix=/usr/local
+RUN ./configure --with-value-type="long long" --prefix=/usr/local CFLAGS="-std=gnu89"
 RUN make
 RUN make install
 
 FROM alpine
-RUN apk add libffi gdbm gmp
+RUN apk add libffi gdbm gmp readline
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s rep /usr/local/bin/scheme-banner
 RUN ldconfig

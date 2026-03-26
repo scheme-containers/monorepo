@@ -7,7 +7,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O tinyscheme.tar.gz https://sourceforge.net/projects/tinyscheme/files/tinyscheme/tinyscheme-1.41/tinyscheme-1.41.tar.gz/download
+RUN wget -O tinyscheme.tar.gz https://sourceforge.net/projects/tinyscheme/files/tinyscheme/tinyscheme-1.42/tinyscheme-1.42.tar.gz/download
 RUN sha256sum tinyscheme.tar.gz && sha256sum -c checksum
 RUN mkdir tinyscheme && tar -C tinyscheme --strip-components 1 -xf tinyscheme.tar.gz
 WORKDIR /build/tinyscheme

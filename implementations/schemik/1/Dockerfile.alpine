@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
+FROM alpine:3.10.9 AS build
 RUN apk add gcc musl-dev make scons gc-dev glib-dev ncurses-dev readline-dev \
     wget gcompat
 WORKDIR /build
@@ -17,7 +17,7 @@ COPY write-scheme-version write-scheme-version
 RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
 FROM alpine
-RUN apk add gc glib curses readline
+RUN apk add gc glib ncurses readline
 COPY --from=build /usr/local/ /usr/local/
 ENV SCHEMIK_HOME=/usr/local/lib/schemik
 COPY scheme-banner /usr/local/bin/scheme-banner

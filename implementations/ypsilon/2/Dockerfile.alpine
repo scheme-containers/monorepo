@@ -1,20 +1,24 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine:3.14 AS build
+# Version is set to 3.17 to get llvm15
+FROM alpine:3.17 AS build
 RUN apk add gcc musl-dev build-base make cmake wget cpio git curl-dev \
     oniguruma-dev libffi-dev gmp-dev llvm-static llvm-dev clang-static \
-    clang-dev libstdc++ lld
+    clang-dev libstdc++ lld libxml2-dev
 
 WORKDIR /build/
 RUN git clone https://github.com/fujita-y/ypsilon.git --depth 1
 
+
 WORKDIR /build/ypsilon
-RUN cmake -DCMAKE_BUILD_TYPE=Release .
+RUN cmake -DCMAKE_C_FLAGS="" -DCMAKE_BUILD_TYPE=Release .
+RUN sed -i "s/#include <sys\/poll.h>/#include <poll.h>/" src/sysdep.h
 RUN cmake --build .
 RUN cmake --install .
+RUN cp /usr/lib/libzstd.so.1 /usr/lib/libLLVM-15.so /usr/lib/libstdc++.so.6 \
+    /usr/lib/libgcc_s.so.1 /usr/local/lib
 
 FROM alpine
-RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/v3.14/main llvm11-libs
-RUN apk add gmp libffi
+RUN apk add gmp libffi libxml2
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin
 RUN ln -s ypsilon /usr/local/bin/scheme-banner

@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
@@ -23,9 +23,9 @@ RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 50
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 50
 
 WORKDIR /build/ypsilon
-RUN cmake -DCMAKE_BUILD_TYPE=Release .
-RUN cmake --build .
-RUN cmake --install .
+RUN CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release .
+RUN CC=clang CXX=clang++ cmake --build .
+RUN CC=clang CXX=clang++ cmake --install .
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
