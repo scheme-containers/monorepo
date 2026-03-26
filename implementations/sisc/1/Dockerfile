@@ -30,4 +30,5 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s sisc /usr/local/bin/scheme-banner
+RUN printf "(exit)\n" | sisc
 CMD ["scheme-banner"]

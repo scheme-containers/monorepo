@@ -1,15 +1,14 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
-RUN apk add gcc musl-dev make texinfo libffi-dev gc-dev gmp-dev pcre-dev wget
+FROM alpine:3.23 AS build
+RUN apk add build-base texinfo libffi-dev gc-dev gmp-dev pcre-dev wget
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O stklos.tar.gz https://stklos.net/download/stklos-2.10.tar.gz
+RUN wget -O stklos.tar.gz https://github.com/egallesio/STklos/archive/refs/tags/version-26.0.tar.gz
 RUN sha256sum stklos.tar.gz && sha256sum -c checksum
 RUN mkdir stklos && tar -C stklos --strip-components 1 -xf stklos.tar.gz
 WORKDIR /build/stklos
-RUN ./configure \
-  --without-provided-bignum --without-provided-gc --without-provided-regexp
-RUN make
+RUN ./configure
+RUN make CFLAGS="-std=c11"
 RUN make install
 
 FROM alpine

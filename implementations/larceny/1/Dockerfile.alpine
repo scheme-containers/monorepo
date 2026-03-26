@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
+FROM alpine:3.23 AS build
 RUN apk add wget
 WORKDIR /build
 COPY checksum checksum
@@ -10,8 +10,9 @@ RUN mkdir /usr/local/lib/larceny
 RUN tar -C /usr/local/lib/larceny --strip-components 1 -xf larceny.tar.gz
 
 FROM alpine
-RUN apk add gcompat
-COPY --from=build /usr/local/lib/larceny/ /usr/local/lib/larceny/
+RUN apk add musl-dev gcompat
+COPY --from=build /usr/local/lib/larceny/ /usr/local/lib/larceny
 COPY scheme-banner scheme-script /usr/local/bin/
 RUN ln -s ../lib/larceny/larceny /usr/local/bin/larceny
+COPY scheme-banner scheme-script scheme-r7rs /usr/local/bin/
 CMD ["scheme-banner"]

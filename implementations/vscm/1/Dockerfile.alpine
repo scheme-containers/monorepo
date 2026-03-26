@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
-RUN apk add gcc musl-dev make wget gcompat
+FROM alpine:3.23 AS build
+RUN apk add build-base wget
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O vscm.tar.gz https://raw.githubusercontent.com/lambdaconservatory/scheme-release-archive/master/vscm/vscmV1R2.tar.gz
@@ -8,6 +8,7 @@ RUN sha256sum vscm.tar.gz && sha256sum -c checksum
 RUN mkdir vscm && tar -C vscm --strip-components 1 -xf vscm.tar.gz
 WORKDIR /build/vscm
 RUN sed -i "s,/home/blume,/usr/local/lib/vscm,g" Makefile
+RUN sed -i 's/getwd (buf)/getcwd (buf, 0)/' posix.c
 RUN make
 RUN mkdir /usr/local/lib/vscm \
  && mkdir /usr/local/lib/vscm/lib \

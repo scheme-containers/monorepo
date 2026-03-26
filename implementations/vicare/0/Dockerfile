@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:bookworm AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
        ca-certificates \
        gcc \
@@ -22,11 +22,10 @@ WORKDIR /build
 RUN wget -O vicare.tar.xz https://github.com/marcomaggi/vicare/archive/refs/tags/v0.4.1-devel.3.tar.gz
 RUN mkdir vicare && tar -C vicare --strip-components 1 -xaf vicare.tar.xz
 WORKDIR /build/vicare
-#RUN autoupdate
-RUN sh autogen.sh
+RUN bash autogen.sh
 RUN cp /usr/share/automake*/config.guess .
-RUN VERSION=v0.4.1-devel3 ./configure --prefix=/usr/local --enable-maintainer-mode
-RUN make CFLAGS=-std=gnu11
+RUN VERSION=v0.4.1-devel3 ./configure --prefix=/usr/local
+RUN make
 RUN make install
 
 FROM debian:trixie-slim

@@ -1,11 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
+FROM alpine:3.23 AS build
 RUN apk add git make gcc musl-dev
 WORKDIR /build
 COPY checksum checksum
-ADD https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.11.tar.gz chibi.tgz
-RUN sha256sum chibi.tgz && sha256sum -c checksum
-RUN mkdir chibi && tar -C chibi --strip-components 1 -xf chibi.tgz
+RUN wget -O chibi.tar.gz https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.12.tar.gz
+RUN sha256sum chibi.tar.gz && sha256sum -c checksum
+RUN mkdir chibi && tar -C chibi --strip-components 1 -xf chibi.tar.gz
 WORKDIR /build/chibi
 RUN make
 RUN make install

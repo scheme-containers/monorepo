@@ -1,4 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
+# Set version to 3.14 to use llvm11
 FROM alpine:3.14 AS build
 RUN apk add gcc musl-dev build-base make cmake wget cpio git curl-dev \
     oniguruma-dev libffi-dev gmp-dev llvm-static llvm-dev clang-static \
