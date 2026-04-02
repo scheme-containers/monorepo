@@ -3,7 +3,7 @@ FROM alpine:3.23 AS build
 RUN apk add build-base wget
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O sigscheme.tar.gz https://github.com/uim/sigscheme/releases/download/0.9.4/sigscheme-0.9.4.tar.gz
+RUN wget -O sigscheme.tar.gz https://github.com/uim/sigscheme/releases/download/0.9.5/sigscheme-0.9.5.tar.gz
 RUN sha256sum sigscheme.tar.gz && sha256sum -c checksum
 RUN mkdir sigscheme && tar -C sigscheme --strip-components 1 -xf sigscheme.tar.gz
 WORKDIR /build/sigscheme
