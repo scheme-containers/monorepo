@@ -1,2 +1,2 @@
 #!/bin/sh
-exec goldfish -m r7rs "$@"
+exec gf --mode r7rs "$@"

@@ -15,7 +15,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O goldfish.tar.gz https://github.com/MoganLab/goldfish/archive/refs/tags/v17.11.30.tar.gz
+RUN wget -O goldfish.tar.gz https://github.com/MoganLab/goldfish/archive/refs/tags/v17.11.37.tar.gz
 RUN sha256sum goldfish.tar.gz && sha256sum -c checksum
 RUN mkdir goldfish && tar -C goldfish --strip-components 1 -xf goldfish.tar.gz
 WORKDIR /build/goldfish
