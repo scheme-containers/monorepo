@@ -17,3 +17,4 @@ COPY scheme-banner /usr/local/bin/
 COPY scheme-r7rs /usr/local/bin/
 RUN ldconfig
 CMD ["scheme-banner"]
+
