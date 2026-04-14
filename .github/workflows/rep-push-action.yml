@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/rep:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/rep/0/
-          tags: |
-            schemers/rep:0
-            schemers/rep:0-bullseye-slim
-            schemers/rep:latest
+        name: Build and push schemers/rep latest
+        run: make VERSION=latest SCHEME=rep build push
+      -
+        name: Build and push schemers/rep head
+        run: make VERSION=head SCHEME=rep build push

@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/vx:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/vx/head/
-          tags: |
-            schemers/vx:head
-            schemers/vx:head-bullseye-slim
-            schemers/vx:latest
+        name: Build and push schemers/vx latest
+        run: make VERSION=latest SCHEME=vx build push
+      -
+        name: Build and push schemers/vx head
+        run: make VERSION=head SCHEME=vx build push

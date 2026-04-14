@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/s9fes:2018
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/s9fes/2018/
-          tags: |
-            schemers/s9fes:2018
-            schemers/s9fes:2018-bullseye-slim
-            schemers/s9fes:latest
+        name: Build and push schemers/s9fes latest
+        run: make VERSION=latest SCHEME=s9fes build push
+      -
+        name: Build and push schemers/s9fes head
+        run: make VERSION=head SCHEME=s9fes build push

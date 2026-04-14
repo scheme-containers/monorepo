@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/husk:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/husk/head/
-          tags: |
-            schemers/husk:head
-            schemers/husk:head-bullseye-slim
-            schemers/husk:latest
+        name: Build and push schemers/husk latest
+        run: make VERSION=latest SCHEME=husk build push
+      -
+        name: Build and push schemers/husk head
+        run: make VERSION=head SCHEME=husk build push

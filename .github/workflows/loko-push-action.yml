@@ -7,6 +7,8 @@ on:
       - 'master'
     paths:
       - implementations/loko/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
 
 jobs:
   docker:
@@ -25,21 +27,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/loko:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/loko/0/
-          tags: |
-            schemers/loko:0
-            schemers/loko:0-bullseye-slim
-            schemers/loko:latest
+        name: Build and push schemers/loko latest
+        run: make VERSION=latest SCHEME=loko build push
       -
-        name: Build and push schemers/loko:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/loko/head/
-          tags: |
-            schemers/loko:head
-            schemers/loko:head-bullseye-slim
+        name: Build and push schemers/loko head
+        run: make VERSION=head SCHEME=loko build push

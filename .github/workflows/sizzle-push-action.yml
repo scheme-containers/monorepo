@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/sizzle:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/sizzle/0/
-          tags: |
-            schemers/sizzle:0
-            schemers/sizzle:0-bullseye-slim
-            schemers/sizzle:latest
+        name: Build and push schemers/sizzle latest
+        run: make VERSION=latest SCHEME=sizzle build push
+      -
+        name: Build and push schemers/sizzle head
+        run: make VERSION=head SCHEME=sizzle build push

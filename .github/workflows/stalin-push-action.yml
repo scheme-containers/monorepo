@@ -1,12 +1,12 @@
 
-name: docker-larceny-push-action
+name: docker-stalin-push-action
 
 on:
   push:
     branches:
       - 'master'
     paths:
-      - implementations/larceny/**/Dockerfile
+      - implementations/stalin/**/Dockerfile
 
 jobs:
   docker:
@@ -25,8 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/larceny latest
-        run: make VERSION=latest SCHEME=larceny build push
+        name: Build and push schemers/stalin latest
+        run: make VERSION=latest SCHEME=stalin build push
       -
-        name: Build and push schemers/larceny head
-        run: make VERSION=head SCHEME=larceny build push
+        name: Build and push schemers/stalin head
+        run: make VERSION=head SCHEME=stalin build push

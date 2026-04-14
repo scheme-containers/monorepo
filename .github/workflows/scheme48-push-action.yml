@@ -25,13 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/scheme48:1.9
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/scheme48/1.9/
-          tags: |
-            schemers/scheme48:1.9
-            schemers/scheme48:1
-            schemers/scheme48:1-bullseye-slim
-            schemers/scheme48:latest
+        name: Build and push schemers/scheme48 latest
+        run: make VERSION=latest SCHEME=scheme48 build push
+      -
+        name: Build and push schemers/scheme48 head
+        run: make VERSION=head SCHEME=scheme48 build push

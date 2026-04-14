@@ -25,21 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/bigloo:4
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/bigloo/4/
-          tags: |
-            schemers/bigloo:4
-            schemers/bigloo:0-bullseye
-            schemers/bigloo:latest
+        name: Build and push schemers/bigloo latest
+        run: make VERSION=latest SCHEME=bigloo build push
       -
-        name: Build and push schemers/bigloo:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/bigloo/head/
-          tags: |
-            schemers/bigloo:head
-            schemers/bigloo:head-bullseye
+        name: Build and push schemers/bigloo head
+        run: make VERSION=head SCHEME=bigloo build push

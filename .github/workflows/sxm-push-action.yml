@@ -25,13 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/sxm:1.1
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/sxm/1.1/
-          tags: |
-            schemers/sxm:1.1
-            schemers/sxm:1
-            schemers/sxm:1-bullseye-slim
-            schemers/sxm:latest
+        name: Build and push schemers/sxm latest
+        run: make VERSION=latest SCHEME=sxm build push
+      -
+        name: Build and push schemers/sxm head
+        run: make VERSION=head SCHEME=sxm build push

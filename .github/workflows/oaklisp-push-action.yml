@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/oaklisp:1
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/oaklisp/1/
-          tags: |
-            schemers/oaklisp:1
-            schemers/oaklisp:1-bullseye-slim
-            schemers/oaklisp:latest
+        name: Build and push schemers/oaklisp latest
+        run: make VERSION=latest SCHEME=oaklisp build push
+      -
+        name: Build and push schemers/oaklisp head
+        run: make VERSION=head SCHEME=oaklisp build push

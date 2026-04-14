@@ -7,6 +7,9 @@ on:
       - 'master'
     paths:
       - implementations/racket/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
+
 
 jobs:
   docker:
@@ -25,12 +28,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/racket:6
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/racket/6/
-          tags: |
-            schemers/racket:6
-            schemers/racket:6-bullseye-slim
-            schemers/racket:latest
+        name: Build and push schemers/racket latest
+        run: make VERSION=latest SCHEME=racket build push
+      -
+        name: Build and push schemers/racket head
+        run: make VERSION=head SCHEME=racket build push
