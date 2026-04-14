@@ -24,7 +24,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
+      -
         name: Build and push schemers/tinyscheme latest
         run: make VERSION=latest SCHEME=tinyscheme build push
       -
