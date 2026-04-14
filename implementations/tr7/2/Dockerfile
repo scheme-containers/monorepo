@@ -19,3 +19,4 @@ COPY --from=build /usr/local/ /usr/local/
 RUN ln -s tr7i /usr/local/bin/scheme-banner \
  && ln -s tr7i /usr/local/bin/scheme-r7rs
 CMD ["scheme-banner"]
+
