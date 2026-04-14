@@ -13,8 +13,10 @@ DOCKER_ARGS=
 
 ifeq "${VERSION}" "latest"
 VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-*" | sort -V | tail -n 1)
+VERSION_NUMBER=$(shell basename ${VERSION_PATH})
 else
 VERSION_PATH=implementations/${SCHEME}/${VERSION}
+VERSION_NUMBER=${VERSION}
 endif
 
 ifeq "${LINUX}" "alpine"
@@ -29,21 +31,24 @@ endif
 
 ifeq "${ARCH}" "aarch64"
 TAG=${LINUX_REAL}${VERSION}-arm
+VERSION_NUMBER_TAG=${LINUX_REAL}${VERSION_NUMBER}-arm
 PLATFORM=${OS}/arm64
 endif
 
 ifeq "${ARCH}" "x86_64"
 TAG=${LINUX_REAL}${VERSION}
+VERSION_NUMBER_TAG=${LINUX_REAL}${VERSION_NUMBER}
 PLATFORM=${OS}/amd64
 endif
 
 ifeq "${ARCH}" "x86"
 TAG=${LINUX_REAL}${VERSION}
+VERSION_NUMBER_TAG=${LINUX_REAL}${VERSION_NUMBER}
 PLATFORM=${OS}/386
 endif
 
-BUILD_CMD=docker build . ${DOCKER_ARGS} --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG}
-PUSH_CMD=docker push schemers/${SCHEME}:${TAG}
+BUILD_CMD=docker build . ${DOCKER_ARGS} --platform ${PLATFORM} -f ${DOCKERFILE} --tag=schemers/${SCHEME}:${TAG} --tag=schemers/${SCHEME}:${VERSION_NUMBER_TAG}
+PUSH_CMD=docker push schemers/${SCHEME}:${TAG} && docker push schemers/${SCHEME}:${VERSION_NUMBER_TAG}
 IMAGE_CLEAN_CMD=docker image rm schemers/${SCHEME}:${TAG}
 
 debug:
