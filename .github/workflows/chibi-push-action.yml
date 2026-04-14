@@ -31,4 +31,4 @@ jobs:
         run: make VERSION=latest SCHEME=chibi build push
       -
         name: Build and push schemers/chibi head
-        run: make VERSION=head latest SCHEME=chibi build push
+        run: make VERSION=head SCHEME=chibi build push
