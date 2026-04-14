@@ -7,6 +7,8 @@ on:
       - 'master'
     paths:
       - implementations/cyclone/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
 
 jobs:
   docker:
@@ -25,21 +27,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/cyclone:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/cyclone/0/
-          tags: |
-            schemers/cyclone:0
-            schemers/cyclone:head-sid-slim
-            schemers/cyclone:latest
+        name: Build and push schemers/cyclone latest
+        run: make VERSION=latest SCHEME=cyclone build push
       -
-        name: Build and push schemers/cyclone:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/cyclone/head/
-          tags: |
-            schemers/cyclone:head
-            schemers/cyclone:head-sid-slim
+        name: Build and push schemers/cyclone head
+        run: make VERSION=head SCHEME=cyclone build push

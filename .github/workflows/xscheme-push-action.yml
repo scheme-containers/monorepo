@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/xscheme:head-lambdaconservatory
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/xscheme/head-lambdaconservatory/
-          tags: |
-            schemers/xscheme:head-lambdaconservatory
-            schemers/xscheme:head-lambdaconservatory-bullseye-slim
-            schemers/xscheme:latest
+        name: Build and push schemers/xscheme latest
+        run: make VERSION=latest SCHEME=xscheme build push
+      -
+        name: Build and push schemers/xscheme head
+        run: make VERSION=head SCHEME=xscheme build push

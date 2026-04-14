@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/vicare:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/vicare/0/
-          tags: |
-            schemers/vicare:0
-            schemers/vicare:0-bullseye-slim
-            schemers/vicare:latest
+        name: Build and push schemers/vicare latest
+        run: make VERSION=latest SCHEME=vicare build push
+      -
+        name: Build and push schemers/vicare head
+        run: make VERSION=head SCHEME=vicare build push

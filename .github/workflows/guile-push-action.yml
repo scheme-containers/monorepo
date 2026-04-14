@@ -7,6 +7,8 @@ on:
       - 'master'
     paths:
       - implementations/guile/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
 
 jobs:
   docker:
@@ -25,22 +27,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/guile:2
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/guile/2/
-          tags: |
-            schemers/guile:2
-            schemers/guile:2.2
+        name: Build and push schemers/guile latest
+        run: make VERSION=latest SCHEME=guile build push
       -
-        name: Build and push schemers/guile:3
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/guile/3/
-          tags: |
-            schemers/guile:3
-            schemers/guile:3.0
-            schemers/guile:3-bullseye-slim
-            schemers/guile:latest
+        name: Build and push schemers/guile head
+        run: make VERSION=head SCHEME=guile build push

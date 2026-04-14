@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/unsyntax:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/unsyntax/head/
-          tags: |
-            schemers/unsyntax:head
-            schemers/unsyntax:head-bullseye-slim
-            schemers/unsyntax:latest
+        name: Build and push schemers/unsyntax latest
+        run: make VERSION=latest SCHEME=unsyntax build push
+      -
+        name: Build and push schemers/unsyntax head
+        run: make VERSION=head SCHEME=unsyntax build push

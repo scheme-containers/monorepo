@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/schluessel:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/schluessel/0/
-          tags: |
-            schemers/schluessel:0
-            schemers/schluessel:0-bullseye-slim
-            schemers/schluessel:latest
+        name: Build and push schemers/schluessel latest
+        run: make VERSION=latest SCHEME=schluessel build push
+      -
+        name: Build and push schemers/schluessel head
+        run: make VERSION=head SCHEME=schluessel build push

@@ -7,6 +7,8 @@ on:
       - 'master'
     paths:
       - implementations/gauche/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
 
 jobs:
   docker:
@@ -25,21 +27,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/gauche:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/gauche/0/
-          tags: |
-            schemers/gauche:0
-            schemers/gauche:0-bullseye-slim
-            schemers/gauche:latest
+        name: Build and push schemers/gauche latest
+        run: make VERSION=latest SCHEME=gauche build push
       -
-        name: Build and push schemers/gauche:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/gauche/head/
-          tags: |
-            schemers/gauche:head
-            schemers/gauche:head-bullseye-slim
+        name: Build and push schemers/gauche head
+        run: make VERSION=head SCHEME=gauche build push

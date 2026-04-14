@@ -1,12 +1,12 @@
 
-name: docker-larceny-push-action
+name: docker-scsh-push-action
 
 on:
   push:
     branches:
       - 'master'
     paths:
-      - implementations/larceny/**/Dockerfile
+      - implementations/scsh/**/Dockerfile
 
 jobs:
   docker:
@@ -25,8 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/larceny latest
-        run: make VERSION=latest SCHEME=larceny build push
+        name: Build and push schemers/scsh latest
+        run: make VERSION=latest SCHEME=scsh build push
       -
-        name: Build and push schemers/larceny head
-        run: make VERSION=head SCHEME=larceny build push
+        name: Build and push schemers/scsh head
+        run: make VERSION=head SCHEME=scsh build push

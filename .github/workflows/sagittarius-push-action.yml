@@ -7,6 +7,8 @@ on:
       - 'master'
     paths:
       - implementations/sagittarius/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
 
 jobs:
   docker:
@@ -25,21 +27,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/sagittarius:0
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/sagittarius/0/
-          tags: |
-            schemers/sagittarius:0
-            schemers/sagittarius:0-bullseye-slim
-            schemers/sagittarius:latest
+        name: Build and push schemers/sagittarius latest
+        run: make VERSION=latest SCHEME=sagittarius build push
       -
-        name: Build and push schemers/sagittarius:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/sagittarius/head/
-          tags: |
-            schemers/sagittarius:head
-            schemers/sagittarius:head-bullseye-slim
+        name: Build and push schemers/sagittarius head
+        run: make VERSION=head SCHEME=sagittarius build push

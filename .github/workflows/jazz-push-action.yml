@@ -25,11 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/jazz:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/jazz/head/
-          tags: |
-            schemers/jazz:head
-            schemers/jazz:head-bullseye-slim
+        name: Build and push schemers/jazz latest
+        run: make VERSION=latest SCHEME=jazz build push
+      -
+        name: Build and push schemers/jazz head
+        run: make VERSION=head SCHEME=jazz build push

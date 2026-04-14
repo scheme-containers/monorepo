@@ -1,12 +1,14 @@
 
-name: docker-larceny-push-action
+name: docker-goldfish-push-action
 
 on:
   push:
     branches:
       - 'master'
     paths:
-      - implementations/larceny/**/Dockerfile
+      - implementations/goldfish/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
 
 jobs:
   docker:
@@ -25,8 +27,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/larceny latest
-        run: make VERSION=latest SCHEME=larceny build push
+        name: Build and push schemers/goldfish latest
+        run: make VERSION=latest SCHEME=goldfish build push
       -
-        name: Build and push schemers/larceny head
-        run: make VERSION=head SCHEME=larceny build push
+        name: Build and push schemers/goldfish head
+        run: make VERSION=head SCHEME=goldfish build push

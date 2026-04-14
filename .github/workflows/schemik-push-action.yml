@@ -25,12 +25,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/schemik:1
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/schemik/1/
-          tags: |
-            schemers/schemik:1
-            schemers/schemik:1-buster-slim
-            schemers/schemik:latest
+        name: Build and push schemers/schemik latest
+        run: make VERSION=latest SCHEME=schemik build push
+      -
+        name: Build and push schemers/schemik head
+        run: make VERSION=head SCHEME=schemik build push

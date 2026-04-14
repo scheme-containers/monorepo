@@ -7,6 +7,8 @@ on:
       - 'master'
     paths:
       - implementations/ypsilon/**/Dockerfile
+  schedule:
+    - cron: "17 4 * * 2"
 
 jobs:
   docker:
@@ -25,12 +27,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/ypsilon:head
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: implementations/ypsilon/head/
-          tags: |
-            schemers/ypsilon:head
-            schemers/ypsilon:head-bullseye-slim
-            schemers/ypsilon:latest
+        name: Build and push schemers/ypsilon latest
+        run: make VERSION=latest SCHEME=ypsilon build push
+      -
+        name: Build and push schemers/ypsilon head
+        run: make VERSION=head SCHEME=ypsilon build push
