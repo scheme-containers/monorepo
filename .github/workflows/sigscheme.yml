@@ -1,4 +1,4 @@
-name: docker-sigscheme-push-action
+name: sigscheme
 
 on:
   push:

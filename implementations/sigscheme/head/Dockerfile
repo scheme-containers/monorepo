@@ -7,10 +7,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-COPY checksum checksum
-RUN wget -O sigscheme.tar.gz https://github.com/uim/sigscheme/releases/download/0.9.5/sigscheme-0.9.5.tar.gz
-RUN sha256sum sigscheme.tar.gz && sha256sum -c checksum
-RUN mkdir sigscheme && tar -C sigscheme --strip-components 1 -xf sigscheme.tar.gz
+RUN git clone https://github.com/uim/sigscheme.git --depth=1
 WORKDIR /build/sigscheme
 RUN ./configure
 RUN make
