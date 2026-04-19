@@ -21,3 +21,4 @@ COPY --from=build /build/tinyscheme/init.scm /build/tinyscheme/scheme \
   /usr/local/tinyscheme/
 COPY scheme-banner /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
+
