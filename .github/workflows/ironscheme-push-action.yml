@@ -1,7 +1,5 @@
-env:
-  SCHEME: ironscheme
-
-name: docker-${{env.SCHEME}}-push-action
+name: docker-ironscheme-push-action
+env: { SCHEME: ironscheme }
 
 on:
   push:
