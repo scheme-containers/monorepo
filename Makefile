@@ -52,16 +52,25 @@ PUSH_CMD=docker push schemers/${SCHEME}:${TAG} && docker push schemers/${SCHEME}
 IMAGE_CLEAN_CMD=docker image rm schemers/${SCHEME}:${TAG}
 
 debug:
+	@echo "SCHEME   : ${SCHEME}"
+	@echo "VERSION  : ${VERSION}"
+	@echo "ARCH     : ${ARCH}"
 	@echo "DIR      : ${VERSION_PATH}"
 	@echo "BUILD_CMD: ${BUILD_CMD}"
 	@echo "PUSH_CMD : ${PUSH_CMD}"
 
 build:
+	@echo "SCHEME   : ${SCHEME}"
+	@echo "VERSION  : ${VERSION}"
+	@echo "ARCH     : ${ARCH}"
 	@echo "DIR      : ${VERSION_PATH}"
 	@echo "BUILD_CMD: ${BUILD_CMD}"
 	cd ${VERSION_PATH} && ${BUILD_CMD}
 
 push:
+	@echo "SCHEME   : ${SCHEME}"
+	@echo "VERSION  : ${VERSION}"
+	@echo "ARCH     : ${ARCH}"
 	@echo "DIR      : ${VERSION_PATH}"
 	@echo "PUSH_CMD : ${PUSH_CMD}"
 	cd ${VERSION_PATH} && ${PUSH_CMD}
