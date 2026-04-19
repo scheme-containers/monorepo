@@ -1,4 +1,4 @@
-name: docker-otus-push-action
+name: otus
 
 on:
   push:
