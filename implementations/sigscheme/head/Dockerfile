@@ -2,6 +2,8 @@
 FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
+    autoconf \
+    automake \
     file \
     git \
     ca-certificates \
@@ -9,6 +11,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/uim/sigscheme.git --depth=1
 WORKDIR /build/sigscheme
+RUN ./setup.sh
+RUN ./autogen.sh
 RUN ./configure
 RUN make
 RUN make install

@@ -1,9 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine:3.23 AS build
-RUN apk add build-base git
+RUN apk add build-base git autoconf automake
 WORKDIR /build
 RUN git clone https://github.com/uim/sigscheme.git --depth=1
 WORKDIR /build/sigscheme
+RUN sh setup.sh
+RUN ./autogen.sh
 RUN ./configure
 RUN make
 RUN make install
