@@ -30,8 +30,14 @@ jobs:
         name: Build and push schemers/ironscheme latest
         run: make VERSION=latest SCHEME=ironscheme build push
       -
+        name: Build and push schemers/ironscheme latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=ironscheme build push
+      -
         name: Build and push schemers/ironscheme head
         run: make VERSION=head SCHEME=ironscheme build push
+      -
+        name: Build and push schemers/ironscheme head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=ironscheme build push
   docker-arm:
     runs-on: ubuntu-latest-arm
     steps:
@@ -48,8 +54,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push schemers/ironscheme latest
+        name: Build and push schemers/ironscheme latest arm
         run: make ARCH=aarch64 VERSION=latest SCHEME=ironscheme build push
       -
-        name: Build and push schemers/ironscheme head
+        name: Build and push schemers/ironscheme latest arm alpine
+        run: make LINUX=alpine ARCH=aarch64 VERSION=latest SCHEME=ironscheme build push
+      -
+        name: Build and push schemers/ironscheme head arm
         run: make ARCH=aarch64 VERSION=head SCHEME=ironscheme build push
+      -
+        name: Build and push schemers/ironscheme head arm alpine
+        run: make LINUX=alpine ARCH=aarch64 VERSION=head SCHEME=ironscheme build push
