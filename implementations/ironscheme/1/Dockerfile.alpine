@@ -1,26 +1,27 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine:3.23 AS build
-RUN apk add wget git bash musl-dev libucontext-dev icu-dev gcc libstdc++ \
-    openssl-dev zlib-dev gcompat
-WORKDIR /build/ironscheme
-COPY checksum checksum
-RUN wget -O IronScheme.zip https://github.com/IronScheme/IronScheme/releases/download/1.0.603/IronScheme-1.0.603-636c88b.zip
-#RUN sha256sum IronScheme.zip && sha256sum -c checksum
-RUN unzip IronScheme.zip
-RUN rm checksum IronScheme.zip
+RUN apk add wget git icu-dev bash
+RUN wget https://builds.dotnet.microsoft.com/dotnet/scripts/v1/dotnet-install.sh \
+    && bash dotnet-install.sh --version 9.0.313 --install-dir /usr/local/bin
+WORKDIR /build
+RUN git clone https://github.com/IronScheme/IronScheme.git --branch 1.0.603 --recurse-submodules
+WORKDIR /build/IronScheme/IronScheme
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=true
+ENV DOTNET_ROOT=/usr/local/bin
+RUN sh build.sh
+#RUN sh test.sh
+#RUN sh package.sh
+#RUN sh nuget.sh
 
 FROM alpine
-RUN apk add wget git bash dotnet9-hostfxr musl-dev libucontext-dev icu-dev \
-    gcc libstdc++ openssl-dev zlib-dev gcompat
+RUN apk add wget git icu-dev bash
 RUN wget https://builds.dotnet.microsoft.com/dotnet/scripts/v1/dotnet-install.sh \
-    && bash dotnet-install.sh --channel STS
-ENV DOTNET_CLI_TELEMETRY_OPTOUT=true
-ENV DOTNET_ROOT=/root/.dotnet
-ENV PATH=${PATH}:/root/.dotnet
-COPY --from=build /build/ironscheme /opt/ironscheme
+    && bash dotnet-install.sh --version 9.0.313 --install-dir /usr/local/bin
+COPY --from=build /build/IronScheme/IronScheme /usr/local/IronScheme/
 COPY ironscheme /usr/local/bin/
 RUN ln -s ironscheme /usr/local/bin/isc && \
     ln -s ironscheme /usr/local/bin/scheme-banner && \
     ln -s ironscheme /usr/local/bin/scheme-script
-RUN ln -sf ${HOME}/.dotnet/dotnet /usr/local/bin/dotnet
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=true
+ENV DOTNET_ROOT=/usr/local/bin
 CMD ["scheme-banner"]

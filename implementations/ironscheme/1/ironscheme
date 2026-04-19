@@ -17,4 +17,4 @@ IFS=':' read -ra library_path <<<"${IRONSCHEME_LIBRARY_PATH:-}"
 for dir in "${library_path[@]}"; do
         flags+=(-I "$dir")
 done
-exec "$runtime" "/opt/ironscheme/$dll" "${flags[@]}" "$@"
+exec "$runtime" /usr/local/IronScheme/IronScheme.Console/bin/Release/net9.0/$dll "${flags[@]}" "$@"
