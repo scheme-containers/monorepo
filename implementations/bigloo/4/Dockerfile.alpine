@@ -1,0 +1,20 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine:3.23 AS build
+RUN apk add build-base autoconf automake libtool patch zip sqlite-dev libc-dev \
+    gmp-dev libunistring-dev pcre2-dev openssl-dev openjdk25
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O bigloo.tar.gz https://www-sop.inria.fr/mimosa/fp/Bigloo/download/bigloo-latest.tar.gz
+RUN mkdir bigloo && tar -C bigloo --strip-components 1 -xf bigloo.tar.gz
+WORKDIR /build/bigloo
+RUN ./configure
+RUN make
+RUN make compile-bee
+RUN make install-sans-docs
+RUN make fulltest
+
+FROM alpine
+RUN apk add build-base openjdk25
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s bigloo /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
