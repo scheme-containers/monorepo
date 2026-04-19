@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM schemers/gauche:alpine-latest AS build
+FROM alpine:3.32 AS build
 RUN apk add gcc musl-dev make pkgconf wget openssh-client mbedtls-dev zlib-dev git autoconf automake libtool
 # Build Gauche to bootstrap head
 WORKDIR /build
