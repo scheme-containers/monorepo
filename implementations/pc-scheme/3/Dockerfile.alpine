@@ -1,0 +1,9 @@
+FROM alpine:3.23 AS build
+RUN apk add build-base flex bison wget gawk autoconf
+WORKDIR /build
+RUN wget -O dosemu.tar.gz https://github.com/dosemu2/dosemu2/archive/refs/tags/dosemu2-2.0pre9-2.tar.gz
+RUN mkdir dosemu && tar -C dosemu --strip-components 1 -xf dosemu.tar.gz
+RUN ./autogen.sh
+WORKDIR /build/dosemu
+RUN ./configure --prefix=/usr/local
+RUN make

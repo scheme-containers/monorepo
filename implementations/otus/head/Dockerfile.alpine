@@ -1,0 +1,13 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine:3.23 AS build
+RUN apk add gcc make musl-dev xxd git
+WORKDIR /build
+RUN git clone https://github.com/yuriy-chumak/ol.git --depth=1
+WORKDIR /build/ol
+RUN make PREFIX=/usr/local
+RUN make PREFIX=/usr/local install
+
+FROM alpine
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s ol /usr/local/bin/scheme-banner
+CMD ["scheme-banner"]
