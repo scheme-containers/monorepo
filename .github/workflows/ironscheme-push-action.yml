@@ -1,27 +1,32 @@
+env:
+    SCHEME: ironscheme
 
-name: docker-ironscheme-push-action
+name: docker-${{env.SCHEME}} -push-action
 
 on:
   push:
     paths:
-      - implementations/ironscheme/**/Dockerfile*
-      - .github/workflows/ironscheme*.yml
+      - implementations/${{env.SCHEME}}/**/Dockerfile*
+      - .github/workflows/${{env.SCHEME}}*.yml
   schedule:
     - cron: "17 4 * * 2"
 
 jobs:
   build:
-    runs-on: [ubuntu-22.04, ubuntu-22.04-arm]
+    strategy:
+      matrix:
+      implementation: ${{env.SCHEME}}
+      os: [ubuntu-25.04, ubuntu-24.04-arm]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/ironscheme latest
-        run: make VERSION=latest SCHEME=ironscheme build
-      - name: Build schemers/ironscheme latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=ironscheme build
-      - name: Build schemers/ironscheme head
-        run: make VERSION=head SCHEME=ironscheme build
-      - name: Build schemers/ironscheme head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=ironscheme build
+      - name: Build schemers/${{env.SCHEME}} latest
+        run: make VERSION=latest SCHEME=${{env.SCHEME}} build
+      - name: Build schemers/${{env.SCHEME}} latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=${{env.SCHEME}} build
+      - name: Build schemers/${{env.SCHEME}} head
+        run: make VERSION=head SCHEME=${{env.SCHEME}} build
+      - name: Build schemers/${{env.SCHEME}} head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=${{env.SCHEME}} build
