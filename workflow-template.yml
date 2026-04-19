@@ -6,7 +6,7 @@ on:
       - implementations/${SCHEME}/**/Dockerfile*
       - .github/workflows/${SCHEME}*.yml
 jobs:
-  build:
+  Debian-latest:
     strategy:
       fail-fast: false
       matrix:
@@ -22,16 +22,39 @@ jobs:
       - name: Push schemers/${SCHEME} latest
         if: github.ref == 'refs/heads/master'
         run: make VERSION=latest SCHEME=${SCHEME} push
-      - name: Build schemers/${SCHEME} latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build
-      - name: Push schemers/${SCHEME} latest alpine
-        if: github.ref == 'refs/heads/master'
-        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
       - name: Build schemers/${SCHEME} head
         run: make VERSION=head SCHEME=${SCHEME} build
       - name: Push schemers/${SCHEME} head
         if: github.ref == 'refs/heads/master'
         run: make VERSION=head SCHEME=${SCHEME} push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Build schemers/${SCHEME} latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build
+      - name: Push schemers/${SCHEME} latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Build schemers/${SCHEME} head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} build
       - name: Push schemers/${SCHEME} head alpine
         if: github.ref == 'refs/heads/master'
         run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} push

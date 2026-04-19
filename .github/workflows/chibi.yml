@@ -8,7 +8,7 @@ on:
   schedule: 
     - cron: "17 4 * * 2"
 jobs:
-  build:
+  Debian-latest:
     strategy:
       fail-fast: false
       matrix:
@@ -24,16 +24,39 @@ jobs:
       - name: Push schemers/chibi latest
         if: github.ref == 'refs/heads/master'
         run: make VERSION=latest SCHEME=chibi push
-      - name: Build schemers/chibi latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=chibi build
-      - name: Push schemers/chibi latest alpine
-        if: github.ref == 'refs/heads/master'
-        run: make LINUX=alpine VERSION=latest SCHEME=chibi push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
       - name: Build schemers/chibi head
         run: make VERSION=head SCHEME=chibi build
       - name: Push schemers/chibi head
         if: github.ref == 'refs/heads/master'
         run: make VERSION=head SCHEME=chibi push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Build schemers/chibi latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=chibi build
+      - name: Push schemers/chibi latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=chibi push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Build schemers/chibi head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=chibi build
       - name: Push schemers/chibi head alpine
         if: github.ref == 'refs/heads/master'
         run: make LINUX=alpine VERSION=head SCHEME=chibi push
