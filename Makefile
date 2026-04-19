@@ -2,7 +2,7 @@
 SCHEME=chibi
 VERSION=head             # head, N or latest
 LINUX=                   # empty or alpine
-ARCH=x86_64
+ARCH=$(shell uname --machine)
 OS=linux
 # User arguments end
 
@@ -52,16 +52,25 @@ PUSH_CMD=docker push schemers/${SCHEME}:${TAG} && docker push schemers/${SCHEME}
 IMAGE_CLEAN_CMD=docker image rm schemers/${SCHEME}:${TAG}
 
 debug:
+	@echo "SCHEME   : ${SCHEME}"
+	@echo "VERSION  : ${VERSION}"
+	@echo "ARCH     : ${ARCH}"
 	@echo "DIR      : ${VERSION_PATH}"
 	@echo "BUILD_CMD: ${BUILD_CMD}"
 	@echo "PUSH_CMD : ${PUSH_CMD}"
 
 build:
+	@echo "SCHEME   : ${SCHEME}"
+	@echo "VERSION  : ${VERSION}"
+	@echo "ARCH     : ${ARCH}"
 	@echo "DIR      : ${VERSION_PATH}"
 	@echo "BUILD_CMD: ${BUILD_CMD}"
 	cd ${VERSION_PATH} && ${BUILD_CMD}
 
 push:
+	@echo "SCHEME   : ${SCHEME}"
+	@echo "VERSION  : ${VERSION}"
+	@echo "ARCH     : ${ARCH}"
 	@echo "DIR      : ${VERSION_PATH}"
 	@echo "PUSH_CMD : ${PUSH_CMD}"
 	cd ${VERSION_PATH} && ${PUSH_CMD}
@@ -69,4 +78,7 @@ push:
 clean-image:
 	@echo "CLEAN_CMD : ${CLEAN_CMD}"
 	${IMAGE_CLEAN_CMD}
+
+workflow:
+	sed 's/\$${SCHEME}/${SCHEME}/g' workflow-template.yml > .github/workflows/${SCHEME}-push-action.yml
 
