@@ -12,3 +12,4 @@ FROM alpine
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
+
