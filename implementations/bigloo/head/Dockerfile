@@ -17,6 +17,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates \
     default-jdk \
     wget \
+    git \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/manuel-serrano/bigloo.git --depth=1
