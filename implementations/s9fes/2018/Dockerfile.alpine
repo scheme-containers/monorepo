@@ -18,7 +18,7 @@ RUN cp /usr/lib/x86_64-linux-gnu/libncurses.so.6 /usr/local/lib/
 RUN cp /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/local/lib/
 
 FROM alpine
-RUn apk add gcompat
+RUN apk add gcompat
 COPY --from=build /usr/local/ /usr/local/
 RUN ln -s s9 /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]

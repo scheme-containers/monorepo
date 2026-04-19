@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine:3.23 AS build
-RUn apk add gcc musl-dev make
+RUN apk add gcc musl-dev make
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O tr7.tar.gz https://gitlab.com/jobol/tr7/-/archive/v2.0.17/tr7-v2.0.17.tar.gz
