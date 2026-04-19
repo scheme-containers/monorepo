@@ -1,5 +1,4 @@
 name: docker-ironscheme-push-action
-env: { SCHEME: ironscheme }
 
 on:
   push:
@@ -8,6 +7,8 @@ on:
       - .github/workflows/${{env.SCHEME}}*.yml
   schedule:
     - cron: "17 4 * * 2"
+
+env: { SCHEME: ironscheme }
 
 jobs:
   build:
