@@ -3,7 +3,7 @@ FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     file \
-    wget \
+    git \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
