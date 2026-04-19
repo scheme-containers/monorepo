@@ -16,7 +16,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/egallesio/STklos.git stklos --depth 1 --tags
 WORKDIR /build/stklos
-RUn autoreconf
+RUN autoreconf
 RUN ./configure --without-provided-bignum --without-provided-gc --prefix=/usr/local
 RUN make
 RUN make install
