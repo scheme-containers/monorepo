@@ -70,3 +70,6 @@ clean-image:
 	@echo "CLEAN_CMD : ${CLEAN_CMD}"
 	${IMAGE_CLEAN_CMD}
 
+workflow:
+	sed 's/\$${SCHEME}/${SCHEME}/g' workflow-template.yml > .github/workflows/${SCHEME}-push-action.yml
+
