@@ -1,4 +1,4 @@
-name: docker-gauche-push-action
+name: gauche
 
 on:
   push:
