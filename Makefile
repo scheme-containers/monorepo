@@ -2,7 +2,7 @@
 SCHEME=chibi
 VERSION=head             # head, N or latest
 LINUX=                   # empty or alpine
-ARCH=x86_64
+ARCH=$(shell uname --machine)
 OS=linux
 # User arguments end
 
