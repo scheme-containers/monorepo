@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        implementation: ironscheme
+        implementation: [ironscheme]
         os: [ubuntu-25.04, ubuntu-24.04-arm]
     steps:
       - name: Checkout
