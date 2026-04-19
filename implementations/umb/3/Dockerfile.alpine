@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine:3.23 AS build
-RUn apk add gcc make musl-dev patch wget gcompat
+RUN apk add gcc make musl-dev patch wget gcompat
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O umb-scheme.tar.Z https://raw.githubusercontent.com/lambdaconservatory/scheme-release-archive/master/umb/umb-scheme-3.2.tar.Z
