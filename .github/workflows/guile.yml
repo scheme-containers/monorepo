@@ -1,0 +1,74 @@
+name: docker-guile-push-action
+
+on:
+  push:
+    paths:
+      - implementations/guile/**/Dockerfile*
+      - .github/workflows/guile*.yml
+  schedule: 
+    - cron: "17 4 * * 2"
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/guile latest
+        run: make VERSION=latest SCHEME=guile build
+      - name: Push schemers/guile latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=guile push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/guile head
+        run: make VERSION=head SCHEME=guile build
+      - name: Push schemers/guile head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=guile push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/guile latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=guile build
+      - name: Push schemers/guile latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=guile push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/guile head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=guile build
+      - name: Push schemers/guile head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=guile push

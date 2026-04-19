@@ -1,0 +1,72 @@
+name: docker-shoe-push-action
+
+on:
+  push:
+    paths:
+      - implementations/shoe/**/Dockerfile*
+      - .github/workflows/shoe*.yml
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/shoe latest
+        run: make VERSION=latest SCHEME=shoe build
+      - name: Push schemers/shoe latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=shoe push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/shoe head
+        run: make VERSION=head SCHEME=shoe build
+      - name: Push schemers/shoe head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=shoe push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/shoe latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=shoe build
+      - name: Push schemers/shoe latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=shoe push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/shoe head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=shoe build
+      - name: Push schemers/shoe head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=shoe push

@@ -1,0 +1,74 @@
+name: docker-chezscheme-push-action
+
+on:
+  push:
+    paths:
+      - implementations/chezscheme/**/Dockerfile*
+      - .github/workflows/chezscheme*.yml
+  schedule: 
+    - cron: "17 4 * * 2"
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chezscheme latest
+        run: make VERSION=latest SCHEME=chezscheme build
+      - name: Push schemers/chezscheme latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=chezscheme push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chezscheme head
+        run: make VERSION=head SCHEME=chezscheme build
+      - name: Push schemers/chezscheme head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=chezscheme push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chezscheme latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=chezscheme build
+      - name: Push schemers/chezscheme latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=chezscheme push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chezscheme head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=chezscheme build
+      - name: Push schemers/chezscheme head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=chezscheme push

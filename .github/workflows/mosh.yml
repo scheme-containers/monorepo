@@ -1,0 +1,72 @@
+name: docker-mosh-push-action
+
+on:
+  push:
+    paths:
+      - implementations/mosh/**/Dockerfile*
+      - .github/workflows/mosh*.yml
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mosh latest
+        run: make VERSION=latest SCHEME=mosh build
+      - name: Push schemers/mosh latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=mosh push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mosh head
+        run: make VERSION=head SCHEME=mosh build
+      - name: Push schemers/mosh head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=mosh push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mosh latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=mosh build
+      - name: Push schemers/mosh latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=mosh push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mosh head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=mosh build
+      - name: Push schemers/mosh head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=mosh push

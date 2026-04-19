@@ -1,0 +1,72 @@
+name: docker-vscm-push-action
+
+on:
+  push:
+    paths:
+      - implementations/vscm/**/Dockerfile*
+      - .github/workflows/vscm*.yml
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/vscm latest
+        run: make VERSION=latest SCHEME=vscm build
+      - name: Push schemers/vscm latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=vscm push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/vscm head
+        run: make VERSION=head SCHEME=vscm build
+      - name: Push schemers/vscm head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=vscm push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/vscm latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=vscm build
+      - name: Push schemers/vscm latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=vscm push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/vscm head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=vscm build
+      - name: Push schemers/vscm head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=vscm push

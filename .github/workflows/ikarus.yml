@@ -1,0 +1,72 @@
+name: docker-ikarus-push-action
+
+on:
+  push:
+    paths:
+      - implementations/ikarus/**/Dockerfile*
+      - .github/workflows/ikarus*.yml
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/ikarus latest
+        run: make VERSION=latest SCHEME=ikarus build
+      - name: Push schemers/ikarus latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=ikarus push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/ikarus head
+        run: make VERSION=head SCHEME=ikarus build
+      - name: Push schemers/ikarus head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=ikarus push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/ikarus latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=ikarus build
+      - name: Push schemers/ikarus latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=ikarus push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/ikarus head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=ikarus build
+      - name: Push schemers/ikarus head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=ikarus push

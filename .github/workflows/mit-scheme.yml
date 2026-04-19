@@ -1,0 +1,72 @@
+name: docker-mit-scheme-push-action
+
+on:
+  push:
+    paths:
+      - implementations/mit-scheme/**/Dockerfile*
+      - .github/workflows/mit-scheme*.yml
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mit-scheme latest
+        run: make VERSION=latest SCHEME=mit-scheme build
+      - name: Push schemers/mit-scheme latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=mit-scheme push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mit-scheme head
+        run: make VERSION=head SCHEME=mit-scheme build
+      - name: Push schemers/mit-scheme head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=mit-scheme push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mit-scheme latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=mit-scheme build
+      - name: Push schemers/mit-scheme latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=mit-scheme push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/mit-scheme head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=mit-scheme build
+      - name: Push schemers/mit-scheme head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=mit-scheme push

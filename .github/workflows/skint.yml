@@ -1,0 +1,74 @@
+name: docker-skint-push-action
+
+on:
+  push:
+    paths:
+      - implementations/skint/**/Dockerfile*
+      - .github/workflows/skint*.yml
+  schedule: 
+    - cron: "17 4 * * 2"
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/skint latest
+        run: make VERSION=latest SCHEME=skint build
+      - name: Push schemers/skint latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=skint push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/skint head
+        run: make VERSION=head SCHEME=skint build
+      - name: Push schemers/skint head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=skint push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/skint latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=skint build
+      - name: Push schemers/skint latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=skint push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/skint head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=skint build
+      - name: Push schemers/skint head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=skint push

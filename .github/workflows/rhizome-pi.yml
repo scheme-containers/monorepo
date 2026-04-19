@@ -1,0 +1,72 @@
+name: docker-rhizome-pi-push-action
+
+on:
+  push:
+    paths:
+      - implementations/rhizome-pi/**/Dockerfile*
+      - .github/workflows/rhizome-pi*.yml
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/rhizome-pi latest
+        run: make VERSION=latest SCHEME=rhizome-pi build
+      - name: Push schemers/rhizome-pi latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=rhizome-pi push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/rhizome-pi head
+        run: make VERSION=head SCHEME=rhizome-pi build
+      - name: Push schemers/rhizome-pi head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=rhizome-pi push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/rhizome-pi latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=rhizome-pi build
+      - name: Push schemers/rhizome-pi latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=rhizome-pi push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/rhizome-pi head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=rhizome-pi build
+      - name: Push schemers/rhizome-pi head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=rhizome-pi push

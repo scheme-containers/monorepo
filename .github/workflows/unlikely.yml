@@ -1,0 +1,72 @@
+name: docker-unlikely-push-action
+
+on:
+  push:
+    paths:
+      - implementations/unlikely/**/Dockerfile*
+      - .github/workflows/unlikely*.yml
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/unlikely latest
+        run: make VERSION=latest SCHEME=unlikely build
+      - name: Push schemers/unlikely latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=unlikely push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/unlikely head
+        run: make VERSION=head SCHEME=unlikely build
+      - name: Push schemers/unlikely head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=unlikely push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/unlikely latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=unlikely build
+      - name: Push schemers/unlikely latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=unlikely push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/unlikely head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=unlikely build
+      - name: Push schemers/unlikely head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=unlikely push

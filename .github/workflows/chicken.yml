@@ -1,0 +1,74 @@
+name: docker-chicken-push-action
+
+on:
+  push:
+    paths:
+      - implementations/chicken/**/Dockerfile*
+      - .github/workflows/chicken*.yml
+  schedule: 
+    - cron: "17 4 * * 2"
+jobs:
+  Debian-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chicken latest
+        run: make VERSION=latest SCHEME=chicken build
+      - name: Push schemers/chicken latest
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=latest SCHEME=chicken push
+  Debian-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chicken head
+        run: make VERSION=head SCHEME=chicken build
+      - name: Push schemers/chicken head
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=head SCHEME=chicken push
+  Alpine-latest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chicken latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=chicken build
+      - name: Push schemers/chicken latest alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=latest SCHEME=chicken push
+  Alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build schemers/chicken head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=chicken build
+      - name: Push schemers/chicken head alpine
+        if: github.ref == 'refs/heads/master'
+        run: make LINUX=alpine VERSION=head SCHEME=chicken push
