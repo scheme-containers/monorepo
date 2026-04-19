@@ -1,0 +1,20 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine:3.23 AS build
+RUN apk add gcc musl-dev make pkgconf perl gdbm-tools autoconf autoconf-archive \
+    libtool automake autoconf m4 libffi-dev gdbm-dev gmp-dev texinfo git \
+    gcompat readline-dev
+WORKDIR /build
+RUN git clone https://github.com/SawfishWM/librep.git --depth=1
+WORKDIR /build/librep
+RUN ./autogen.sh --with-value-type="long long"
+RUN autoupdate
+RUN ./configure --with-value-type="long long" --prefix=/usr/local CFLAGS="-std=gnu89"
+RUN make
+RUN make install
+
+FROM alpine
+RUN apk add libffi gdbm gmp readline
+COPY --from=build /usr/local/ /usr/local/
+RUN ln -s rep /usr/local/bin/scheme-banner
+RUN ldconfig
+CMD ["scheme-banner"]

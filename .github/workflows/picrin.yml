@@ -1,4 +1,4 @@
-name: docker-picrin-push-action
+name: picrin
 
 on:
   push:
