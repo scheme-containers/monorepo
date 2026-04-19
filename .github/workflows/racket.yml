@@ -1,4 +1,4 @@
-name: docker-racket-push-action
+name: racket
 
 on:
   push:
