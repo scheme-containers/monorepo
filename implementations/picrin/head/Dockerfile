@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM schemers/picrin AS build
+FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ca-certificates \
@@ -13,8 +13,6 @@ RUN git clone https://github.com/picrin-scheme/picrin.git --depth 1 --tags
 WORKDIR /build/picrin
 RUN make
 RUN make install
-COPY write-scheme-version write-scheme-version
-RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \

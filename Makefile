@@ -3,6 +3,12 @@ SCHEME=chibi
 VERSION=head             # head, N or latest
 LINUX=                   # empty or alpine
 ARCH=$(shell uname --machine)
+ifeq "${ARCH}" "aarch64"
+ARCH=arm
+endif
+ifeq "${ARCH}" "arm64"
+ARCH=arm
+endif
 OS=linux
 # User arguments end
 
@@ -29,7 +35,7 @@ DOCKERFILE=Dockerfile
 LINUX_REAL=
 endif
 
-ifeq "${ARCH}" "aarch64"
+ifeq "${ARCH}" "arm"
 TAG=${LINUX_REAL}${VERSION}-arm
 VERSION_NUMBER_TAG=${LINUX_REAL}${VERSION_NUMBER}-arm
 PLATFORM=${OS}/arm64
