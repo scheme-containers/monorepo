@@ -1,4 +1,4 @@
-name: docker-${SCHEME}-push-action
+name: ${SCHEME}
 
 on:
   push:
