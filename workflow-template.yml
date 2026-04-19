@@ -12,8 +12,8 @@ jobs:
   build:
     strategy:
       matrix:
-      version: 1
-      os: [ubuntu-25.04, ubuntu-24.04-arm]
+        implementation: ${SCHEME}
+        os: [ubuntu-25.04, ubuntu-24.04-arm]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
