@@ -8,6 +8,7 @@ RUN sha256sum chibi.tar.gz && sha256sum -c checksum
 RUN mkdir chibi && tar -C chibi --strip-components 1 -xf chibi.tar.gz
 WORKDIR /build/chibi
 RUN make
+RUN make test-dist
 RUN make install
 
 FROM alpine
