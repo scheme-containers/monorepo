@@ -15,7 +15,7 @@ RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust &&
 WORKDIR /build
 RUN git clone https://github.com/mattwparas/steel.git --depth=1
 WORKDIR /build/steel
-RUN cargo xtask install
+RUN cargo xtask install --root=/usr/other
 
 FROM debian:trixie-slim
 COPY --from=build /usr/other/ /usr/other/
