@@ -5,8 +5,8 @@ WORKDIR /build
 RUN wget -O owl.tar.gz https://gitlab.com/owl-lisp/owl/-/archive/v0.2.1/owl-v0.2.1.tar.gz
 RUN mkdir owl && tar -C owl --strip-components 1 -xf owl.tar.gz
 WORKDIR /build
-RUN git clone https://gitlab.com/owl-lisp/owl.git --depth 1 --tags
-WORKDIR /build/owl
+RUN git clone https://gitlab.com/owl-lisp/owl.git owl-git --depth 1 --tags
+WORKDIR /build/owl-git
 RUN make PREFIX=/usr/local
 RUN make PREFIX=/usr/local install
 
