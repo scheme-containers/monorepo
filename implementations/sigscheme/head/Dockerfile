@@ -1,18 +1,27 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    build-essential \
     file \
-    wget \
+    git \
     ca-certificates \
+    asciidoc \
+    autoconf \
+    autoconf-archive \
+    bzip2 \
+    gcc \
+    libc6-dev \
+    libtool \
+    make \
+    pkg-config \
+    ruby \
+    tzdata \
+    automake \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-COPY checksum checksum
-RUN wget -O sigscheme.tar.gz https://github.com/uim/sigscheme/releases/download/0.9.5/sigscheme-0.9.5.tar.gz
-RUN sha256sum sigscheme.tar.gz && sha256sum -c checksum
-RUN mkdir sigscheme && tar -C sigscheme --strip-components 1 -xf sigscheme.tar.gz
+RUN git clone https://github.com/uim/sigscheme.git --recursive --depth=1
 WORKDIR /build/sigscheme
-RUN ./configure
+RUN ./autogen.sh
+RUN ./configure --enable-maintainer-mode --prefix=/usr/local
 RUN make
 RUN make install
 

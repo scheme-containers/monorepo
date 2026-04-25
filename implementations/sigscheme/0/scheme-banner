@@ -1,4 +1,6 @@
 #!/bin/sh
-set -eu
-cat /usr/local/share/scheme-version
+set -eu -o pipefail
+printf "SigScheme "
+grep -F "#define VERSION " /usr/local/include/sigscheme/config.h |
+    grep -ohE [0-9][0-9.]+
 exec sscm "$@"
