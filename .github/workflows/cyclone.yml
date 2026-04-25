@@ -1,4 +1,4 @@
-name: docker-cyclone-push-action
+name: cyclone
 
 on:
   push:
