@@ -14,7 +14,10 @@ RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O rust.tar.xz https://sta
 RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust && bash install.sh
 RUN mv /usr/local /usr/other && mkdir -p /usr/local
 WORKDIR /build
-RUN git clone https://github.com/mattwparas/steel.git --depth=1
+COPY checksum checksum
+RUN wget -O steel.tar.gz https://github.com/mattwparas/steel/releases/download/v0.8.2/steel-source.tar.gz
+RUN sha256sum steel.tar.gz && sha256sum -c checksum
+RUN mkdir steel && tar -C steel --strip-components 1 -xf steel.tar.gz
 WORKDIR /build/steel
 ENV PATH=/usr/other/bin:${PATH}
 RUN cargo xtask install

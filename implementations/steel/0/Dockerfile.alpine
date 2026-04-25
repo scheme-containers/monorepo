@@ -1,8 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add git rust cargo
+RUN apk add wget rust cargo
 WORKDIR /build
-RUN git clone https://github.com/mattwparas/steel.git --depth=1
+COPY checksum checksum
+RUN wget -O steel.tar.gz https://github.com/mattwparas/steel/releases/download/v0.8.2/steel-source.tar.gz
+#RUN sha256sum steel.tar.gz && sha256sum -c checksum
+RUN mkdir steel && tar -C steel --strip-components 1 -xf steel.tar.gz
 WORKDIR /build/steel
 RUN cargo xtask install
 
