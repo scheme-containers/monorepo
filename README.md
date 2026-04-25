@@ -55,6 +55,9 @@ Examples:
 
 ## Updating workflow
 
+If you need to update workflows change workflow-template.yml and then update
+them using make.
+
 For implementations that are not under active development and do not need
 weekly push of head
 
