@@ -4,7 +4,7 @@ RUN apk add git rust cargo
 WORKDIR /build
 RUN git clone https://github.com/mattwparas/steel.git --depth=1
 WORKDIR /build/steel
-RUN cargo install --path=. --root=/usr/other
+RUN cargo xtask install
 
 FROM alpine
 COPY --from=build /usr/other/ /usr/local/
