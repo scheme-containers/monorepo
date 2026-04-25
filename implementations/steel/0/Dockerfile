@@ -19,6 +19,7 @@ RUN wget -O steel.tar.gz https://github.com/mattwparas/steel/releases/download/v
 RUN sha256sum steel.tar.gz && sha256sum -c checksum
 RUN mkdir steel && tar -C steel --strip-components 1 -xf steel.tar.gz
 WORKDIR /build/steel
+ENV PATH=/usr/other/bin:${PATH}
 RUN cargo xtask install
 
 FROM debian:trixie-slim
