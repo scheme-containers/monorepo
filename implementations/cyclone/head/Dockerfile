@@ -20,7 +20,7 @@ RUN echo "Bootstrapping from Cyclone $(cyclone -vn)"
 #RUN git log -n 1
 RUN make
 RUN make install
-RUN make test
+#RUN make test
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \

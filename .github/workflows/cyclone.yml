@@ -1,10 +1,12 @@
-name: ${SCHEME}
+name: cyclone
 
 on:
   push:
     paths:
-      - implementations/${SCHEME}/**/Dockerfile*
-      - .github/workflows/${SCHEME}*.yml
+      - implementations/cyclone/**/Dockerfile*
+      - .github/workflows/cyclone*.yml
+  schedule: 
+    - cron: "17 4 * * 2"
 jobs:
   build-debian:
     strategy:
@@ -17,8 +19,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} latest
-        run: make VERSION=latest SCHEME=${SCHEME} build
+      - name: Build schemers/cyclone latest
+        run: make VERSION=latest SCHEME=cyclone build
   build-debian-head:
     strategy:
       fail-fast: false
@@ -30,8 +32,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} head
-        run: make VERSION=head SCHEME=${SCHEME} build
+      - name: Build schemers/cyclone head
+        run: make VERSION=head SCHEME=cyclone build
   build-alpine:
     strategy:
       fail-fast: false
@@ -43,8 +45,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build
+      - name: Build schemers/cyclone latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=cyclone build
   build-alpine-head:
     strategy:
       fail-fast: false
@@ -56,8 +58,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} build
+      - name: Build schemers/cyclone head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=cyclone build
   push-debian:
     strategy:
       fail-fast: false
@@ -70,8 +72,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} latest
-        run: make VERSION=latest SCHEME=${SCHEME} build push
+      - name: Build schemers/cyclone latest
+        run: make VERSION=latest SCHEME=cyclone build push
   push-debian-head:
     strategy:
       fail-fast: false
@@ -84,8 +86,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} head
-        run: make VERSION=head SCHEME=${SCHEME} build push
+      - name: Build schemers/cyclone head
+        run: make VERSION=head SCHEME=cyclone build push
   push-alpine:
     strategy:
       fail-fast: false
@@ -98,8 +100,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build push
+      - name: Build schemers/cyclone latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=cyclone build push
   push-alpine-head:
     strategy:
       fail-fast: false
@@ -112,5 +114,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/${SCHEME} head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} build push
+      - name: Build schemers/cyclone head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=cyclone build push
