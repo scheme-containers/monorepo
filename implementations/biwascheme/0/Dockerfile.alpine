@@ -1,11 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim
-RUN apt-get update && apt-get -y --no-install-recommends install \
-    nodejs \
-    npm \
-    ca-certificates \
-    git \
- && rm -rf /var/lib/apt/lists/*
+FROM alpine:3.23
+RUN apk add nodejs npm git
 WORKDIR /build
 RUN git clone https://github.com/biwascheme/biwascheme.git --depth=1
 WORKDIR /build/biwascheme
