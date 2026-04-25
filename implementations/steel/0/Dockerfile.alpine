@@ -10,7 +10,7 @@ WORKDIR /build/steel
 RUN cargo xtask install
 
 FROM alpine
-COPY --from=build /usr/other/ /usr/local/
+COPY --from=build /usr/local/ /usr/local/
 RUN apk add lld
 ENV PATH=/usr/local/capy/0.1.0:${PATH}
 COPY scheme-banner /usr/local/bin/
