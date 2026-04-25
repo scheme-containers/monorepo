@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM schemers/owl:alpine-latest AS build
+FROM alpine:3.23 AS build
 RUN apk add gcc musl-dev make git
 WORKDIR /build
 COPY checksum checksum
