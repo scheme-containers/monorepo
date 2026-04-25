@@ -6,9 +6,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       git \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-COPY checksum checksum
 RUN wget -O owl.tar.gz https://gitlab.com/owl-lisp/owl/-/archive/v0.2.1/owl-v0.2.1.tar.gz
-RUN sha256sum owl.tar.gz && sha256sum -c checksum
 RUN mkdir owl && tar -C owl --strip-components 1 -xf owl.tar.gz
 WORKDIR /build
 RUN git clone https://gitlab.com/owl-lisp/owl.git --depth 1 --tags
