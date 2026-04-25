@@ -1,13 +1,17 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM schemers/owl AS build
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ca-certificates \
       git \
+      wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://gitlab.com/owl-lisp/owl.git --depth 1 --tags
-WORKDIR /build/owl
+RUN wget -O owl.tar.gz https://gitlab.com/owl-lisp/owl/-/archive/v0.2.1/owl-v0.2.1.tar.gz
+RUN mkdir owl && tar -C owl --strip-components 1 -xf owl.tar.gz
+WORKDIR /build
+RUN git clone https://gitlab.com/owl-lisp/owl.git owl-git --depth 1 --tags
+WORKDIR /build/owl-git
 RUN make PREFIX=/usr/local
 RUN make PREFIX=/usr/local install
 
