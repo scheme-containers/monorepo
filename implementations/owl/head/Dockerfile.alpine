@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine:3.23 AS build
-RUN apk add gcc musl-dev make git
+RUN apk add gcc musl-dev make git wget
 WORKDIR /build
 RUN wget -O owl.tar.gz https://gitlab.com/owl-lisp/owl/-/archive/v0.2.1/owl-v0.2.1.tar.gz
 RUN mkdir owl && tar -C owl --strip-components 1 -xf owl.tar.gz

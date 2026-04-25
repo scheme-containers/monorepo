@@ -4,6 +4,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ca-certificates \
       git \
+      wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN wget -O owl.tar.gz https://gitlab.com/owl-lisp/owl/-/archive/v0.2.1/owl-v0.2.1.tar.gz
