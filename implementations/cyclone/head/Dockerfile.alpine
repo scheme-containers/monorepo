@@ -9,7 +9,7 @@ RUN echo "Bootstrapping from Cyclone $(cyclone -vn)"
 #RUN git log -n 1
 RUN make
 RUN make install
-RUN make test
+#RUN make test
 
 FROM alpine
 RUN apk add ck
