@@ -15,8 +15,6 @@ WORKDIR /build/sigscheme
 RUN ./configure
 RUN make
 RUN make install
-COPY write-scheme-version write-scheme-version
-RUN ./write-scheme-version | tee /usr/local/share/scheme-version
 
 FROM debian:trixie-slim
 COPY --from=build /usr/local/ /usr/local/
