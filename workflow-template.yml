@@ -6,11 +6,8 @@ on:
       - implementations/${SCHEME}/**/Dockerfile*
       - .github/workflows/${SCHEME}*.yml
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
+  build-debian:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,18 +15,43 @@ jobs:
         uses: docker/setup-buildx-action@v1
       - name: Build schemers/${SCHEME} latest
         run: make VERSION=latest SCHEME=${SCHEME} build
-      - name: Build schemers/${SCHEME} latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build
       - name: Build schemers/${SCHEME} head
         run: make VERSION=head SCHEME=${SCHEME} build
+  build-debian-arm:
+    runs-on: ubuntu-latest-arm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/${SCHEME} latest
+        run: make VERSION=latest SCHEME=${SCHEME} build
+      - name: Build schemers/${SCHEME} head
+        run: make VERSION=head SCHEME=${SCHEME} build
+  build-alpine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/${SCHEME} latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build
       - name: Build schemers/${SCHEME} head alpine
         run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} build
-  push:
-    strategy:
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    needs: build
+  build-alpine-arm:
+    runs-on: ubuntu-latest-arm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/${SCHEME} latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build
+      - name: Build schemers/${SCHEME} head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} build
+  push-debian:
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout
@@ -38,9 +60,41 @@ jobs:
         uses: docker/setup-buildx-action@v1
       - name: Build schemers/${SCHEME} latest
         run: make VERSION=latest SCHEME=${SCHEME} build push
-      - name: Build schemers/${SCHEME} latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build push
       - name: Build schemers/${SCHEME} head
         run: make VERSION=head SCHEME=${SCHEME} build push
+  push-debian-arm:
+    runs-on: ubuntu-latest-arm
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/${SCHEME} latest
+        run: make VERSION=latest SCHEME=${SCHEME} build push
+      - name: Build schemers/${SCHEME} head
+        run: make VERSION=head SCHEME=${SCHEME} build push
+  push-alpine:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/${SCHEME} latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build push
+      - name: Build schemers/${SCHEME} head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} build push
+  push-alpine-arm:
+    runs-on: ubuntu-latest-arm
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/${SCHEME} latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=${SCHEME} build push
       - name: Build schemers/${SCHEME} head alpine
         run: make LINUX=alpine VERSION=head SCHEME=${SCHEME} build push
