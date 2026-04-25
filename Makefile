@@ -82,3 +82,7 @@ clean-image:
 workflow:
 	sed 's/\$${SCHEME}/${SCHEME}/g' workflow-template.yml > .github/workflows/${SCHEME}-push-action.yml
 
+workflow-head: workflow
+	# Add scheduled builds
+	sed -i '7 a \ \ schedule: \n\ \ \ \ - cron: "17 4 * * 2"' .github/workflows/${SCHEME}-push-action.yml
+
