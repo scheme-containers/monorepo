@@ -53,4 +53,16 @@ Examples:
     > BUILD_CMD: docker build . -f Dockerfile --tag=schemers/chibi:head
     > PUSH_CMD : docker push schemers/chibi:head
 
+## Updating workflow
+
+For implementations that are not under active development and do not need
+weekly push of head
+
+    make SCHEME=chibi workflow
+
+for ones that do
+
+    make SCHEME=chibi workflow-head
+
+
 
