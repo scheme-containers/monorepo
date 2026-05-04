@@ -1,0 +1,42 @@
+name: goldfish
+
+on:
+  push:
+    paths:
+      - implementations/goldfish/**/Dockerfile*
+      - .github/workflows/goldfish*.yml
+  schedule: 
+    - cron: "17 4 * * 2"
+jobs:
+  build-debian:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/goldfish latest
+        run: make VERSION=latest SCHEME=goldfish build
+  push-debian:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build schemers/goldfish latest
+        run: make VERSION=latest SCHEME=goldfish build push
