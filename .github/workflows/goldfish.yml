@@ -1,10 +1,10 @@
-name: guile
+name: goldfish
 
 on:
   push:
     paths:
-      - implementations/guile/**/Dockerfile*
-      - .github/workflows/guile*.yml
+      - implementations/goldfish/**/Dockerfile*
+      - .github/workflows/goldfish*.yml
   schedule: 
     - cron: "17 4 * * 2"
 jobs:
@@ -19,8 +19,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/guile latest
-        run: make VERSION=latest SCHEME=guile build
+      - name: Build schemers/goldfish latest
+        run: make VERSION=latest SCHEME=goldfish build
   build-debian-head:
     strategy:
       fail-fast: false
@@ -32,8 +32,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/guile head
-        run: make VERSION=head SCHEME=guile build
+      - name: Build schemers/goldfish head
+        run: make VERSION=head SCHEME=goldfish build
   build-alpine:
     strategy:
       fail-fast: false
@@ -45,8 +45,21 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/guile latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=guile build
+      - name: Build schemers/goldfish latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=goldfish build
+  build-alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/goldfish head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=goldfish build
   push-debian:
     strategy:
       fail-fast: false
@@ -64,8 +77,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/guile latest
-        run: make VERSION=latest SCHEME=guile build push
+      - name: Build schemers/goldfish latest
+        run: make VERSION=latest SCHEME=goldfish build push
   push-debian-head:
     strategy:
       fail-fast: false
@@ -83,8 +96,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/guile head
-        run: make VERSION=head SCHEME=guile build push
+      - name: Build schemers/goldfish head
+        run: make VERSION=head SCHEME=goldfish build push
   push-alpine:
     strategy:
       fail-fast: false
@@ -102,5 +115,24 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/guile latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=guile build push
+      - name: Build schemers/goldfish latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=goldfish build push
+  push-alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build schemers/goldfish head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=goldfish build push
