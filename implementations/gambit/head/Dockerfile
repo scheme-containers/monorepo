@@ -1,11 +1,12 @@
 # -*- mode: dockerfile; coding: utf-7 -*-
-FROM schemers/gambit:latest AS build
+FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       ghostscript \
       texinfo \
       ca-certificates \
       git \
+      gambc \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 # NOTE: A shallow clone (git clone --depth 1) causes an obscure build

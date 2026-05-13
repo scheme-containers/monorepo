@@ -18,7 +18,7 @@ RUN make modules
 RUN make check
 RUN make install
 
-FROM alpine debian:trixie-slim
+FROM alpine
 RUN apk add gcc musl-dev mbedtls
 COPY --from=build /usr/local/ /usr/local/
 CMD ["scheme-banner"]
