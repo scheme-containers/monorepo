@@ -12,11 +12,13 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     openssl \
     sqlite3 \
     zlib1g-dev \
+    autoconf \
+    automake \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git
 WORKDIR /build/gerbil
-RUN ./configure --prefix=/usr/local
+RUN ./configure --enable-single-host --enable-trust-c-tco --prefix=/usr/local
 RUN make -j4
 RUN make install
 
