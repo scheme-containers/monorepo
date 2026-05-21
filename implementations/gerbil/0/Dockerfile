@@ -12,12 +12,14 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     openssl \
     sqlite3 \
     zlib1g-dev \
+    autoconf \
+    automake \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git
 WORKDIR /build/gerbil
-RUN ./configure
-RUN make -j16
+RUN ./configure --prefix=/usr/local
+RUN make -j$(nproc)
 RUN make install
 
 FROM debian:trixie-slim

@@ -1,0 +1,53 @@
+retropikzel@rm-virt-debian:~/Projects/monorepo$ make SCHEME=gerbil workflow-head
+rm -rf .github/workflows/gerbil-push-action.yml
+sed 's/\${SCHEME}/gerbil/g' workflow-template.yml > .github/workflows/gerbil.yml
+# Add scheduled builds
+sed -i '7 a \ \ schedule: \n\ \ \ \ - cron: "17 4 * * 2"' .github/workflows/gerbil.yml
+retropikzel@rm-virt-debian:~/Projects/monorepo$
+retropikzel@rm-virt-debian:~/Projects/monorepo$
+retropikzel@rm-virt-debian:~/Projects/monorepo$ make SCHEME=gerbil VERSION=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
