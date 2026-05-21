@@ -17,7 +17,7 @@ WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git
 WORKDIR /build/gerbil
 RUN ./configure
-RUN make -j16
+RUN make -j4
 RUN make install
 
 FROM debian:trixie-slim
