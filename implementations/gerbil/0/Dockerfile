@@ -16,7 +16,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git
 WORKDIR /build/gerbil
-RUN ./configure
+RUN ./configure --prefix=/usr/local
 RUN make -j4
 RUN make install
 
