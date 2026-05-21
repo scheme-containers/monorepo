@@ -12,6 +12,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     openssl \
     sqlite3 \
     zlib1g-dev \
+    gambc \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git --branch=v0.18.2
