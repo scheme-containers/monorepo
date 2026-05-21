@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine:3.23 AS build
-RUN apk add git make gcc musl-dev
+RUN apk add git make gcc musl-dev gc-dev
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O chibi.tar.gz https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.12.tar.gz

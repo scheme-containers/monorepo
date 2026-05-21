@@ -3,6 +3,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       build-essential \
       wget \
       ca-certificates \
+      libgc-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
