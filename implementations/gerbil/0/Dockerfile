@@ -14,7 +14,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     zlib1g-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/mighty-gerbils/gerbil.git
+RUN git clone https://github.com/mighty-gerbils/gerbil.git --branch=v0.18.2
 WORKDIR /build/gerbil
 RUN ./configure
 RUN make -j16
