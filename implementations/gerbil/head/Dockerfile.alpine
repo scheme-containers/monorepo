@@ -3,8 +3,8 @@ RUN apk add gcc make musl-dev sqlite-dev openssl-dev zlib-dev git autoconf autom
 WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git
 WORKDIR /build/gerbil
-RUN ./configure --enable-single-host --enable-trust-c-tco --prefix=/usr/local
-RUN make -j4
+RUN ./configure --prefix=/usr/local
+RUN make -j$(nproc)
 RUN make install
 
 FROM alpine

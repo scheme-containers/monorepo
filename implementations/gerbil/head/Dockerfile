@@ -18,8 +18,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 RUN git clone https://github.com/mighty-gerbils/gerbil.git
 WORKDIR /build/gerbil
-RUN ./configure --enable-single-host --enable-trust-c-tco --prefix=/usr/local
-RUN make -j4
+RUN ./configure --prefix=/usr/local
+RUN make -j$(nproc)
 RUN make install
 
 FROM debian:trixie-slim
