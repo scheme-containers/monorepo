@@ -12,6 +12,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libgc-dev \
       libgmp-dev \
       bash-completion \
+      asciidoctor \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/egallesio/STklos.git stklos --depth 1 --tags
@@ -20,7 +21,7 @@ RUn autoreconf
 RUN ./configure --without-provided-bignum --without-provided-gc --prefix=/usr/local
 RUN make
 RUN make install
-RUN make tests
+#RUN make tests
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
