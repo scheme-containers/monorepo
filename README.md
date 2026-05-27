@@ -33,7 +33,7 @@ Or both at once:
 ## Building image
 
 Give arguments and run without command to see what will be run.  See the
-Makefile for all arguemtns. When you are satisfied with commands run "build"
+Makefile for all arguments. When you are satisfied with commands run "build"
 and then "push" if you want to push the image.
 
 Examples:

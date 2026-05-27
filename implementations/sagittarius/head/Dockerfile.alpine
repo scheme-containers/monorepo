@@ -1,9 +1,10 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add gcc musl-dev g++ make cmake libffi-dev gc-dev openssl-dev git wget
-RUN wget https://github.com/ktakashi/sagittarius-scheme/releases/download/v0.9.13/sagittarius-0.9.13.tar.gz
-RUN tar -xf sagittarius-0.9.13.tar.gz
-RUN cd sagittarius-0.9.13 && cmake . && make && make install
+RUN apk add \
+    gcc musl-dev g++ make cmake libffi-dev gc-dev openssl-dev git wget zlib-dev
+RUN wget https://github.com/ktakashi/sagittarius-scheme/releases/download/v0.9.14/sagittarius-0.9.14.tar.gz
+RUN tar -xf sagittarius-0.9.14.tar.gz
+RUN cd sagittarius-0.9.14 && cmake . && make && make install
 WORKDIR /build
 RUN git clone https://github.com/ktakashi/sagittarius-scheme.git \
       sagittarius --depth 1
