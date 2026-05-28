@@ -11,9 +11,10 @@ RUN mkdir /usr/local/lib/larceny
 RUN tar -C /usr/local/lib/larceny --strip-components 1 -xf larceny.tar.gz
 
 FROM debian:trixie-slim
-RUN apt-get update && apt-get -y --no-install-recommends install \
-      libc6-i386 \
- && rm -rf /var/lib/apt/lists/*
+RUN  if [ "$(uname --machine)" = "x86_64" ]; then apt-get update && apt-get -y --no-install-recommends install \
+    libc6-i386 \
+ && rm -rf /var/lib/apt/lists/* \
+; fi
 COPY --from=build /usr/local/lib/larceny/ /usr/local/lib/larceny/
 RUN ln -s ../lib/larceny/larceny /usr/local/bin/larceny
 COPY scheme-banner scheme-script scheme-r7rs /usr/local/bin/
