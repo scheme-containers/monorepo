@@ -3,7 +3,6 @@ FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
-    lib32z1-dev \
     wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
@@ -14,7 +13,6 @@ RUN tar -C /usr/local/lib/larceny --strip-components 1 -xf larceny-prebuilt.tar.
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    lib32z1 \
     libc6-i386 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/lib/larceny/ /usr/local/lib/larceny/
