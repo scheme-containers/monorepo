@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
