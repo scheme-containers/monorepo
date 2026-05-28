@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm AS build
+FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
        build-essential \
        cmake \
@@ -11,9 +11,9 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
        git ca-certificates \
        wget \
   && rm -rf /var/lib/apt/lists/*
-RUN wget https://github.com/ktakashi/sagittarius-scheme/releases/download/v0.9.13/sagittarius-0.9.13.tar.gz
-RUN tar -xf sagittarius-0.9.13.tar.gz
-RUN cd sagittarius-0.9.13 && cmake . && make && make install
+RUN wget https://github.com/ktakashi/sagittarius-scheme/releases/download/v0.9.14/sagittarius-0.9.14.tar.gz
+RUN tar -xf sagittarius-0.9.14.tar.gz
+RUN cd sagittarius-0.9.14 && cmake . && make && make install
 WORKDIR /build
 RUN git clone https://github.com/ktakashi/sagittarius-scheme.git \
       sagittarius --depth 1

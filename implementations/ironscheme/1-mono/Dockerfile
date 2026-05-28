@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:bookworm-slim AS build
+FROM debian:trixie AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       unzip \
       wget \
@@ -11,7 +11,7 @@ RUN wget -O IronScheme.zip https://github.com/IronScheme/IronScheme/releases/dow
 RUN sha256sum IronScheme.zip && sha256sum -c checksum
 RUN unzip -d IronScheme IronScheme.zip && mv IronScheme /usr/local
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 COPY --from=build /usr/local/IronScheme /usr/local/IronScheme/
 RUN apt-get update && apt-get -y --no-install-recommends install \
        mono-devel \
