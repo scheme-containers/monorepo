@@ -1,7 +1,8 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
 RUN apk add gcc make musl-dev autoconf automake libtool patch zip sqlite git \
-    gmp-dev libunistring-dev pcre2-dev sqlite-dev openssl-dev openjdk21 wget
+    gmp-dev libunistring-dev pcre2-dev sqlite-dev openssl-dev openjdk21 wget \
+    libunwind-dev
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O bigloo.tar.gz https://www-sop.inria.fr/mimosa/fp/Bigloo/download/bigloo-latest.tar.gz
