@@ -7,7 +7,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O wile.tar.gz https://github.com/aalpar/wile/archive/refs/tags/v1.14.258.tar.gz
+RUN wget -O wile.tar.gz \
+    https://github.com/aalpar/wile/archive/refs/tags/v1.17.0.tar.gz
 RUN sha256sum wile.tar.gz && sha256sum -c checksum
 RUN mkdir wile && tar -C wile --strip-components 1 -xf wile.tar.gz
 WORKDIR /build/wile
