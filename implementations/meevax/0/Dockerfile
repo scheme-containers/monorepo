@@ -11,11 +11,15 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O meevax.tar.gz https://github.com/yamacir-kit/meevax/archive/refs/tags/v0.5.461.tar.gz
+RUN wget -O meevax.tar.gz \
+    https://github.com/yamacir-kit/meevax/archive/refs/tags/v0.5.566.tar.gz
 RUN sha256sum meevax.tar.gz && sha256sum -c checksum
 RUN mkdir meevax && tar -C meevax --strip-components 1 -xf meevax.tar.gz
 WORKDIR /build/meevax
-RUN CC=clang CXX=clang++ cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+RUN CC=clang CXX=clang++ \
+    cmake -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local
 WORKDIR /build/meevax/build
 RUN make CC=clang CXX=clang++ -j8 all
 RUN make CC=clang CXX=clang++ install
