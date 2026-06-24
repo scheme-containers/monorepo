@@ -1,10 +1,10 @@
-name: wile
+name: meevax
 
 on:
   push:
     paths:
-      - implementations/wile/**/Dockerfile*
-      - .github/workflows/wile*.yml
+      - implementations/meevax/**/Dockerfile*
+      - .github/workflows/meevax*.yml
   schedule: 
     - cron: "17 4 * * 2"
 jobs:
@@ -19,8 +19,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/wile latest
-        run: make VERSION=latest SCHEME=wile build
+      - name: Build schemers/meevax latest
+        run: make VERSION=latest SCHEME=meevax build
   build-debian-head:
     strategy:
       fail-fast: false
@@ -32,8 +32,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/wile head
-        run: make VERSION=head SCHEME=wile build
+      - name: Build schemers/meevax head
+        run: make VERSION=head SCHEME=meevax build
   build-alpine:
     strategy:
       fail-fast: false
@@ -45,8 +45,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/wile latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=wile build
+      - name: Build schemers/meevax latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=meevax build
   build-alpine-head:
     strategy:
       fail-fast: false
@@ -58,8 +58,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/wile head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=wile build
+      - name: Build schemers/meevax head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=meevax build
   push-debian:
     strategy:
       fail-fast: false
@@ -77,8 +77,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/wile latest
-        run: make VERSION=latest SCHEME=wile build push
+      - name: Build schemers/meevax latest
+        run: make VERSION=latest SCHEME=meevax build push
   push-debian-head:
     strategy:
       fail-fast: false
@@ -96,8 +96,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/wile head
-        run: make VERSION=head SCHEME=wile build push
+      - name: Build schemers/meevax head
+        run: make VERSION=head SCHEME=meevax build push
   push-alpine:
     strategy:
       fail-fast: false
@@ -115,8 +115,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/wile latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=wile build push
+      - name: Build schemers/meevax latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=meevax build push
   push-alpine-head:
     strategy:
       fail-fast: false
@@ -134,5 +134,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/wile head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=wile build push
+      - name: Build schemers/meevax head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=meevax build push
