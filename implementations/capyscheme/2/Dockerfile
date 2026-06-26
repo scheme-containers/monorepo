@@ -15,7 +15,7 @@ RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust &&
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O capy.tar.gz \
-    https://codeberg.org/playXE/capy/archive/v2.0.0.tar.gz
+    https://codeberg.org/playXE/capy/archive/v2.0.2.tar.gz
 RUN sha256sum capy.tar.gz && sha256sum -c checksum
 RUN mkdir capy && tar -C capy --strip-components 1 -xf capy.tar.gz
 WORKDIR /build/capy
