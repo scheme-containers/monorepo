@@ -19,12 +19,13 @@ RUN wget -O capy.tar.gz \
 RUN sha256sum capy.tar.gz && sha256sum -c checksum
 RUN mkdir capy && tar -C capy --strip-components 1 -xf capy.tar.gz
 WORKDIR /build/capy
-RUN make PREFIX=/usr/local build
-RUN make PREFIX=/usr/local install
+RUN make PREFIX=/usr/other build
+RUN make PREFIX=/usr/other install
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get install -y binutils
-COPY --from=build /usr/local/ /usr/local/
+COPY --from=build /usr/other/ /usr/other/
+ENV PATH=/usr/local/other:${PATH}
 COPY scheme-banner /usr/local/bin/
 COPY scheme-r7rs /usr/local/bin/
 CMD ["scheme-banner"]
