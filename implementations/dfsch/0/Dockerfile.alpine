@@ -3,6 +3,11 @@ FROM alpine AS build
 RUN apk add build-base autoconf automake libtool m4 git expat-dev gc-dev \
     zlib-dev expat bash elfutils-dev
 WORKDIR /build
+RUN git clone https://github.com/zolll23/execinfo.git --depth=1
+WORKDIR /build/execinfo
+RUN make
+RUN make install
+WORKDIR /build
 RUN git clone https://github.com/adh/dfsch.git --depth=1
 WORKDIR /build/dfsch
 RUN ./bootstrap.sh
