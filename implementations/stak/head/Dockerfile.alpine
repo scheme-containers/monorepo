@@ -7,7 +7,7 @@ WORKDIR /build/stak
 RUN cargo install stak --root /usr/other
 
 FROM alpine
-COPY --from=build /usr/other/ /usr/local/
+COPY --from=build /usr/other/ /usr/other/
+ENV PATH=/usr/other/bin:${PATH}
 COPY scheme-banner /usr/local/bin/
-RUN ldconfig
-CMD scheme-banner
+CMD ["scheme-banner"]
