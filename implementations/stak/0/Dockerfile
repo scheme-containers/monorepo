@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:testing AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
@@ -18,7 +18,7 @@ RUN mkdir stak && tar -C stak --strip-components 1 -xf stak.tar.gz
 WORKDIR /build/stak
 RUN cargo install stak --root /usr/other
 
-FROM debian:trixie-slim
+FROM debian:testing
 COPY --from=build /usr/other/ /usr/local/
 COPY scheme-banner /usr/local/bin/
 RUN ldconfig
