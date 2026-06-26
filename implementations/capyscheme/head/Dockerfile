@@ -15,7 +15,7 @@ RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust &&
 WORKDIR /build
 RUN git clone https://codeberg.org/playXE/capy.git --depth=1
 WORKDIR /build/capy
-RUN make PREFIX=/usr/other build
+RUN make PREFIX=/usr/other
 RUN make PREFIX=/usr/other install
 
 FROM debian:trixie-slim

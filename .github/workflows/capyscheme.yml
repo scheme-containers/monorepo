@@ -36,6 +36,20 @@ jobs:
         uses: docker/setup-buildx-action@v1
       - name: Build schemers/capyscheme head
         run: make VERSION=head SCHEME=capyscheme build
+  build-alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    if: github.ref != 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build schemers/capyscheme head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=capyscheme build
   push-debian:
     strategy:
       fail-fast: false
@@ -74,3 +88,22 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build schemers/capyscheme head
         run: make VERSION=head SCHEME=capyscheme build push
+  push-alpine-head:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build schemers/capyscheme head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=capyscheme build push
