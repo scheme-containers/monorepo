@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM debian:trixie-slim AS build
+FROM debian:testing AS build
 RUN apt-get update && apt-get install -y \
   git \
   ca-certificates \
@@ -8,10 +8,9 @@ RUN apt-get update && apt-get install -y \
   make \
   build-essential \
   rsync \
+  rustc \
+  cargo \
   && rm -rf /var/lib/apt/lists/*
-RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O rust.tar.xz https://static.rust-lang.org/dist/rust-nightly-aarch64-unknown-linux-gnu.tar.xz; fi
-RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O rust.tar.xz https://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.xz; fi
-RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust && bash install.sh
 WORKDIR /build
 RUN git clone https://codeberg.org/playXE/capy.git --depth=1
 WORKDIR /build/capy
@@ -21,7 +20,6 @@ RUN make PREFIX=/usr/other install
 FROM debian:trixie-slim
 RUN apt-get update && apt-get install -y binutils
 COPY --from=build /usr/other/ /usr/other/
-RUN cp -r /usr/other/* /usr/local/
 ENV PATH=/usr/other/bin:${PATH}
 COPY scheme-banner /usr/local/bin/
 CMD ["scheme-banner"]
