@@ -1,16 +1,31 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine:3.23 AS build
-RUN apk add wget make
+FROM alpine AS build
+RUN apk add make gcc autoconf automake guile-dev git libcurl pkgconf \
+    chez-scheme wget curl-dev
 WORKDIR /build
+RUN wget -O loko.tar.gz \
+    https://gitlab.com/weinholt/loko/-/archive/v0.13.0/loko-v0.13.0.tar.gz
 COPY checksum checksum
-RUN wget -O loko.tar.gz https://scheme.fail/releases/loko-0.12.2.tar.gz
-RUN sha256sum loko.tar.gz && sha256sum -c checksum
+RUN wget -O akku.tar.gz https://gitlab.com/akkuscm/akku/-/archive/v1.1.0/akku-v1.1.0.tar.gz
+
+RUN sha256sum akku.tar.gz loko.tar.gz && sha256sum -c checksum
+
+RUN mkdir akku && tar -C akku --strip-components 1 -xf akku.tar.gz
 RUN mkdir loko && tar -C loko --strip-components 1 -xf loko.tar.gz
+
+WORKDIR /build/akku
+RUN ./bootstrap
+RUN ./configure GUILD=/usr/bin/guild GUILE_CONFIG=/usr/bin/guile-config
+RUN make
+RUN make install
+
 WORKDIR /build/loko
+RUN akku --debug install
 RUN make
 RUN make install
 
 FROM alpine
+RUN apk add guile
 COPY --from=build /usr/local /usr/local
 RUN ln -s loko /usr/local/bin/scheme-banner \
  && ln -s loko /usr/local/bin/scheme-script
