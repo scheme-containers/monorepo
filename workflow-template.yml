@@ -1,6 +1,7 @@
 name: ${SCHEME}
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - implementations/${SCHEME}/**/Dockerfile*

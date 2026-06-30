@@ -4,19 +4,26 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
     libffi-dev \
+    libfontconfig-dev \
+    libpango1.0-dev \
+    libfontconfig-dev \
+    libcairo-dev \
+    libjpeg-dev \
+    libedit-dev \
     chezscheme \
     wget \
     libjpeg62-turbo-dev \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O racket.tgz https://download.racket-lang.org/releases/9.1/installers/racket-minimal-9.1-src.tgz
+RUN wget -O racket.tgz \
+    https://download.racket-lang.org/releases/9.2/installers/racket-9.2-src.tgz
 RUN sha256sum racket.tgz && sha256sum -c checksum
 RUN mkdir racket && tar -C racket --strip-components 1 -xf racket.tgz
 WORKDIR /build/racket/src
-RUN ./configure --prefix=/usr/local
-RUN make PREFIX=/usr/local -j16 cs
-RUN make PREFIX=/usr/local -j16 install-cs
+RUN ./configure --prefix=/usr/local --enable-scheme=chezscheme
+RUN make PREFIX=/usr/local -j$(nproc) cs
+RUN make PREFIX=/usr/local -j$(nproc) install-cs
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \

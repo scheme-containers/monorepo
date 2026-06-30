@@ -4,24 +4,29 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
     git \
-    libffi-dev \
     libfontconfig-dev \
+    libpango1.0-dev \
+    libfontconfig-dev \
+    libcairo-dev \
+    libjpeg-dev \
+    libedit-dev \
     chezscheme \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone https://github.com/racket/racket.git --depth=1
 WORKDIR /build/racket/racket/src
-RUN ./configure --prefix=/usr/local \
-    --disable-wpo --disable-compress --disable-iconv \
-    --disable-curses --enable-cs-only --enable-scheme=chezscheme
-RUN make PREFIX=/usr/local -j16 cs
-RUN make PREFIX=/usr/local -j16 install-cs
+RUN ./configure --prefix=/usr/local --enable-scheme=chezscheme
+RUN make PREFIX=/usr/local -j$(nproc) cs
+RUN make PREFIX=/usr/local -j$(nproc) install-cs
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    libedit-dev \
     libfontconfig-dev \
-    libcairo-5c0 \
+    libpango1.0-dev \
+    libfontconfig-dev \
+    libcairo-dev \
+    libjpeg-dev \
+    libedit-dev \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local /usr/local

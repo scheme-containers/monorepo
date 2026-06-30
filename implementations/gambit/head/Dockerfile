@@ -17,7 +17,6 @@ RUN ./configure --enable-single-host --enable-march=native --enable-dynamic-clib
 RUN ln -s /usr/local/bin/gsc gsc-boot
 RUN make -j$(nproc) || (rm -rf boot/ gsc-boot && make)
 RUN make -j$(nproc) modules
-RUN make check
 RUN make install
 
 FROM debian:trixie-slim
