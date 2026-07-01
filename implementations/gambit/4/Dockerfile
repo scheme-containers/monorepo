@@ -13,11 +13,16 @@ RUN wget -O gambit.tgz https://github.com/gambit/gambit/archive/refs/tags/v4.9.7
 RUN sha256sum gambit.tgz && sha256sum -c checksum
 RUN mkdir gambit && tar -C gambit --strip-components 1 -xf gambit.tgz
 WORKDIR /build/gambit
-RUN ./configure --enable-single-host --enable-march=native --enable-dynamic-clib --enable-trust-c-tco --prefix=/usr/local
+RUN ./configure \
+    --prefix=/usr/local \
+    --enable-single-host \
+    --enable-march=native \
+    --enable-dynamic-clib \
+    --enable-trust-c-tco
 RUN ln -s /usr/local/bin/gsc gsc-boot
-RUN make -j8 || (rm -rf boot/ gsc-boot && make)
-RUN make -j8 modules
-RUN make -j8 check
+RUN make -j$(nproc) || (rm -rf boot/ gsc-boot && make)
+RUN make -j$(nproc) modules
+RUN make -j$(nproc) check
 RUN make install
 
 FROM debian:trixie-slim

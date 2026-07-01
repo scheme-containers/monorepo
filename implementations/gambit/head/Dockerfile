@@ -13,7 +13,12 @@ WORKDIR /build
 # failure for unknown reasons. That's why we use a full clone.
 RUN git clone https://github.com/gambit/gambit.git
 WORKDIR /build/gambit
-RUN ./configure --enable-single-host --enable-march=native --enable-dynamic-clib --enable-trust-c-tco --prefix=/usr/local
+RUN ./configure \
+    --prefix=/usr/local \
+    --enable-single-host \
+    --enable-march=native \
+    --enable-dynamic-clib \
+    --enable-trust-c-tco
 RUN ln -s /usr/local/bin/gsc gsc-boot
 RUN make -j$(nproc) || (rm -rf boot/ gsc-boot && make)
 RUN make -j$(nproc) modules
