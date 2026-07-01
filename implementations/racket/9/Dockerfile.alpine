@@ -1,23 +1,26 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
 FROM alpine AS build
-RUN apk add gcc make musl-dev libedit-dev cairo-dev jpeg-dev pango-dev \
-    fontconfig-dev git libffi-dev chez-scheme coreutils libjpeg-turbo-dev
+RUN apk add gcc make musl-dev git chez-scheme coreutils libffi-dev \
+    fontconfig-dev cairo-dev pango-dev jpeg-dev
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O racket.tgz \
-    https://download.racket-lang.org/releases/9.2/installers/racket-9.2-src.tgz
+    https://download.racket-lang.org/releases/9.2/installers/racket-minimal-9.2-src.tgz
 RUN sha256sum racket.tgz && sha256sum -c checksum
 RUN mkdir racket && tar -C racket --strip-components 1 -xf racket.tgz
 WORKDIR /build/racket/src
-RUN ./configure --prefix=/usr/local --enable-scheme=chez
+RUN ./configure \
+    --prefix=/usr/local \
+    --enable-scheme=chez \
+    --enable-csonly \
+    --disable-iconv \
+    --disable-curses \
+    --disable-docs
 RUN make PREFIX=/usr/local -j$(nproc) cs
 RUN make PREFIX=/usr/local -j$(nproc) install-cs
+RUN raco pkg install --scope installation --auto --no-docs --jobs $(nproc) --batch r6rs r7rs
 
 FROM alpine
-RUN apk add libedit fontconfig cairo pango jpeg-dev
-RUN cp /usr/lib/libjpeg.so /usr/lib/libjpeg.so.62
 COPY --from=build /usr/local /usr/local
-RUN raco pkg install --scope installation --auto --no-docs r6rs
-RUN raco pkg install --scope installation --auto --no-docs r7rs
 RUN ln -sf /usr/local/bin/racket /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
