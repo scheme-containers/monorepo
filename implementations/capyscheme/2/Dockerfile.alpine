@@ -1,0 +1,19 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM rust:alpine AS build
+RUN apk add make libffi-dev clang rsync git musl-dev gcompat bash
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O capy.tar.gz \
+    https://codeberg.org/playXE/capy/archive/v2.0.2.tar.gz
+RUN sha256sum capy.tar.gz && sha256sum -c checksum
+RUN mkdir capy && tar -C capy --strip-components 1 -xf capy.tar.gz
+WORKDIR /build/capy
+RUN make PREFIX=/usr/other build
+RUN make PREFIX=/usr/other install
+
+FROM alpine
+COPY --from=build /usr/other/ /usr/other/
+RUN cp -r /usr/other/* /usr/local/
+COPY scheme-banner /usr/local/bin/
+COPY scheme-r7rs /usr/local/bin/
+CMD ["scheme-banner"]

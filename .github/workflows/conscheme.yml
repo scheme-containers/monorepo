@@ -1,11 +1,10 @@
-name: ypsilon
+name: conscheme
 
 on:
-  workflow_dispatch:
   push:
     paths:
-      - implementations/ypsilon/**/Dockerfile*
-      - .github/workflows/ypsilon*.yml
+      - implementations/conscheme/**/Dockerfile*
+      - .github/workflows/conscheme*.yml
 jobs:
   build-debian:
     strategy:
@@ -19,8 +18,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/ypsilon latest
-        run: make VERSION=latest SCHEME=ypsilon build
+      - name: Build schemers/conscheme latest
+        run: make VERSION=latest SCHEME=conscheme build
   build-debian-head:
     strategy:
       fail-fast: false
@@ -33,8 +32,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/ypsilon head
-        run: make VERSION=head SCHEME=ypsilon build
+      - name: Build schemers/conscheme head
+        run: make VERSION=head SCHEME=conscheme build
   build-alpine:
     strategy:
       fail-fast: false
@@ -47,8 +46,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/ypsilon latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=ypsilon build
+      - name: Build schemers/conscheme latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=conscheme build
   build-alpine-head:
     strategy:
       fail-fast: false
@@ -61,8 +60,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build schemers/ypsilon head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=ypsilon build
+      - name: Build schemers/conscheme head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=conscheme build
   push-debian:
     strategy:
       fail-fast: false
@@ -80,8 +79,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/ypsilon latest
-        run: make VERSION=latest SCHEME=ypsilon build push
+      - name: Build schemers/conscheme latest
+        run: make VERSION=latest SCHEME=conscheme build push
   push-debian-head:
     strategy:
       fail-fast: false
@@ -99,8 +98,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/ypsilon head
-        run: make VERSION=head SCHEME=ypsilon build push
+      - name: Build schemers/conscheme head
+        run: make VERSION=head SCHEME=conscheme build push
   push-alpine:
     strategy:
       fail-fast: false
@@ -118,8 +117,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/ypsilon latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=ypsilon build push
+      - name: Build schemers/conscheme latest alpine
+        run: make LINUX=alpine VERSION=latest SCHEME=conscheme build push
   push-alpine-head:
     strategy:
       fail-fast: false
@@ -137,5 +136,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/ypsilon head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=ypsilon build push
+      - name: Build schemers/conscheme head alpine
+        run: make LINUX=alpine VERSION=head SCHEME=conscheme build push
