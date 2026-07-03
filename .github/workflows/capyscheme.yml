@@ -5,9 +5,9 @@ on:
   push:
     paths:
       - implementations/capyscheme/**/Dockerfile*
+      - .github/workflows/capyscheme*.yml
   schedule:
     - cron: "17 4 * * 2"
-      - .github/workflows/capyscheme*.yml
 jobs:
   build-debian:
     strategy:
