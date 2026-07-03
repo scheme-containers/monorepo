@@ -1,6 +1,7 @@
 name: capyscheme
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - implementations/capyscheme/**/Dockerfile*
