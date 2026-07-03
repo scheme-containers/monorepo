@@ -7,9 +7,11 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN wget https://code.call-cc.org/dev-snapshots/2024/12/09/chicken-6.0.0pre1.tar.gz
-RUN tar -xf chicken-6.0.0pre1.tar.gz
-WORKDIR /build/chicken-6.0.0pre1
+RUN wget -O chicken.tar.gz \
+    https://code.call-cc.org/dev-snapshots/2026/05/12/chicken-6.0.0rc3.tar.gz
+RUN tar -xf chicken.tar.gz
+RUN mkdir chicken-pre && tar -C chicken-pre --strip-components 1 -xf chicken.tar.gz
+WORKDIR /build/chicken-pre
 RUN ./configure --prefix=/usr/local-other && make && make install
 WORKDIR /build
 RUN git clone https://code.call-cc.org/git/chicken-core.git chicken

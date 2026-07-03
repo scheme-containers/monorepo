@@ -1,16 +1,16 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine:edge AS build
+FROM alpine AS build
 RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing openjdk25
 RUN apk add automake autoconf texinfo git gcc musl-dev g++ make readline-dev
 WORKDIR /build
 RUN git clone https://gitlab.com/kashell/Kawa.git kawa --depth 1
 WORKDIR kawa
 RUN ./autogen.sh
-RUN ./configure --enable-kawa-frontend
+RUN ./configure
 RUN make
 RUN make install
 
-FROM alpine:edge
+FROM alpine
 RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing openjdk25
 RUN apk add readline
 COPY --from=build /usr/local/ /usr/local/

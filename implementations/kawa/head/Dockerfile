@@ -18,16 +18,13 @@ WORKDIR /build
 RUN git clone https://gitlab.com/kashell/Kawa.git kawa --depth 1
 WORKDIR kawa
 RUN ./autogen.sh
-RUN ./configure --enable-kawa-frontend
+RUN ./configure
 RUN make
 RUN make install
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    wget \
-    ca-certificates \
     openjdk-25-jdk \
-    libreadline-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner /usr/local/bin

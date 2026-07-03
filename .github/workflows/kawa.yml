@@ -1,11 +1,12 @@
 name: kawa
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - implementations/kawa/**/Dockerfile*
       - .github/workflows/kawa*.yml
-  schedule: 
+  schedule:
     - cron: "17 4 * * 2"
 jobs:
   build-debian:
@@ -14,6 +15,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
+    if: github.ref != 'refs/heads/master'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,6 +29,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
+    if: github.ref != 'refs/heads/master'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,6 +43,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
+    if: github.ref != 'refs/heads/master'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -53,6 +57,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
+    if: github.ref != 'refs/heads/master'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
