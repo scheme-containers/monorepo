@@ -1,12 +1,13 @@
 name: capyscheme
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - implementations/capyscheme/**/Dockerfile*
-      - .github/workflows/capyscheme*.yml
   schedule:
     - cron: "17 4 * * 2"
+      - .github/workflows/capyscheme*.yml
 jobs:
   build-debian:
     strategy:
@@ -40,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
     if: github.ref != 'refs/heads/master'
     steps:
@@ -54,7 +55,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
     if: github.ref != 'refs/heads/master'
     steps:
@@ -106,7 +107,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
     if: github.ref == 'refs/heads/master'
     steps:
@@ -125,7 +126,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
     if: github.ref == 'refs/heads/master'
     steps:
