@@ -11,14 +11,14 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       libreadline-dev \
  && rm -rf /var/lib/apt/lists/*
 RUN curl -s "https://get.sdkman.io" | bash
-RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && sdk install java 11.0.28-tem"
+RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && sdk install java 11.0.31-tem"
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O kawa.tar.gz https://ftp.gnu.org/pub/gnu/kawa/kawa-3.1.1.tar.gz
 RUN sha256sum kawa.tar.gz && sha256sum -c checksum
 RUN mkdir kawa && tar -C kawa --strip-components 1 -xf kawa.tar.gz
 WORKDIR /build/kawa
-RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && ./configure --enable-kawa-frontend"
+RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && ./configure"
 RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && make"
 RUN bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && make install"
 
