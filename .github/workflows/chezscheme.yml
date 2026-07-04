@@ -1,6 +1,7 @@
 name: chezscheme
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - implementations/chezscheme/**/Dockerfile*

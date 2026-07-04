@@ -12,7 +12,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 COPY checksum checksum
-RUN wget -O chezscheme.tar.gz https://github.com/cisco/ChezScheme/releases/download/v10.1.0/csv10.1.0.tar.gz
+RUN wget -O chezscheme.tar.gz \
+    https://github.com/cisco/ChezScheme/releases/download/v10.4.1/csv10.4.1.tar.gz
 RUN sha256sum chezscheme.tar.gz && sha256sum -c checksum
 RUN mkdir chezscheme && tar -C chezscheme -xf chezscheme.tar.gz --strip-components 1
 WORKDIR /build/chezscheme
