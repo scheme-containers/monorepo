@@ -1,6 +1,7 @@
 name: stak
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - implementations/stak/**/Dockerfile*
