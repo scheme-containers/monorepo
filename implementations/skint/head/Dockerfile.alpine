@@ -1,10 +1,11 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine AS build
+FROM alpine:3.23 AS build
 RUN apk add musl-dev make git clang
 WORKDIR /build
 RUN git clone https://github.com/false-schemers/skint.git --depth=1
 WORKDIR /build/skint
-RUN make CC=clang
+RUN sh configure --prefix=/usr/local
+RUN make
 RUN make test
 RUN make install
 RUN make libtest
