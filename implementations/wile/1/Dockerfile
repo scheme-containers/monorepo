@@ -1,3 +1,4 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
 FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
     golang \
@@ -8,7 +9,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O wile.tar.gz \
-    https://github.com/aalpar/wile/archive/refs/tags/v1.17.0.tar.gz
+    https://github.com/aalpar/wile/archive/refs/tags/v1.18.0.tar.gz
 RUN sha256sum wile.tar.gz && sha256sum -c checksum
 RUN mkdir wile && tar -C wile --strip-components 1 -xf wile.tar.gz
 WORKDIR /build/wile
