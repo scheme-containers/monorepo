@@ -12,7 +12,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O stak.tar.gz \
-    https://github.com/raviqqe/stak/archive/refs/tags/v0.12.18.tar.gz
+    https://github.com/raviqqe/stak/archive/refs/tags/v0.12.20.tar.gz
 RUN sha256sum stak.tar.gz && sha256sum -c checksum
 RUN mkdir stak && tar -C stak --strip-components 1 -xf stak.tar.gz
 WORKDIR /build/stak
