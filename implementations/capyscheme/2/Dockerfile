@@ -13,11 +13,12 @@ RUN if [ "$(uname --machine)" = "aarch64" ]; then wget -O rust.tar.xz https://st
 RUN if [ "$(uname --machine)" = "x86_64" ]; then wget -O rust.tar.xz https://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.xz; fi
 RUN mkdir rust && tar -C rust --strip-components 1 -xf rust.tar.xz && cd rust && bash install.sh
 WORKDIR /build
-COPY checksum checksum
-RUN wget -O capy.tar.gz \
-    https://codeberg.org/playXE/capy/archive/v2.0.2.tar.gz
-RUN sha256sum capy.tar.gz && sha256sum -c checksum
-RUN mkdir capy && tar -C capy --strip-components 1 -xf capy.tar.gz
+#COPY checksum checksum
+#RUN wget -O capy.tar.gz \
+    #https://codeberg.org/playXE/capy/archive/v2.0.2.tar.gz
+#RUN sha256sum capy.tar.gz && sha256sum -c checksum
+#RUN mkdir capy && tar -C capy --strip-components 1 -xf capy.tar.gz
+RUN git clone https://codeberg.org/playXE/capy.git --depth=1 --branch=v2.0.2
 WORKDIR /build/capy
 RUN make PREFIX=/usr/other build
 RUN make PREFIX=/usr/other install
