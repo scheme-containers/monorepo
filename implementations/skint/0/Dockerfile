@@ -9,12 +9,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O skint.tar.gz \
-    https://github.com/false-schemers/skint/archive/refs/tags/v7.0.1.tar.gz
+    https://github.com/false-schemers/skint/archive/refs/tags/v0.7.4.tar.gz
 RUN sha256sum skint.tar.gz && sha256sum -c checksum
 RUN mkdir skint && tar -C skint --strip-components 1 -xf skint.tar.gz
 WORKDIR /build/skint
 RUN ./configure --prefix=/usr/local
-RUN make CC=clang
+RUN make -j$(nproc) CC=clang
 RUN make test
 RUN make install
 RUN make libtest
