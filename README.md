@@ -53,19 +53,16 @@ Examples:
     > BUILD_CMD: docker build . -f Dockerfile --tag=schemers/chibi:head
     > PUSH_CMD : docker push schemers/chibi:head
 
-## Updating workflow
+## Workflow
 
-If you need to update workflows change workflow-template.yml and then update
-them using make.
+If you need to update workflows change workflow-template.yml if needed
+and then update them using make. To override default workflow build operating
+systems and linuxes use following files.
 
-For implementations that are not under active development and do not need
-weekly push of head
+- implementation/$SCHEME/WORKFLOW_OS.txt
+    - If does not exist defaults to "ubuntu-24.04, ubuntu-24.04-arm"
+- implementation/$SCHEME/WORKFLOW_LINUX.txt
+    - If does not exist defaults to "debian, alpine"
 
     make SCHEME=chibi workflow
-
-for ones that do
-
-    make SCHEME=chibi workflow-head
-
-
 
