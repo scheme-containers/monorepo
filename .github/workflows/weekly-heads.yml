@@ -1,33 +1,35 @@
-name: chibi
+name: Weekly heads
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 2"
   push:
     paths:
-      - implementations/chibi/**/Dockerfile*
-      - .github/workflows/chibi*.yml
+      - .github/workflows/weekly-heads.yml
 jobs:
-  latest:
+  heads:
     strategy:
       fail-fast: false
       matrix:
+        scheme: [chibi, tr7]
+        version: [head]
         linux: [debian, alpine]
         os: [ubuntu-24.04, ubuntu-24.04-arm]
-        version: [latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
-      - name: Build chibi
-        run: make VERSION=${{ matrix.version }} SCHEME=chibi LINUX=${{ matrix.linux }} build
+      - name: Build ${{ matrix.scheme }}
+        run: make VERSION=latest SCHEME=${{ matrix.scheme }} LINUX=${{ matrix.linux }} build
       - name: Login to DockerHub
         if: github.ref == 'refs/heads/master'
         uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Push chibi
+      - name: Build ${{ matrix.scheme }}
         if: github.ref == 'refs/heads/master'
-        run: make VERSION=${{ matrix.version }} SCHEME=chibi LINUX=${{ matrix.linux }} push
+        run: make VERSION=${{ matrix.version }} SCHEME=${{ matrix.scheme }} LINUX=${{ matrix.linux }} push
