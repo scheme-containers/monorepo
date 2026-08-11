@@ -23,6 +23,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
       - name: Build ${{ matrix.scheme }}
+        if: github.ref != 'refs/heads/master'
         run: make VERSION=latest SCHEME=${{ matrix.scheme }} LINUX=${{ matrix.linux }} build
       - name: Login to DockerHub
         if: github.ref == 'refs/heads/master'
@@ -30,6 +31,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build ${{ matrix.scheme }}
+      - name: Build and push ${{ matrix.scheme }}
         if: github.ref == 'refs/heads/master'
-        run: make VERSION=${{ matrix.version }} SCHEME=${{ matrix.scheme }} LINUX=${{ matrix.linux }} push
+        run: make VERSION=${{ matrix.version }} SCHEME=${{ matrix.scheme }} LINUX=${{ matrix.linux }} build push
