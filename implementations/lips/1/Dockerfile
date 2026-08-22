@@ -3,11 +3,15 @@ FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get -y --no-install-recommends install \
       nodejs \
       npm \
-      git \
       ca-certificates \
+      wget \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
-RUN git clone https://github.com/jcubic/lips.git --depth=1
+COPY checksum checksum
+RUN wget -O lips.tgz \
+    https://github.com/jcubic/lips/archive/refs/tags/1.0.0-beta.22.1.tar.gz
+RUN sha256sum lips.tgz && sha256sum -c checksum
+RUN mkdir lips && tar -C lips --strip-components 1 -xf lips.tgz
 WORKDIR /build/lips
 RUN npm install -g
 
@@ -16,6 +20,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       nodejs \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/ /usr/local/
-RUN ln -s lips /usr/local/bin/scheme-banner \
- && ln -s lips /usr/local/bin/scheme-r7rs
+RUN ln -sf lips /usr/local/bin/scheme-banner \
+ && ln -sf lips /usr/local/bin/scheme-r7rs
 CMD ["scheme-banner"]
