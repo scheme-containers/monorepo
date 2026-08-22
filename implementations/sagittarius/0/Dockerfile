@@ -29,4 +29,4 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 COPY --from=build /usr/local/ /usr/local/
 COPY scheme-banner scheme-r7rs scheme-script /usr/local/bin/
 RUN ldconfig
-CMD scheme-banner
+CMD ["scheme-banner"]
