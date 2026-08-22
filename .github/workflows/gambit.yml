@@ -1,142 +1,35 @@
 name: gambit
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - implementations/gambit/**/Dockerfile*
+      - implementations/gambit/**/checksum
       - .github/workflows/gambit*.yml
-  schedule:
-    - cron: "17 4 * * 2"
 jobs:
-  build-debian:
+  latest:
     strategy:
       fail-fast: false
       matrix:
+        linux: [debian, alpine]
         os: [ubuntu-24.04, ubuntu-24.04-arm]
+        version: [latest]
     runs-on: ${{ matrix.os }}
-    if: github.ref != 'refs/heads/master'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build schemers/gambit latest
-        run: make VERSION=latest SCHEME=gambit build
-  build-debian-head:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    if: github.ref != 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build schemers/gambit head
-        run: make VERSION=head SCHEME=gambit build
-  build-alpine:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    if: github.ref != 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build schemers/gambit latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=gambit build
-  build-alpine-head:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    if: github.ref != 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build schemers/gambit head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=gambit build
-  push-debian:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v4
+      - name: Build gambit
+        if: github.ref != 'refs/heads/master'
+        run: make VERSION=${{ matrix.version }} SCHEME=gambit LINUX=${{ matrix.linux }} build
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        if: github.ref == 'refs/heads/master'
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/gambit latest
-        run: make VERSION=latest SCHEME=gambit build push
-  push-debian-head:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/gambit head
-        run: make VERSION=head SCHEME=gambit build push
-  push-alpine:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/gambit latest alpine
-        run: make LINUX=alpine VERSION=latest SCHEME=gambit build push
-  push-alpine-head:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
-    runs-on: ${{ matrix.os }}
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build schemers/gambit head alpine
-        run: make LINUX=alpine VERSION=head SCHEME=gambit build push
+      - name: Build and push gambit
+        if: github.ref == 'refs/heads/master'
+        run: make VERSION=${{ matrix.version }} SCHEME=gambit LINUX=${{ matrix.linux }} build push
