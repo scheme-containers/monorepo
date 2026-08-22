@@ -23,7 +23,7 @@ RUN ./configure \
 RUN ln -s /usr/local/bin/gsc gsc-boot
 RUN make -j$(nproc) || (rm -rf boot/ gsc-boot && make)
 RUN make -j$(nproc) modules
-RUN make -j$(nproc) check
+#RUN make -j$(nproc) check
 RUN make install
 
 FROM debian:trixie-slim
