@@ -21,6 +21,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
       - name: Build chibi
+        if: github.ref != 'refs/heads/master'
         run: make VERSION=${{ matrix.version }} SCHEME=chibi LINUX=${{ matrix.linux }} build
       - name: Login to DockerHub
         if: github.ref == 'refs/heads/master'
@@ -28,6 +29,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Push chibi
+      - name: Build and push chibi
         if: github.ref == 'refs/heads/master'
-        run: make VERSION=${{ matrix.version }} SCHEME=chibi LINUX=${{ matrix.linux }} push
+        run: make VERSION=${{ matrix.version }} SCHEME=chibi LINUX=${{ matrix.linux }} build push
