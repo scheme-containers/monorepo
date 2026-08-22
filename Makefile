@@ -1,7 +1,9 @@
 # User arguments begin
 SCHEME=chibi
-VERSION=head             # head, N or latest
-LINUX=                   # empty or alpine
+# head, N or latest
+VERSION=latest
+# debian or alpine
+LINUX=debian
 ARCH=$(shell uname --machine)
 OS=linux
 # User arguments end
