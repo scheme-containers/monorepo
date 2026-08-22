@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - implementations/racket/**/Dockerfile*
+      - implementations/racket/**/checksum
       - .github/workflows/racket*.yml
 jobs:
   latest:
