@@ -16,7 +16,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O racket.tgz \
-    https://download.racket-lang.org/releases/9.2/installers/racket-minimal-9.2-src.tgz
+    https://download.racket-lang.org/releases/9.3/installers/racket-minimal-9.3-src.tgz
 RUN sha256sum racket.tgz && sha256sum -c checksum
 RUN mkdir racket && tar -C racket --strip-components 1 -xf racket.tgz
 WORKDIR /build/racket/src
