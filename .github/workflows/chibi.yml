@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - implementations/chibi/**/Dockerfile*
+      - implementations/chibi/**/checksum
       - .github/workflows/chibi*.yml
 jobs:
   latest:

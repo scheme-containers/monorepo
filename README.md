@@ -34,7 +34,8 @@ Or both at once:
 
 Give arguments and run without command to see what will be run.  See the
 Makefile for all arguments. When you are satisfied with commands run "build"
-and then "push" if you want to push the image.
+and then "push" if you want to push the image. Build command also generates
+github workflow if it is missing.
 
 Examples:
 
@@ -55,14 +56,12 @@ Examples:
 
 ## Workflow
 
-If you need to update workflows change workflow-template.yml if needed
-and then update them using make. To override default workflow build operating
-systems and linuxes use following files.
+By default buildind adds workflow into .github/workflows/$SCHEME.yml
+To override default workflow build operating systems and linuxes for latest
+version use following files.
 
-- implementation/$SCHEME/WORKFLOW_OS.txt
+- implementation/$SCHEME/LATEST/WORKFLOW_OS
     - If does not exist defaults to "ubuntu-24.04, ubuntu-24.04-arm"
-- implementation/$SCHEME/WORKFLOW_LINUX.txt
+- implementation/$SCHEME/LATEST/WORKFLOW_LINUX
     - If does not exist defaults to "debian, alpine"
-
-    make SCHEME=chibi workflow
 
