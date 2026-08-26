@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scheme: [capyscheme, chicken, cyclone, lips]
+        scheme: [capyscheme, chicken, cyclone, guile, lips]
         version: [head]
         linux: [debian, alpine]
         os: [ubuntu-24.04, ubuntu-24.04-arm]
