@@ -14,8 +14,8 @@ jobs:
       matrix:
         scheme: [capyscheme, chibi, chicken, cyclone, gambit, guile, lips, meevax, stklos, tr7]
         version: [head]
-        linux: [debian, alpine]
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        linux: [debian]
+        os: [ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
