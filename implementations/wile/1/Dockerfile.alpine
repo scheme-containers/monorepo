@@ -1,5 +1,6 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM alpine:3.23 AS build
+# Edge for newer golang
+FROM alpine:edge AS build
 RUN apk add go make wget
 WORKDIR /build
 COPY checksum checksum

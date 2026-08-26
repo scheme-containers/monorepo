@@ -56,14 +56,12 @@ Examples:
 
 ## Workflow
 
-If you need to update workflows change workflow-template.yml if needed
-and then update them using make. To override default workflow build operating
-systems and linuxes use following files.
+By default buildind adds workflow into .github/workflows/$SCHEME.yml
+To override default workflow build operating systems and linuxes use following
+files.
 
 - implementation/$SCHEME/WORKFLOW_OS
     - If does not exist defaults to "ubuntu-24.04, ubuntu-24.04-arm"
 - implementation/$SCHEME/WORKFLOW_LINUX
     - If does not exist defaults to "debian, alpine"
-
-    make SCHEME=chibi workflow
 

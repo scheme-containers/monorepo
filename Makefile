@@ -61,7 +61,7 @@ debug:
 	@echo "BUILD_CMD: ${BUILD_CMD}"
 	@echo "PUSH_CMD : ${PUSH_CMD}"
 
-build:
+build: workflow
 	@echo "SCHEME   : ${SCHEME}"
 	@echo "VERSION  : ${VERSION}"
 	@echo "ARCH     : ${ARCH}"
@@ -81,8 +81,8 @@ clean-image:
 	@echo "CLEAN_CMD : ${CLEAN_CMD}"
 	${IMAGE_CLEAN_CMD}
 
-WORKFLOW_OS=$(shell cat implementations/${SCHEME}/WORKFLOW_OS || echo "ubuntu-24.04, ubuntu-24.04-arm")
-WORKFLOW_LINUX=$(shell cat implementations/${SCHEME}/WORKFLOW_LINUX || echo "debian, alpine")
+WORKFLOW_OS=$(shell cat implementations/${SCHEME}/WORKFLOW_OS 2>/dev/null || echo "ubuntu-24.04, ubuntu-24.04-arm")
+WORKFLOW_LINUX=$(shell cat implementations/${SCHEME}/WORKFLOW_LINUX 2>/dev/null || echo "debian, alpine")
 workflow:
 	rm -rf .github/workflows/${SCHEME}-push-action.yml
 	cp workflow-template.yml .github/workflows/${SCHEME}.yml
