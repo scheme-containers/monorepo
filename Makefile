@@ -81,8 +81,8 @@ clean-image:
 	@echo "CLEAN_CMD : ${CLEAN_CMD}"
 	${IMAGE_CLEAN_CMD}
 
-WORKFLOW_OS=$(shell cat implementations/${SCHEME}/WORKFLOW_OS.txt || echo "ubuntu-24.04, ubuntu-24.04-arm")
-WORKFLOW_LINUX=$(shell cat implementations/${SCHEME}/WORKFLOW_LINUX.txt || echo "debian, alpine")
+WORKFLOW_OS=$(shell cat implementations/${SCHEME}/WORKFLOW_OS || echo "ubuntu-24.04, ubuntu-24.04-arm")
+WORKFLOW_LINUX=$(shell cat implementations/${SCHEME}/WORKFLOW_LINUX || echo "debian, alpine")
 workflow:
 	rm -rf .github/workflows/${SCHEME}-push-action.yml
 	cp workflow-template.yml .github/workflows/${SCHEME}.yml
