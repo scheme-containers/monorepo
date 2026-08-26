@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scheme: [capyscheme, gambit, guile, goldfish, lips, meevax, wile]
+        scheme: [capyscheme, gambit, guile, lips, meevax, wile]
         version: [head]
         linux: [debian]
         os: [ubuntu-24.04]
