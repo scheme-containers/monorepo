@@ -9,7 +9,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /build
 COPY checksum checksum
 RUN wget -O lips.tgz \
-    https://github.com/jcubic/lips/archive/refs/tags/1.0.0-beta.22.1.tar.gz
+    https://github.com/jcubic/lips/archive/refs/tags/1.0.0-beta.23.1.tar.gz
 RUN sha256sum lips.tgz && sha256sum -c checksum
 RUN mkdir lips && tar -C lips --strip-components 1 -xf lips.tgz
 WORKDIR /build/lips

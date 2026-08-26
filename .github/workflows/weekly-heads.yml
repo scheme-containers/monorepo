@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scheme: [capyscheme, chibi, chicken, cyclone, gambit, guile, lips, meevax, stklos, tr7]
+        scheme: [capyscheme, gambit, guile, lips, meevax]
         version: [head]
         linux: [debian]
         os: [ubuntu-24.04]
