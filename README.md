@@ -57,11 +57,11 @@ Examples:
 ## Workflow
 
 By default buildind adds workflow into .github/workflows/$SCHEME.yml
-To override default workflow build operating systems and linuxes use following
-files.
+To override default workflow build operating systems and linuxes for latest
+version use following files.
 
-- implementation/$SCHEME/WORKFLOW_OS
+- implementation/$SCHEME/LATEST/WORKFLOW_OS
     - If does not exist defaults to "ubuntu-24.04, ubuntu-24.04-arm"
-- implementation/$SCHEME/WORKFLOW_LINUX
+- implementation/$SCHEME/LATEST/WORKFLOW_LINUX
     - If does not exist defaults to "debian, alpine"
 

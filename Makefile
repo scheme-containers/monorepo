@@ -13,8 +13,9 @@ VERSION_TAG=head
 PLATFORM=${OS}/amd64
 DOCKER_ARGS=
 
+LATEST_VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-*" | sort -V | tail -n 1)
 ifeq "${VERSION}" "latest"
-VERSION_PATH=$(shell find "implementations/${SCHEME}/" -maxdepth 1 -name "*" -not -name "head" -not -name "*-*" | sort -V | tail -n 1)
+VERSION_PATH=${LATEST_VERSION_PATH}
 VERSION_NUMBER=$(shell basename ${VERSION_PATH})
 else
 VERSION_PATH=implementations/${SCHEME}/${VERSION}
@@ -81,12 +82,13 @@ clean-image:
 	@echo "CLEAN_CMD : ${CLEAN_CMD}"
 	${IMAGE_CLEAN_CMD}
 
-WORKFLOW_OS=$(shell cat implementations/${SCHEME}/WORKFLOW_OS 2>/dev/null || echo "ubuntu-24.04, ubuntu-24.04-arm")
-WORKFLOW_LINUX=$(shell cat implementations/${SCHEME}/WORKFLOW_LINUX 2>/dev/null || echo "debian, alpine")
+WORKFLOW_OS=$(shell cat ${LATEST_VERSION_PATH}/WORKFLOW_OS || echo "ubuntu-24.04, ubuntu-24.04-arm")
+WORKFLOW_LINUX=$(shell cat ${LATEST_VERSION_PATH}/WORKFLOW_LINUX || echo "debian, alpine")
+WORKFLOW_FILE=.github/workflows/${SCHEME}.yml
 workflow:
 	rm -rf .github/workflows/${SCHEME}-push-action.yml
-	cp workflow-template.yml .github/workflows/${SCHEME}.yml
-	sed -i 's/\$${SCHEME}/${SCHEME}/g' .github/workflows/${SCHEME}.yml
-	sed -i 's/\$${WORKFLOW_OS}/${WORKFLOW_OS}/g' .github/workflows/${SCHEME}.yml
-	sed -i 's/\$${WORKFLOW_LINUX}/${WORKFLOW_LINUX}/g' .github/workflows/${SCHEME}.yml
+	cp workflow-template.yml ${WORKFLOW_FILE}
+	sed -i 's/\$${SCHEME}/${SCHEME}/g' ${WORKFLOW_FILE}
+	sed -i 's/\$${WORKFLOW_OS}/${WORKFLOW_OS}/g' ${WORKFLOW_FILE}
+	sed -i 's/\$${WORKFLOW_LINUX}/${WORKFLOW_LINUX}/g' ${WORKFLOW_FILE}
 

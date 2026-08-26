@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         linux: [debian, alpine]
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        os: [ubuntu-24.04]
         version: [latest]
     runs-on: ${{ matrix.os }}
     steps:
