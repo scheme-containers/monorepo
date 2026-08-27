@@ -1,0 +1,16 @@
+# -*- mode: dockerfile; coding: utf-8 -*-
+FROM alpine:3.23 AS build
+RUN apk add git make gcc musl-dev gc-dev
+WORKDIR /build
+COPY checksum checksum
+RUN wget -O snow-chibi.tar.gz https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.12.tar.gz
+RUN sha256sum snow-chibi.tar.gz && sha256sum -c checksum
+RUN mkdir snow-chibi && tar -C snow-chibi --strip-components 1 -xf snow-chibi.tar.gz
+WORKDIR /build/snow-chibi
+RUN make PREFIX=/opt/snow-chibi
+RUN make PREFIX=/opt/snow-chibi install
+
+FROM alpine
+COPY --from=build /opt /opt
+ENV PATH=/opt/snow-chibi/bin:${PATH}
+ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
