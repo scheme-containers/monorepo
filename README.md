@@ -65,3 +65,19 @@ version use following files.
 - implementation/$SCHEME/LATEST/WORKFLOW_LINUX
     - If does not exist defaults to "debian, alpine"
 
+
+## Package managers
+
+### snow-chibi
+
+To make it faster and easier to "install" package managers into containers,
+some package managers are also distributed as docker containers. Installed
+under /opt/$NAME.
+
+To copy snow-chibi into your docker image you can add these lines into the
+Dockerfile:
+
+
+    COPY --from=schemers/snow-chibi:head /opt/snow-chibi /opt/snow-chibi
+    ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
+    ENV PATH=/opt/snow-chibi/bin:${PATH}
