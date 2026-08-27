@@ -81,3 +81,5 @@ Dockerfile:
     COPY --from=schemers/snow-chibi:head /opt/snow-chibi /opt/snow-chibi
     ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
     ENV PATH=/opt/snow-chibi/bin:${PATH}
+
+You might need to also given them to docker run command with --env.
