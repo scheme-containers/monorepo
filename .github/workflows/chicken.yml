@@ -6,8 +6,6 @@ on:
     paths:
       - implementations/chicken/**/Dockerfile*
       - .github/workflows/chicken*.yml
-  schedule:
-    - cron: "17 4 * * 2"
 jobs:
   build-debian:
     strategy:

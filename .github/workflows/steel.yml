@@ -5,8 +5,6 @@ on:
     paths:
       - implementations/steel/**/Dockerfile*
       - .github/workflows/steel*.yml
-  schedule: 
-    - cron: "17 4 * * 2"
 jobs:
   build-debian:
     strategy:
