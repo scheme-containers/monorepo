@@ -6,8 +6,6 @@ on:
     paths:
       - implementations/kawa/**/Dockerfile*
       - .github/workflows/kawa*.yml
-  schedule:
-    - cron: "17 4 * * 2"
 jobs:
   build-debian:
     strategy:

@@ -6,8 +6,6 @@ on:
     paths:
       - implementations/gauche/**/Dockerfile*
       - .github/workflows/gauche*.yml
-  schedule:
-    - cron: "17 4 * * 2"
 jobs:
   build-debian:
     strategy:

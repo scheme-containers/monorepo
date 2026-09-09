@@ -5,8 +5,6 @@ on:
     paths:
       - implementations/loko/**/Dockerfile*
       - .github/workflows/loko*.yml
-  schedule:
-    - cron: "17 4 * * 2"
 jobs:
   build-debian:
     strategy:

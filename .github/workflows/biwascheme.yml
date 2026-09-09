@@ -5,8 +5,6 @@ on:
     paths:
       - implementations/biwascheme/**/Dockerfile*
       - .github/workflows/biwascheme*.yml
-  schedule: 
-    - cron: "17 4 * * 2"
 jobs:
   build-debian:
     strategy:
